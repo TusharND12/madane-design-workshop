@@ -8,12 +8,31 @@ import { fadeUp, stagger, viewportOnce } from "@/lib/motion";
 
 /**
  * Approach — a centered editorial statement (AEROTECH-style) whose elements
- * fade in one by one, followed by a supporting manifesto + image card.
+ * fade in one by one, followed by a quiet credential ticker, the three working
+ * tenets as pillars, and a supporting image.
  */
+const MARQUEE = [
+  "Architecture",
+  "Interiors",
+  "Turnkey delivery",
+  "BIM-integrated workflows",
+  "IGBC green building",
+  "USGBC certified",
+  "Corporate & commercial",
+  "Industrial facilities",
+  "Mumbai · since 2008",
+];
+
+const PILLARS = [
+  { n: "01", title: "Restraint", body: "Two neutrals and a single material logic — nothing on the wall that doesn't earn its place." },
+  { n: "02", title: "Daylight", body: "We let light do the dramatic work, and shape each room around how the sun moves through it." },
+  { n: "03", title: "Detail", body: "The few things you actually touch are detailed to the tolerance of furniture." },
+];
+
 export function EditorialQuote() {
   return (
     <section className="relative z-10 -mt-[16vh] rounded-t-[clamp(1.75rem,5vw,3.25rem)] bg-stone shadow-[0_-34px_70px_-26px_rgba(0,0,0,0.7)] md:-mt-[24vh]">
-      <div className="shell-wide pt-[clamp(5rem,12vh,9rem)] pb-[clamp(11rem,36vh,26rem)]">
+      <div className="shell-wide pt-[clamp(5rem,12vh,9rem)] pb-[clamp(7rem,20vh,16rem)]">
         {/* Centered hero statement — staggered, one element at a time */}
         <motion.div
           variants={stagger(0.14)}
@@ -47,44 +66,85 @@ export function EditorialQuote() {
           </motion.div>
         </motion.div>
 
-        {/* Supporting row — manifesto + image card, fading in one by one */}
+        {/* Credential ticker — quiet, looping proof of range */}
         <motion.div
-          variants={stagger(0.16)}
+          variants={fadeUp}
           initial="hidden"
           whileInView="show"
           viewport={viewportOnce}
-          className="mt-24 grid gap-12 md:mt-32 md:grid-cols-12 md:gap-8"
+          className="mt-16 border-y border-ink/10 md:mt-20"
         >
-          <motion.div variants={fadeUp} className="flex flex-col gap-6 md:col-span-4">
-            <span className="section-index">01 — Method</span>
-            <p className="max-w-prose text-base leading-relaxed text-ink-muted">
-              We hold to two neutrals and a single material logic, let daylight do the dramatic work, and detail the
-              few things you actually touch to the tolerance of furniture.
-            </p>
-            <div>
-              <Button href="/process" variant="tertiary" arrow>
-                How we work
-              </Button>
-            </div>
-          </motion.div>
-
-          <motion.figure variants={fadeUp} className="md:col-span-7 md:col-start-6">
-            <div className="relative aspect-[16/10] overflow-hidden rounded-card bg-mount">
-              <Image
-                src="/assets/hero/p-56.jpg"
-                alt="A completed Madane interior — restraint, daylight and material."
-                fill
-                sizes="(max-width:768px) 100vw, 58vw"
-                className="object-cover transition-transform duration-700 ease-editorial hover:scale-[1.03]"
-              />
-            </div>
-            <figcaption className="mt-4 flex items-center justify-between font-mono text-2xs uppercase tracking-label text-ink-muted">
-              <span>Inside the work</span>
-              <span>Madane · Design Workshop</span>
-            </figcaption>
-          </motion.figure>
+          <CredentialMarquee />
         </motion.div>
+
+        {/* The three working tenets, as pillars */}
+        <motion.div
+          variants={stagger(0.14)}
+          initial="hidden"
+          whileInView="show"
+          viewport={viewportOnce}
+          className="mt-20 md:mt-28"
+        >
+          <motion.span variants={fadeUp} className="section-index">
+            01 — Method
+          </motion.span>
+          <div className="mt-10 grid gap-px overflow-hidden rounded-card border border-ink/10 bg-ink/10 md:grid-cols-3">
+            {PILLARS.map((p) => (
+              <motion.div key={p.n} variants={fadeUp} className="flex flex-col gap-4 bg-stone p-8 md:p-9">
+                <span className="font-mono text-2xs tracking-label text-ink-muted">{p.n}</span>
+                <h3 className="font-display text-2xl tracking-tight">{p.title}</h3>
+                <p className="text-sm leading-relaxed text-ink-muted">{p.body}</p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Supporting visual */}
+        <motion.figure
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="show"
+          viewport={viewportOnce}
+          className="mt-16 md:mt-20"
+        >
+          <div className="relative aspect-[16/9] overflow-hidden rounded-card bg-mount">
+            <Image
+              src="/assets/hero/p-56.jpg"
+              alt="A completed Madane interior — restraint, daylight and material."
+              fill
+              sizes="100vw"
+              className="object-cover transition-transform duration-700 ease-editorial hover:scale-[1.03]"
+            />
+          </div>
+          <figcaption className="mt-4 flex items-center justify-between font-mono text-2xs uppercase tracking-label text-ink-muted">
+            <span>Inside the work</span>
+            <span>Madane · Design Workshop</span>
+          </figcaption>
+        </motion.figure>
       </div>
     </section>
+  );
+}
+
+/* Two identical tracks sliding one full width — seamless, edge-faded loop. */
+function CredentialMarquee() {
+  const loop = [...MARQUEE, ...MARQUEE];
+  return (
+    <div
+      className="relative overflow-hidden py-5"
+      style={{
+        maskImage: "linear-gradient(to right, transparent, #000 7%, #000 93%, transparent)",
+        WebkitMaskImage: "linear-gradient(to right, transparent, #000 7%, #000 93%, transparent)",
+      }}
+    >
+      <div className="marquee-track flex w-max items-center">
+        {loop.map((item, i) => (
+          <div key={i} className="flex items-center" aria-hidden={i >= MARQUEE.length}>
+            <span className="px-7 font-mono text-2xs uppercase tracking-[0.32em] text-ink-muted">{item}</span>
+            <span className="h-[3px] w-[3px] rounded-full bg-ink/30" aria-hidden="true" />
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

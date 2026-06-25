@@ -57,6 +57,18 @@
     .wave-drift { animation: none; }
   }
 
+  /* Seamless credential ticker — two identical tracks slide one full width */
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .marquee-track {
+    animation: marquee 38s linear infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation: none; }
+  }
+
   h1, h2, h3, h4 {
     @apply font-display;
     text-wrap: balance;
