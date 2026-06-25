@@ -29,20 +29,17 @@ export function ProofStat() {
         </Reveal>
 
         <Reveal delay={0.08} className="relative mt-12 overflow-hidden rounded-card border border-hairline bg-mount md:mt-16">
-          {/* faint line-art skyline, rising from the base */}
+          {/* faint Warli-art scene rising from the base */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[72%]"
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[86%] text-ink"
             style={{
-              backgroundImage: "url(/assets/lineart/skyline.png)",
-              backgroundSize: "100% 100%",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "center bottom",
-              opacity: 0.16,
-              maskImage: "linear-gradient(to top, #000 42%, transparent)",
-              WebkitMaskImage: "linear-gradient(to top, #000 42%, transparent)",
+              maskImage: "linear-gradient(to top, #000 48%, transparent)",
+              WebkitMaskImage: "linear-gradient(to top, #000 48%, transparent)",
             }}
-          />
+          >
+            <WarliScene className="absolute inset-0 h-full w-full opacity-[0.16]" />
+          </div>
 
           {/* the four figures */}
           <div ref={ref} className="relative z-10 grid grid-cols-2 md:grid-cols-4">
@@ -109,5 +106,123 @@ function Stat({ value, play, className }: { value: string; play: boolean; classN
       {hasMatch ? n.toFixed(decimals) : value}
       <span className="text-ink-muted">{suffix}</span>
     </span>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Warli art — a faint tribal frieze (Maharashtra) drawn in line:     */
+/*  the tarpa dancers, trees, huts and sun. Background ornament only.   */
+/* ------------------------------------------------------------------ */
+const GROUND = 262;
+const DANCER_XS = [430, 540, 650, 760, 870];
+
+function WarliScene({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 1200 300"
+      preserveAspectRatio="xMidYMax slice"
+      className={className}
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill="none"
+      aria-hidden="true"
+    >
+      {/* ground */}
+      <line x1="0" y1={GROUND} x2="1200" y2={GROUND} strokeWidth={1.5} />
+      <line x1="0" y1={GROUND + 9} x2="1200" y2={GROUND + 9} strokeWidth={1} opacity={0.45} />
+
+      {/* sun + rays */}
+      <circle cx={1086} cy={74} r={22} />
+      {Array.from({ length: 12 }).map((_, i) => {
+        const a = (i / 12) * Math.PI * 2;
+        return (
+          <line
+            key={i}
+            x1={1086 + Math.cos(a) * 28}
+            y1={74 + Math.sin(a) * 28}
+            x2={1086 + Math.cos(a) * 38}
+            y2={74 + Math.sin(a) * 38}
+          />
+        );
+      })}
+
+      {/* huts */}
+      <Hut x={86} w={66} h={56} />
+      <Hut x={190} w={52} h={44} />
+
+      {/* trees */}
+      <WarliTree x={306} h={152} />
+      <WarliTree x={968} h={172} />
+
+      {/* the tarpa dance */}
+      {DANCER_XS.map((x) => (
+        <Dancer key={x} x={x} />
+      ))}
+
+      {/* a bird in flight */}
+      <g>
+        <path d="M 1132 128 q 13 -11 26 0" />
+        <path d="M 1158 128 q 13 -11 26 0" />
+      </g>
+    </svg>
+  );
+}
+
+function Dancer({ x }: { x: number }) {
+  const h = 86;
+  const w = 14;
+  const headY = GROUND - h;
+  const shoulderY = GROUND - h * 0.8;
+  const waistY = GROUND - h * 0.46;
+  const hipY = GROUND - h * 0.14;
+  return (
+    <g>
+      <circle cx={x} cy={headY} r={7} />
+      <line x1={x} y1={headY + 7} x2={x} y2={shoulderY} />
+      {/* hourglass torso (filled) */}
+      <polygon points={`${x - w},${shoulderY} ${x + w},${shoulderY} ${x},${waistY}`} fill="currentColor" stroke="none" />
+      <polygon points={`${x},${waistY} ${x - w},${hipY} ${x + w},${hipY}`} fill="currentColor" stroke="none" />
+      {/* legs */}
+      <line x1={x - w * 0.5} y1={hipY} x2={x - w * 1.5} y2={GROUND} />
+      <line x1={x + w * 0.5} y1={hipY} x2={x + w * 1.5} y2={GROUND} />
+      {/* arms raised in dance */}
+      <line x1={x} y1={shoulderY + 3} x2={x - 30} y2={shoulderY - 16} />
+      <line x1={x} y1={shoulderY + 3} x2={x + 30} y2={shoulderY - 16} />
+    </g>
+  );
+}
+
+function WarliTree({ x, h }: { x: number; h: number }) {
+  const topY = GROUND - h;
+  return (
+    <g>
+      <line x1={x} y1={GROUND} x2={x} y2={topY + 6} />
+      {[0.45, 0.62, 0.78].map((f, i) => {
+        const y = GROUND - h * f;
+        const len = 26 - i * 5;
+        return (
+          <g key={i}>
+            <line x1={x} y1={y} x2={x - len} y2={y - len * 0.6} />
+            <line x1={x} y1={y} x2={x + len} y2={y - len * 0.6} />
+          </g>
+        );
+      })}
+      <circle cx={x} cy={topY} r={11} />
+      <circle cx={x - 15} cy={topY + 9} r={8} />
+      <circle cx={x + 15} cy={topY + 9} r={8} />
+    </g>
+  );
+}
+
+function Hut({ x, w, h }: { x: number; w: number; h: number }) {
+  const top = GROUND - h;
+  return (
+    <g>
+      <rect x={x} y={top} width={w} height={h} />
+      <polygon points={`${x - 8},${top} ${x + w + 8},${top} ${x + w / 2},${top - 26}`} fill="currentColor" stroke="none" />
+      <line x1={x + w / 2} y1={GROUND} x2={x + w / 2} y2={top} strokeWidth={1} opacity={0.5} />
+    </g>
   );
 }
