@@ -1,17 +1,13 @@
-import Image from "next/image";
+import Link from "next/link";
 import { site } from "@/content/site";
-import { Bracket } from "@/components/primitives/Bracket";
-import { Button } from "@/components/primitives/Button";
-import { Reveal } from "@/components/primitives/Reveal";
 
 /**
- * Full-width Ink enquiry band — the page's full stop (PRD H7). Reused as the
- * closing CTA across pages, optionally pre-tagged with a project.
+ * Closing CTA — a floating dark card on the light footer region (reference
+ * layout). Heading on the left, supporting line + actions on the right.
  */
 export function EnquiryBand({
   headline = "Let's design something that feels inevitable.",
   projectTag,
-  image = "/assets/hero/p-77.jpg",
 }: {
   headline?: string;
   projectTag?: string;
@@ -20,44 +16,62 @@ export function EnquiryBand({
   const enquireHref = projectTag ? `/contact?project=${encodeURIComponent(projectTag)}` : "/contact";
 
   return (
-    <section className="on-ink relative isolate overflow-hidden bg-paper text-ink">
-      <div className="absolute inset-0 opacity-25" aria-hidden="true">
-        <Image src={image} alt="" fill sizes="100vw" className="object-cover" />
-        <div className="absolute inset-0 bg-paper/55" />
-      </div>
+    <section className="relative z-10 bg-[#ECEEF4] pt-section">
+      <div className="shell-wide">
+        <div className="relative overflow-hidden rounded-[clamp(1.5rem,3vw,2.5rem)] bg-[#0F1219] p-8 shadow-[0_44px_100px_-46px_rgba(15,18,25,0.6)] md:p-14">
+          {/* sheen + dotted accents */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0"
+            style={{ background: "radial-gradient(130% 150% at 88% 130%, rgba(96,116,176,0.20), transparent 55%)" }}
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute right-8 top-8 h-24 w-40 opacity-40"
+            style={{
+              backgroundImage: "radial-gradient(rgba(255,255,255,0.35) 1px, transparent 1px)",
+              backgroundSize: "12px 12px",
+              maskImage: "linear-gradient(120deg, #000, transparent)",
+              WebkitMaskImage: "linear-gradient(120deg, #000, transparent)",
+            }}
+          />
 
-      <div className="shell-wide relative py-section">
-        <Reveal>
-          <Bracket className="text-ink/55">Enquire</Bracket>
-        </Reveal>
-        <Reveal delay={0.06}>
-          <h2 className="mt-8 max-w-[18ch] font-display text-[clamp(2.25rem,6vw,4.5rem)] leading-[1.0] tracking-tighter">
-            {headline}
-          </h2>
-        </Reveal>
+          <div className="relative grid gap-10 md:grid-cols-2 md:items-center">
+            <h2 className="max-w-[15ch] font-display text-[clamp(1.75rem,3.6vw,2.9rem)] font-light leading-[1.06] tracking-tight text-white">
+              {headline}
+            </h2>
 
-        <Reveal delay={0.12} className="mt-12 flex flex-col gap-8">
-          <div className="flex flex-wrap items-center gap-5">
-            <Button
-              href={enquireHref}
-              variant="secondary"
-              arrow
-              className="border-ink/40 text-ink hover:border-ink hover:bg-ink hover:text-paper"
-            >
-              Start an enquiry
-            </Button>
-            <Button
-              href={`https://wa.me/${site.contact.whatsapp}?text=${encodeURIComponent(site.contact.whatsappMessage)}`}
-              variant="tertiary"
-              className="text-ink/80"
-            >
-              WhatsApp
-            </Button>
-            <Button href={site.contact.phoneHref} variant="tertiary" className="text-ink/80">
-              {site.contact.phoneDisplay}
-            </Button>
+            <div className="md:pl-8">
+              <p className="max-w-sm text-sm leading-relaxed text-white/55">
+                Architecture, interiors and turnkey delivery — tell us about the space and we&rsquo;ll shape it with you.
+              </p>
+              <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
+                <Link
+                  href={enquireHref}
+                  className="inline-flex items-center gap-2.5 rounded-full bg-white px-6 py-3 font-sans text-xs uppercase tracking-[0.14em] text-[#0F1219] transition-colors duration-300 hover:bg-white/85"
+                >
+                  Get started
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M5 12h14M13 6l6 6-6 6" />
+                  </svg>
+                </Link>
+                <a
+                  href={`https://wa.me/${site.contact.whatsapp}?text=${encodeURIComponent(site.contact.whatsappMessage)}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2.5 font-sans text-xs uppercase tracking-[0.14em] text-white/75 transition-colors duration-300 hover:text-white"
+                >
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full border border-white/30">
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </span>
+                  WhatsApp the studio
+                </a>
+              </div>
+            </div>
           </div>
-        </Reveal>
+        </div>
       </div>
     </section>
   );
