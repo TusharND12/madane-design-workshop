@@ -26,6 +26,9 @@ export function LeadershipShowcase({ items, socials, email }: { items: readonly 
   const reduced = usePrefersReducedMotion();
   const [active, setActive] = useState(0);
   const a = items[active];
+  const N = items.length;
+  const pad = (n: number) => String(n).padStart(2, "0");
+  const go = (dir: number) => setActive((i) => (i + dir + N) % N);
 
   return (
     <div className="mt-12 grid gap-10 md:mt-16 md:grid-cols-12 md:gap-12">
@@ -61,6 +64,31 @@ export function LeadershipShowcase({ items, socials, email }: { items: readonly 
             <p className="mt-7 max-w-prose text-base leading-relaxed text-ink-muted">{a.bio}</p>
           </motion.div>
         </AnimatePresence>
+
+        {/* arrow toggle */}
+        <div className="mt-9 flex items-center gap-5">
+          <div className="flex items-center gap-2.5">
+            <button
+              type="button"
+              onClick={() => go(-1)}
+              aria-label="Previous leader"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-hairline text-ink-muted transition-colors duration-300 hover:border-ink hover:text-ink"
+            >
+              <Arrow dir="left" />
+            </button>
+            <button
+              type="button"
+              onClick={() => go(1)}
+              aria-label="Next leader"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-hairline text-ink-muted transition-colors duration-300 hover:border-ink hover:text-ink"
+            >
+              <Arrow dir="right" />
+            </button>
+          </div>
+          <span className="font-mono text-2xs tracking-label text-ink-muted">
+            {pad(active + 1)} <span className="text-ink/30">/ {pad(N)}</span>
+          </span>
+        </div>
       </div>
 
       {/* Right — portrait strip */}
@@ -119,6 +147,25 @@ export function LeadershipShowcase({ items, socials, email }: { items: readonly 
         </div>
       </div>
     </div>
+  );
+}
+
+function Arrow({ dir }: { dir: "left" | "right" }) {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className={dir === "left" ? "rotate-180" : ""}
+    >
+      <path d="M5 12h14M13 6l6 6-6 6" />
+    </svg>
   );
 }
 
