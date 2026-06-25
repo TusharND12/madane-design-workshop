@@ -166,7 +166,7 @@ function Scene({ projects }: { projects: Project[] }) {
           >
             {/* Entrance grow, anchored to the bottom edge so it rises upward */}
             <motion.div style={{ scale, transformOrigin: "50% 100%" }} className="will-change-transform">
-              <div className="scale-[0.25] sm:scale-[0.38] md:scale-[0.5] lg:scale-[0.6] xl:scale-[0.66]">
+              <div className="scale-[0.3] sm:scale-[0.44] md:scale-[0.56] lg:scale-[0.6] xl:scale-[0.66]">
                 <Monitor project={current} active={active} />
               </div>
             </motion.div>
