@@ -62,14 +62,6 @@ export function Footer() {
 
       {/* Bottom bar */}
       <div className="relative shell-wide flex flex-col gap-5 border-t border-ink/12 py-7 sm:flex-row sm:items-center sm:justify-between">
-        <span className="inline-flex w-fit items-center gap-2.5 rounded-full border border-hairline bg-mount px-4 py-2 font-mono text-2xs uppercase tracking-label text-ink/75">
-          <span className="relative flex h-2 w-2" aria-hidden="true">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/70" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-          </span>
-          Available for new projects
-        </span>
-
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-2xs uppercase tracking-[0.12em] text-ink/45">
           <span>© {year} {site.legalName}. All rights reserved</span>
           <Link href="/privacy" className="link-underline hover:text-ink">Privacy Policy</Link>
