@@ -59,9 +59,9 @@ function Scene() {
           {/* Left — the spinning flower */}
           <div className="relative mx-auto flex aspect-square w-full max-w-[clamp(240px,40vw,500px)] items-center justify-center">
             <motion.div className="relative h-full w-full" style={{ rotate: rot }}>
-              {/* black petals interleaved behind, for a fuller bloom */}
+              {/* blank petals interleaved, matching the word petals, for a fuller bloom */}
               {VALUES.map((val, i) => (
-                <BlackPetal key={`bp-${val.en}`} index={i} />
+                <BlankPetal key={`bp-${val.en}`} index={i} />
               ))}
               {VALUES.map((val, i) => (
                 <Petal key={val.en} index={i} rot={rot} active={i === active} sa={val.sa} />
@@ -115,14 +115,14 @@ function Scene() {
   );
 }
 
-function BlackPetal({ index }: { index: number }) {
+function BlankPetal({ index }: { index: number }) {
   return (
     <div
-      className="absolute left-1/2 top-1/2 h-[37%] w-[15%]"
-      style={{ transform: `translate(-50%, -50%) rotate(${index * STEP + STEP / 2}deg) translateY(-80%)` }}
+      className="absolute left-1/2 top-1/2 h-[42%] w-[19%]"
+      style={{ transform: `translate(-50%, -50%) rotate(${index * STEP + STEP / 2}deg) translateY(-86%)` }}
       aria-hidden="true"
     >
-      <div className="h-full w-full rounded-[50%_50%_50%_50%/62%_62%_38%_38%] border border-ink/10 bg-paper shadow-[0_10px_30px_-12px_rgba(0,0,0,0.8)]" />
+      <div className="h-full w-full rounded-[50%_50%_50%_50%/62%_62%_38%_38%] border border-ink/25" />
     </div>
   );
 }
