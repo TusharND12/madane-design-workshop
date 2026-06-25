@@ -11,7 +11,6 @@ type Card = {
   title: string;
   desc: string;
   clients: string[];
-  tint: string;
   span: string;
   big?: boolean;
   wide?: boolean;
@@ -23,7 +22,6 @@ const CARDS: Card[] = [
     title: "Quick-commerce & retail",
     desc: "Dark stores, flagship retail and fast-moving brand environments, rolled out at pace across cities.",
     clients: ["Swiggy", "Zepto", "Urban Company", "Croma", "FirstCry", "Eatigo", "Akasa", "Boomlet"],
-    tint: "56,124,255",
     span: "md:col-span-6",
     big: true,
   },
@@ -32,7 +30,6 @@ const CARDS: Card[] = [
     title: "Banking & finance",
     desc: "Corporate floors and branch experiences for banks and fintechs.",
     clients: ["IDFC First Bank", "Capital First Bank", "Fedbank", "Policy Bazaar", "PB Partners"],
-    tint: "245,170,90",
     span: "md:col-span-3",
   },
   {
@@ -40,7 +37,6 @@ const CARDS: Card[] = [
     title: "Industrial & manufacturing",
     desc: "Plants, facilities and offices for makers and engineers.",
     clients: ["CEAT", "Hero Electric", "Sun Petrochemicals", "Reynaers Aluminium", "Insecticides India", "Umicore"],
-    tint: "150,120,255",
     span: "md:col-span-3",
   },
   {
@@ -48,7 +44,6 @@ const CARDS: Card[] = [
     title: "Media & research",
     desc: "Studios, cinemas and analyst floors.",
     clients: ["UFO Digital Cinema", "Ipsos", "TimesPro", "Startek"],
-    tint: "90,200,180",
     span: "md:col-span-3",
   },
   {
@@ -56,7 +51,6 @@ const CARDS: Card[] = [
     title: "Global & logistics",
     desc: "Cross-border offices and consultancies.",
     clients: ["Nippon Express", "Air Arabia", "TOTO", "Osource Global", "Semac Consultants", "Fox Mandal"],
-    tint: "235,130,160",
     span: "md:col-span-3",
   },
   {
@@ -64,7 +58,6 @@ const CARDS: Card[] = [
     title: "Developers & real estate",
     desc: "Residential towers and landmark developments across the city.",
     clients: ["Swastik Developers", "Advait Developers", "Kushal Landmark"],
-    tint: "120,200,120",
     span: "md:col-span-6",
     wide: true,
   },
@@ -97,14 +90,15 @@ export function Recognition() {
               key={c.key}
               delay={(i % 3) * 0.06}
               className={cn(
-                "group relative flex flex-col overflow-hidden rounded-card border border-hairline bg-mount p-6 md:p-7",
+                "group relative flex flex-col overflow-hidden rounded-card border border-hairline p-6 transition-colors duration-500 hover:border-ink/20 md:p-7",
+                c.big ? "bg-stone/50" : "bg-mount",
                 c.span,
               )}
             >
               <div
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0 opacity-80 transition-opacity duration-500 group-hover:opacity-100"
-                style={{ background: `radial-gradient(120% 110% at 0% 0%, rgba(${c.tint},0.12), transparent 55%)` }}
+                className="pointer-events-none absolute inset-0 opacity-70 transition-opacity duration-500 group-hover:opacity-100"
+                style={{ background: "radial-gradient(115% 105% at 0% 0%, rgba(236,236,230,0.05), transparent 55%)" }}
               />
               <div className="relative flex h-full flex-col">
                 <h3 className={cn("font-display tracking-tight", c.big ? "text-xl md:text-2xl" : "text-lg md:text-xl")}>
