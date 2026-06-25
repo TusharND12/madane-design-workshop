@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { site } from "@/content/site";
+import { FooterMark } from "@/components/layout/FooterMark";
 
 /** The calm full stop — giant wordmark, link columns, status bar (dark theme). */
 const NAV = [
@@ -15,15 +16,10 @@ export function Footer() {
 
   return (
     <footer className="on-ink relative z-0 overflow-hidden bg-paper text-ink">
-      {/* Giant wordmark watermark */}
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-[clamp(0.5rem,2.5vw,2.5rem)] select-none text-center font-display lowercase leading-[0.75] tracking-tighter text-ink/[0.05] text-[clamp(3rem,19vw,17rem)]"
-      >
-        madane
-      </span>
+      {/* Giant wordmark — sits in the band between the CTA card and the columns */}
+      <FooterMark />
 
-      <div className="relative shell-wide pb-10 pt-[clamp(7rem,18vw,13rem)]">
+      <div className="relative shell-wide pb-10 pt-[clamp(2.5rem,6vw,4.5rem)]">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-8">
           {/* Logo + tagline */}
           <div className="lg:col-span-5">
