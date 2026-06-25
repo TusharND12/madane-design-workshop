@@ -21,10 +21,10 @@ export function StudioGrid() {
   // The grid starts tilted in 3D (like the reference mockup) and "opens" flat
   // as it scrolls up into the page.
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "center center"] });
-  const rx = useSpring(useTransform(scrollYProgress, [0, 1], [reduced ? 0 : 46, 0]), { stiffness: 90, damping: 26 });
-  const ry = useSpring(useTransform(scrollYProgress, [0, 1], [reduced ? 0 : -18, 0]), { stiffness: 90, damping: 26 });
-  const tz = useTransform(scrollYProgress, [0, 1], [reduced ? 0 : -320, 0]);
-  const gridScale = useTransform(scrollYProgress, [0, 1], [reduced ? 1 : 0.84, 1]);
+  const rx = useSpring(useTransform(scrollYProgress, [0, 1], [reduced ? 0 : 26, 0]), { stiffness: 90, damping: 26 });
+  const ry = useSpring(useTransform(scrollYProgress, [0, 1], [reduced ? 0 : -10, 0]), { stiffness: 90, damping: 26 });
+  const tz = useTransform(scrollYProgress, [0, 1], [reduced ? 0 : -210, 0]);
+  const gridScale = useTransform(scrollYProgress, [0, 1], [reduced ? 1 : 0.9, 1]);
 
   return (
     <section

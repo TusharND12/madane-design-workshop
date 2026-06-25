@@ -9,7 +9,7 @@ export function Milestones({ items }: { items: Milestone[] }) {
     <section className="bg-stone/50">
       <div className="shell-wide grid gap-12 py-section md:grid-cols-12 md:gap-8">
         <div className="md:col-span-4">
-          <SectionHeader index="03" label="Timeline" title="Eleven years, quietly." />
+          <SectionHeader index="03" label="Timeline" title="Since 2008, quietly." />
         </div>
         <ol className="md:col-span-7 md:col-start-6">
           {items.map((m, i) => (

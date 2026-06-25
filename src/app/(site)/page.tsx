@@ -16,9 +16,9 @@ export default function HomePage() {
       <ProofStat />
       <SelectedWork />
       <EditorialQuote />
+      <GalleryShowcase />
       <StudioGrid />
       <ServicesCards />
-      <GalleryShowcase />
       <Recognition />
       <ProcessStrip />
       <EnquiryBand />
