@@ -5,17 +5,18 @@ import { useInView } from "framer-motion";
 import { studio } from "@/content/studio";
 import { Bracket } from "@/components/primitives/Bracket";
 import { Reveal } from "@/components/primitives/Reveal";
+import { cn } from "@/lib/cn";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 /**
- * Quiet credibility block — one hero figure carries the headline, a supporting
- * trio reads beneath it like a printed ledger (asymmetric, magazine hierarchy).
+ * By the numbers — the studio's record read against its own built work. The four
+ * figures count up across the top while a faint line-art skyline (the same
+ * drawing used on the home page) rises behind them, so the proof literally
+ * stands on the architecture.
  */
 export function ProofStat() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.3 });
-
-  const [hero, ...rest] = studio.stats;
 
   return (
     <section className="bg-paper" aria-label="By the numbers">
@@ -27,64 +28,46 @@ export function ProofStat() {
           </span>
         </Reveal>
 
-        <div ref={ref} className="mt-12 grid gap-4 md:mt-16 md:grid-cols-12 md:gap-6">
-          {/* Hero figure */}
-          <Reveal className="md:col-span-5">
-            <div className="group relative flex h-full flex-col justify-between overflow-hidden rounded-card border border-hairline bg-mount p-8 md:p-10">
-              <span
-                aria-hidden="true"
-                className="pointer-events-none absolute -right-6 -top-10 font-display text-[12rem] leading-none tracking-tighter text-ink/[0.035] md:text-[15rem]"
-              >
-                01
-              </span>
-              <span className="relative z-10 font-mono text-2xs uppercase tracking-label text-ink-muted">
-                The headline figure
-              </span>
-              <div className="relative z-10 mt-10">
-                <Stat
-                  value={hero.value}
-                  play={inView}
-                  className="font-display text-[clamp(4.5rem,13vw,9rem)] leading-[0.85] tracking-tighter tabular-nums"
-                />
-                <span className="mt-6 block h-px w-10 bg-ink/25 transition-all duration-500 ease-editorial group-hover:w-24" />
-                <span className="mt-5 block font-mono text-2xs uppercase tracking-label text-ink-muted">
-                  {hero.label}
-                </span>
-              </div>
-            </div>
-          </Reveal>
+        <Reveal delay={0.08} className="relative mt-12 overflow-hidden rounded-card border border-hairline bg-mount md:mt-16">
+          {/* faint line-art skyline, rising from the base */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[72%]"
+            style={{
+              backgroundImage: "url(/assets/lineart/skyline.png)",
+              backgroundSize: "100% 100%",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center bottom",
+              opacity: 0.16,
+              maskImage: "linear-gradient(to top, #000 42%, transparent)",
+              WebkitMaskImage: "linear-gradient(to top, #000 42%, transparent)",
+            }}
+          />
 
-          {/* Supporting trio — ledger rows */}
-          <Reveal delay={0.12} className="md:col-span-7">
-            <div className="flex h-full flex-col rounded-card border border-hairline bg-mount px-8 md:px-10">
-              {rest.map((s, i) => (
-                <div
-                  key={s.label}
-                  className={`group flex flex-1 items-baseline justify-between gap-6 py-6 md:py-8 ${
-                    i > 0 ? "border-t border-hairline" : ""
-                  }`}
-                >
-                  <div className="flex items-baseline gap-5">
-                    <span className="font-mono text-2xs tracking-label text-ink-muted">
-                      {String(i + 2).padStart(2, "0")}
-                    </span>
-                    <Stat
-                      value={s.value}
-                      play={inView}
-                      className="font-display text-5xl leading-none tracking-tighter tabular-nums md:text-6xl"
-                    />
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <span className="hidden h-px w-6 bg-ink/20 transition-all duration-500 ease-editorial group-hover:w-12 sm:block" />
-                    <span className="text-right font-mono text-2xs uppercase tracking-label text-ink-muted">
-                      {s.label}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </Reveal>
-        </div>
+          {/* the four figures */}
+          <div ref={ref} className="relative z-10 grid grid-cols-2 md:grid-cols-4">
+            {studio.stats.map((s, i) => (
+              <div
+                key={s.label}
+                className={cn(
+                  "group relative flex flex-col gap-4 px-6 pt-9 pb-[clamp(6.5rem,18vh,12rem)] md:px-9 md:pt-11",
+                  i % 2 === 1 && "border-l border-hairline",
+                  i >= 2 && "border-t border-hairline md:border-t-0",
+                  i !== 0 && "md:border-l md:border-hairline",
+                )}
+              >
+                <span className="font-mono text-2xs tracking-label text-ink-muted">{String(i + 1).padStart(2, "0")}</span>
+                <Stat
+                  value={s.value}
+                  play={inView}
+                  className="font-display text-[clamp(3.25rem,7vw,5.5rem)] leading-[0.82] tracking-tighter tabular-nums"
+                />
+                <span className="block h-px w-8 bg-ink/25 transition-all duration-500 ease-editorial group-hover:w-16" />
+                <span className="font-mono text-2xs uppercase tracking-label text-ink-muted">{s.label}</span>
+              </div>
+            ))}
+          </div>
+        </Reveal>
       </div>
     </section>
   );
