@@ -50,8 +50,8 @@ export const services: Service[] = [
       "Design and build under a single accountable team — drawings, procurement and site run as one programme, delivered finished and photograph-ready.",
     forWhom: "Clients who want one partner answerable for the whole thing, on time.",
     includes: ["Single-point delivery", "Procurement", "Site execution", "Quality control", "Snag-free handover"],
-    image: "/assets/hero/p-62.jpg",
-    imageAlt: "Turnkey — a finished creative studio delivered end to end.",
+    image: "/assets/services/turnkey.jpg",
+    imageAlt: "Turnkey — a finished, photograph-ready space delivered end to end.",
     filterType: "Turnkey",
   },
 ];
