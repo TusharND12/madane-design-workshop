@@ -18,6 +18,12 @@ declare global {
 export function SmoothScroll() {
   const reduced = usePrefersReducedMotion();
 
+  // Always start at the top on (re)load — disable the browser's scroll restore.
+  useEffect(() => {
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
     if (reduced) return;
 
@@ -30,6 +36,7 @@ export function SmoothScroll() {
       lerp: 0.1,
     });
     window.__lenis = lenis;
+    lenis.scrollTo(0, { immediate: true });
 
     let raf = 0;
     const loop = (time: number) => {
