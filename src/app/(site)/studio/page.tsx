@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { getStudio, getClients } from "@/lib/cms";
 import { site } from "@/content/site";
 import { PageIntro } from "@/components/common/PageIntro";
 import { SectionHeader } from "@/components/primitives/SectionHeader";
 import { Reveal } from "@/components/primitives/Reveal";
+import { LeadershipShowcase } from "@/components/studio/LeadershipShowcase";
 import { EnquiryBand } from "@/components/common/EnquiryBand";
 
 export const metadata: Metadata = {
@@ -66,25 +66,15 @@ export default function StudioPage() {
       {/* 03 — Leadership */}
       <section className="bg-stone/40">
         <div className="shell-wide py-section">
-          <SectionHeader index="02" label="Leadership" title="The partners behind the practice." align="between" intro="A multidisciplinary leadership team with deep roots in architecture, design, contracts and strategy." />
-          <div className="mt-14 grid grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-4 md:gap-x-8">
-            {studio.leadership.map((m, i) => (
-              <Reveal key={m.name} delay={(i % 4) * 0.06} className="flex flex-col">
-                <div className="relative aspect-[4/5] w-full overflow-hidden rounded-card bg-mount">
-                  {m.portrait ? (
-                    <Image src={m.portrait} alt={`${m.name} — ${m.role}.`} fill sizes="(max-width:768px) 45vw, 22vw" className="object-cover grayscale" />
-                  ) : (
-                    <span aria-hidden="true" className="flex h-full w-full items-center justify-center font-display text-5xl text-ink/80">
-                      {m.name.replace(/^Ar\.\s*/, "").charAt(0)}
-                    </span>
-                  )}
-                </div>
-                <h3 className="mt-5 font-display text-lg leading-tight tracking-tight">{m.name}</h3>
-                <span className="mt-1.5 font-mono text-2xs uppercase tracking-label text-ink-muted">{m.role}</span>
-                <p className="mt-2 text-sm leading-snug text-ink-muted">{m.credential}</p>
-              </Reveal>
-            ))}
-          </div>
+          <SectionHeader index="02" label="Leadership" title="The partners behind the practice." align="between" intro="A multidisciplinary leadership team with deep roots in architecture, design, contracts and strategy. Select a face to read more." />
+          <LeadershipShowcase
+            items={studio.leadership}
+            socials={[
+              ...site.socials.filter((s) => s.label === "Instagram" || s.label === "LinkedIn"),
+              { label: "Email", href: `mailto:${site.contact.email}` },
+            ]}
+            email={site.contact.email}
+          />
         </div>
       </section>
 

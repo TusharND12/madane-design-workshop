@@ -32,10 +32,34 @@ export const studio = {
   ],
   // Founding/partner leadership with real credentials (company profile).
   leadership: [
-    { name: "Ar. Hrishikesh Arun Madane", role: "Founding Partner · Principal Architect", credential: "M.Arch, IIT Crown Hall Chicago · IGBC AP", portrait: "/assets/team-clean/hrishikesh.jpg" },
-    { name: "Akshay Arun Madane", role: "Founding Partner · Business & Contracting", credential: "Contracts & turnkey delivery", portrait: "/assets/team-clean/akshay.jpg" },
-    { name: "Ar. Rasika Hrishikesh Madane", role: "Founding Partner · Design Studio Head", credential: "Design studio leadership", portrait: "/assets/team-clean/rasika.jpg" },
-    { name: "Priyanka Akshay Madane", role: "Partner · Business Development & Marketing", credential: "Growth & client relations", portrait: "" },
+    {
+      name: "Ar. Hrishikesh Arun Madane",
+      role: "Founding Partner · Principal Architect",
+      credential: "M.Arch, IIT Crown Hall Chicago · IGBC AP",
+      bio: "Principal architect and founding partner. With a Master of Architecture from IIT, Crown Hall, Chicago and IGBC accreditation, he leads the studio's design thinking and its commitment to high-performance, sustainable buildings.",
+      portrait: "/assets/team-clean/hrishikesh.jpg",
+    },
+    {
+      name: "Akshay Arun Madane",
+      role: "Founding Partner · Business & Contracting",
+      credential: "Contracts & turnkey delivery",
+      bio: "Founding partner heading business and contracting. He runs turnkey delivery end to end — procurement, contracts and site execution — keeping every project accountable to one team, on time.",
+      portrait: "/assets/team-clean/akshay.jpg",
+    },
+    {
+      name: "Ar. Rasika Hrishikesh Madane",
+      role: "Founding Partner · Design Studio Head",
+      credential: "Design studio leadership",
+      bio: "Founding partner and head of the design studio. She leads the interiors practice and the studio's material and detailing language, resolving each space until the life inside it comes forward.",
+      portrait: "/assets/team-clean/rasika.jpg",
+    },
+    {
+      name: "Priyanka Akshay Madane",
+      role: "Partner · Business Development & Marketing",
+      credential: "Growth & client relations",
+      bio: "Partner leading business development and marketing. She owns client relationships, growth and the studio's brand — the first point of contact for new work.",
+      portrait: "",
+    },
   ],
   // What we design & build (company profile).
   capabilities: [
