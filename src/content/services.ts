@@ -24,8 +24,8 @@ export const services: Service[] = [
       "Interiors for homes and workspaces — planning, material, light and detail tuned until the space disappears and the life inside it comes forward.",
     forWhom: "Anyone who has the shell and needs the inside resolved with discipline.",
     includes: ["Space planning", "Material & finish", "Lighting design", "Joinery & detail", "FF&E and styling"],
-    image: "/assets/hero/p-26.jpg",
-    imageAlt: "Interior — a calm, daylit workspace floor.",
+    image: "/assets/services/interior.jpg",
+    imageAlt: "Interior — a resolved, daylit workspace where the day is spent.",
     filterType: "Interior",
   },
   {
