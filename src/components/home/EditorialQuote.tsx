@@ -199,10 +199,10 @@ function LineFlower({
       viewBox="0 0 80 180"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.1}
+      strokeWidth={1.3}
       strokeLinecap="round"
       strokeLinejoin="round"
-      className={cn("absolute text-ink/30", flip && "-scale-x-100", className)}
+      className={cn("absolute text-ink/50", flip && "-scale-x-100", className)}
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.2 }}
@@ -242,9 +242,9 @@ function Petals() {
       {PETALS.map((p, i) => (
         <motion.span
           key={i}
-          className="absolute block bg-ink/20"
+          className="absolute block bg-ink/35"
           style={{ left: p.left, top: p.top, width: p.s, height: p.s * 1.4, borderRadius: "100% 0 100% 0" }}
-          animate={{ y: [0, 40, 0], x: [0, p.x, 0], rotate: [0, 170, 0], opacity: [0, 0.5, 0] }}
+          animate={{ y: [0, 40, 0], x: [0, p.x, 0], rotate: [0, 170, 0], opacity: [0, 0.7, 0] }}
           transition={{ duration: p.dur, repeat: Infinity, ease: "easeInOut", delay: p.d }}
         />
       ))}
