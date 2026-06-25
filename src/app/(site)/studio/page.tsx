@@ -1,24 +1,24 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { getStudio, getTeam } from "@/lib/cms";
+import { getStudio, getClients } from "@/lib/cms";
 import { site } from "@/content/site";
 import { PageIntro } from "@/components/common/PageIntro";
+import { SectionHeader } from "@/components/primitives/SectionHeader";
 import { Reveal } from "@/components/primitives/Reveal";
-import { Bracket } from "@/components/primitives/Bracket";
-import { TeamGrid } from "@/components/studio/TeamGrid";
-import { Milestones } from "@/components/studio/Milestones";
 import { EnquiryBand } from "@/components/common/EnquiryBand";
 
 export const metadata: Metadata = {
   title: "Studio",
   description:
-    "Madane Design Workshop is a studio of architecture, interiors and turnkey delivery — quiet on purpose, exacting by habit. Our philosophy, people and practice.",
+    "Madane Design Workshop is a Mumbai-based, full-service architecture and design-build studio founded in 2008 — leadership, capabilities, principles and accreditations.",
   alternates: { canonical: "/studio" },
 };
 
+const pad = (n: number) => String(n).padStart(2, "0");
+
 export default function StudioPage() {
   const studio = getStudio();
-  const team = getTeam();
+  const clients = getClients();
 
   return (
     <>
@@ -35,33 +35,21 @@ export default function StudioPage() {
         }
       />
 
-      {/* Philosophy — oversized lead statement beside the running narrative */}
+      {/* 01 — Who we are */}
       <section className="bg-paper">
-        <div className="shell-wide grid gap-12 pb-section md:grid-cols-12 md:gap-x-10">
-          <div className="md:col-span-4">
-            <Reveal className="md:sticky md:top-[calc(var(--header-h)+2.5rem)]">
-              <Bracket>Philosophy</Bracket>
-              <p className="mt-6 font-mono text-2xs uppercase tracking-label text-ink-muted">01 — How we think</p>
-            </Reveal>
-          </div>
-          <div className="md:col-span-8">
-            <Reveal>
-              <p className="max-w-[22ch] font-display text-[clamp(1.9rem,4.4vw,3.5rem)] font-light leading-[1.05] tracking-tight">
-                {studio.philosophy[0]}
-              </p>
-            </Reveal>
-            <div className="mt-12 grid gap-9 md:mt-16 md:grid-cols-2">
-              {studio.philosophy.slice(1).map((p, i) => (
-                <Reveal key={i} delay={i * 0.06} className="border-t border-hairline pt-6">
-                  <p className="max-w-prose text-base leading-relaxed text-ink-muted md:text-lead md:leading-relaxed">{p}</p>
-                </Reveal>
-              ))}
-            </div>
+        <div className="shell-wide pb-section">
+          <SectionHeader index="01" label="Who we are" title="A full-service design-build studio." align="between" intro={studio.philosophy[0]} />
+          <div className="mt-12 grid gap-9 md:mt-14 md:grid-cols-2 md:gap-x-10">
+            {studio.philosophy.slice(1).map((p, i) => (
+              <Reveal key={i} delay={i * 0.06}>
+                <p className="max-w-prose text-base leading-relaxed text-ink-muted md:text-lead md:leading-relaxed">{p}</p>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Practice in numbers — editorial stat band */}
+      {/* 02 — Numbers */}
       <section className="bg-paper">
         <div className="shell-wide pb-section">
           <Reveal className="grid grid-cols-2 gap-px overflow-hidden rounded-card border border-hairline bg-hairline md:grid-cols-4">
@@ -75,44 +63,83 @@ export default function StudioPage() {
         </div>
       </section>
 
-      {/* Full-bleed studio image */}
-      <section className="bg-paper">
-        <Reveal className="relative aspect-[21/9] w-full overflow-hidden bg-mount">
-          <Image src={studio.image} alt={studio.imageAlt} fill sizes="100vw" className="object-cover" />
-        </Reveal>
-      </section>
-
-      {/* Vision — centred pull-quote */}
-      <section className="bg-stone">
-        <div className="shell-wide flex flex-col items-center py-section text-center">
-          <Reveal>
-            <Bracket>Vision</Bracket>
-          </Reveal>
-          <Reveal delay={0.06}>
-            <p className="mx-auto mt-9 max-w-4xl font-display text-[clamp(1.9rem,5vw,3.75rem)] font-light leading-[1.06] tracking-tight">
-              “{studio.vision}”
-            </p>
-          </Reveal>
+      {/* 03 — Leadership */}
+      <section className="bg-stone/40">
+        <div className="shell-wide py-section">
+          <SectionHeader index="02" label="Leadership" title="The partners behind the practice." align="between" intro="A multidisciplinary leadership team with deep roots in architecture, design, contracts and strategy." />
+          <div className="mt-14 grid grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-4 md:gap-x-8">
+            {studio.leadership.map((m, i) => (
+              <Reveal key={m.name} delay={(i % 4) * 0.06} className="flex flex-col">
+                <div className="relative aspect-[4/5] w-full overflow-hidden rounded-card bg-mount">
+                  {m.portrait ? (
+                    <Image src={m.portrait} alt={`${m.name} — ${m.role}.`} fill sizes="(max-width:768px) 45vw, 22vw" className="object-cover grayscale" />
+                  ) : (
+                    <span aria-hidden="true" className="flex h-full w-full items-center justify-center font-display text-5xl text-ink/80">
+                      {m.name.replace(/^Ar\.\s*/, "").charAt(0)}
+                    </span>
+                  )}
+                </div>
+                <h3 className="mt-5 font-display text-lg leading-tight tracking-tight">{m.name}</h3>
+                <span className="mt-1.5 font-mono text-2xs uppercase tracking-label text-ink-muted">{m.role}</span>
+                <p className="mt-2 text-sm leading-snug text-ink-muted">{m.credential}</p>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
-      <Milestones items={studio.milestones} />
-      <TeamGrid team={team} />
-
-      {/* Accreditations */}
+      {/* 04 — What we design & build */}
       <section className="bg-paper">
-        <div className="shell-wide flex flex-col items-center gap-7 border-t border-hairline py-section-sm text-center">
-          <span className="font-mono text-2xs uppercase tracking-label text-ink-muted">Accreditations &amp; memberships</span>
-          <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-5">
-            {studio.accreditations.map((a) => (
-              <span key={a} className="font-display text-xl tracking-tight text-ink/65 md:text-2xl">
-                {a}
-              </span>
+        <div className="shell-wide py-section">
+          <SectionHeader index="03" label="Capabilities" title="What we design & build." align="between" intro="From a single working floor to a whole building — across sectors, in India and internationally." />
+          <div className="mt-12 grid grid-cols-1 gap-x-10 sm:grid-cols-2 lg:grid-cols-3">
+            {studio.capabilities.map((c, i) => (
+              <Reveal as="div" key={c} delay={(i % 3) * 0.04} className="flex items-baseline gap-4 border-t border-hairline py-5">
+                <span className="font-mono text-2xs tracking-label text-ink-muted">{pad(i + 1)}</span>
+                <span className="text-base leading-snug md:text-lead">{c}</span>
+              </Reveal>
             ))}
           </div>
-          <span className="font-mono text-2xs uppercase tracking-label text-ink-muted">
-            IGBC &amp; USGBC Platinum / Gold certified projects
-          </span>
+        </div>
+      </section>
+
+      {/* 05 — Principles */}
+      <section className="bg-stone/40">
+        <div className="shell-wide py-section">
+          <SectionHeader index="04" label="Principles" title="Five things we hold to." />
+          <div className="mt-14 grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-5">
+            {studio.principles.map((p, i) => (
+              <Reveal key={p.en} delay={(i % 5) * 0.05} className="border-t border-hairline pt-6">
+                <span className="block text-xl leading-none text-ink/60">{p.sa}</span>
+                <span className="mt-3 block font-display text-2xl tracking-tight">{p.en}</span>
+                <p className="mt-2.5 text-sm leading-snug text-ink-muted">{p.note}</p>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 06 — Accreditations & Clients */}
+      <section className="bg-paper">
+        <div className="shell-wide py-section">
+          <SectionHeader index="05" label="Recognition" title="Accredited, and trusted." align="between" intro="IGBC & USGBC Platinum / Gold certified projects for the majority of our clients." />
+
+          <div className="mt-12 flex flex-wrap items-center gap-x-12 gap-y-5 border-t border-hairline pt-8">
+            {studio.accreditations.map((a) => (
+              <span key={a} className="font-display text-xl tracking-tight text-ink/65 md:text-2xl">{a}</span>
+            ))}
+          </div>
+
+          <div className="mt-12 border-t border-hairline pt-8">
+            <span className="font-mono text-2xs uppercase tracking-label text-ink-muted">Selected clients</span>
+            <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3">
+              {clients.map((c) => (
+                <span key={c.name} className="font-mono text-2xs uppercase tracking-label text-ink/55 transition-colors duration-300 hover:text-ink">
+                  {c.name}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 

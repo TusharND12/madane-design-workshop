@@ -30,6 +30,36 @@ export const studio = {
     { year: "2020", body: "IGBC & USGBC green-building certification becomes central to design and delivery." },
     { year: "2026", body: "A 52-person team serves 75+ clients across homes, offices and brand environments in India and abroad." },
   ],
+  // Founding/partner leadership with real credentials (company profile).
+  leadership: [
+    { name: "Ar. Hrishikesh Arun Madane", role: "Founding Partner · Principal Architect", credential: "M.Arch, IIT Crown Hall Chicago · IGBC AP", portrait: "/assets/team-clean/hrishikesh.jpg" },
+    { name: "Akshay Arun Madane", role: "Founding Partner · Business & Contracting", credential: "Contracts & turnkey delivery", portrait: "/assets/team-clean/akshay.jpg" },
+    { name: "Ar. Rasika Hrishikesh Madane", role: "Founding Partner · Design Studio Head", credential: "Design studio leadership", portrait: "/assets/team-clean/rasika.jpg" },
+    { name: "Priyanka Akshay Madane", role: "Partner · Business Development & Marketing", credential: "Growth & client relations", portrait: "" },
+  ],
+  // What we design & build (company profile).
+  capabilities: [
+    "High-rise architecture",
+    "Commercial & residential architecture",
+    "Mixed-use developments",
+    "Industrial facilities",
+    "Institutional architecture",
+    "Hospitals & healthcare",
+    "Corporate offices & GCCs",
+    "Luxury villas & residences",
+    "Resort & hotel interiors",
+    "Dark stores & retail",
+    "Turnkey design-build",
+    "IGBC & USGBC green buildings",
+  ],
+  // The studio's five working principles (company profile).
+  principles: [
+    { sa: "ज्ञान", en: "Knowledge", note: "Incorporating continued education." },
+    { sa: "धैर्य", en: "Patience", note: "Creating through patience." },
+    { sa: "प्रेम", en: "Love", note: "We love what we do." },
+    { sa: "न्याय", en: "Justice", note: "Our work does justice to each project." },
+    { sa: "समर्पण", en: "Dedication", note: "A team dedicated to the cause of the project." },
+  ],
 };
 
 // Real leadership — the four founding/partner team (company profile).
