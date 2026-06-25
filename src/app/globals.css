@@ -1,0 +1,258 @@
+@import "../styles/tokens.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------ */
+/*  Base                                                              */
+/* ------------------------------------------------------------------ */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    @apply border-hairline;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: auto; /* Lenis owns scrolling */
+  }
+
+  body {
+    @apply bg-paper text-ink font-sans text-base antialiased;
+    font-feature-settings: "kern", "liga", "calt";
+    overflow-x: hidden;
+  }
+
+  /* Lenis */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  ::selection {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  /* Slow drift for the decorative wave lines behind the device showcase */
+  @keyframes wave-drift {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-44px); }
+  }
+  .wave-drift {
+    animation: wave-drift 16s ease-in-out infinite alternate;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wave-drift { animation: none; }
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display;
+    text-wrap: balance;
+  }
+
+  /* Visible, on-brand focus (a11y — WCAG 2.1 AA) */
+  :focus-visible {
+    outline: 1.5px solid var(--ink);
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+  .on-ink :focus-visible {
+    outline-color: var(--ink);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img,
+  video {
+    display: block;
+    max-width: 100%;
+  }
+
+  /* Hide native cursor only when the custom cursor is active (desktop, pointer) */
+  body[data-cursor="on"] {
+    cursor: none;
+  }
+  body[data-cursor="on"] a,
+  body[data-cursor="on"] button {
+    cursor: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Reusable editorial primitives                                     */
+/* ------------------------------------------------------------------ */
+@layer components {
+  /* Page width container, capped + centered (PRD large-screen rule) */
+  .shell {
+    width: 100%;
+    max-width: var(--content-max);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+  .shell-wide {
+    width: 100%;
+    max-width: var(--wide-max);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  /* 12-column grid */
+  .grid-12 {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--gutter);
+  }
+  @media (max-width: 640px) {
+    .grid-12 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  /* The signature mono bracket label */
+  .bracket-label {
+    @apply font-mono text-2xs uppercase tracking-label text-ink-muted;
+  }
+
+  /* Hairline rule */
+  .rule {
+    height: 1px;
+    width: 100%;
+    background: var(--hairline);
+  }
+  .rule-ink {
+    height: 1.5px;
+    background: var(--ink);
+  }
+
+  /* Animated underline link (micro-interaction) */
+  .link-underline {
+    position: relative;
+    display: inline-block;
+  }
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--dur-fast) var(--ease-editorial);
+  }
+  .link-underline:hover::after,
+  .link-underline:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* Section number spine */
+  .section-index {
+    @apply font-mono text-2xs tracking-label text-ink-muted;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Reveal system base (JS adds .is-in)                               */
+/* ------------------------------------------------------------------ */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity var(--dur-reveal) var(--ease-editorial),
+    transform var(--dur-reveal) var(--ease-editorial);
+  will-change: opacity, transform;
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Slow Ken Burns push for device-screen stills */
+@keyframes kenburns {
+  from { transform: scale(1.02); }
+  to { transform: scale(1.12); }
+}
+.kenburns {
+  animation: kenburns 16s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* Segmented pager fill for the gallery showcase (Apple-style autoplay) */
+@keyframes barFill {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+.bar-fill {
+  animation: barFill linear forwards;
+  will-change: width;
+}
+
+/* Custom cursor states */
+.cursor-ring.is-grow {
+  width: 4rem;
+  height: 4rem;
+  margin-left: -2rem;
+  margin-top: -2rem;
+  border-color: var(--ink);
+}
+.cursor-ring.is-view {
+  width: 5rem;
+  height: 5rem;
+  margin-left: -2.5rem;
+  margin-top: -2.5rem;
+  background: var(--ink);
+}
+.cursor-ring.is-view span {
+  opacity: 1 !important;
+  color: var(--paper);
+}
+
+/* Film grain overlay */
+.grain {
+  position: fixed;
+  inset: -150%;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("/noise.svg");
+  background-size: 180px 180px;
+  mix-blend-mode: multiply;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Reduced motion — all motion becomes an instant cross-fade (PRD)   */
+/* ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.12s !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    transform: none;
+    transition: opacity 0.2s linear;
+  }
+  .grain {
+    display: none;
+  }
+}
