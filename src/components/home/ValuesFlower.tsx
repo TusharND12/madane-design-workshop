@@ -40,10 +40,10 @@ function Scene() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
   const sp = useSpring(scrollYProgress, { stiffness: 55, damping: 20, mass: 0.9 });
 
-  // One-and-a-quarter turns between values (450° = 360 + 90), so the flower
-  // visibly spins yet always lands with the active petal pointing to the marker.
+  // A single quarter-turn between values — the flower rotates one petal forward
+  // on each scroll step and settles, swapping the word alongside.
   const stops = VALUES.map((_, i) => (N > 1 ? i / (N - 1) : 0));
-  const rots = VALUES.map((_, i) => -i * (STEP + 360));
+  const rots = VALUES.map((_, i) => -i * STEP);
   const rot = useTransform(sp, stops, rots);
 
   const [active, setActive] = useState(0);
@@ -59,6 +59,10 @@ function Scene() {
           {/* Left — the spinning flower */}
           <div className="relative mx-auto flex aspect-square w-full max-w-[clamp(240px,40vw,500px)] items-center justify-center">
             <motion.div className="relative h-full w-full" style={{ rotate: rot }}>
+              {/* black petals interleaved behind, for a fuller bloom */}
+              {VALUES.map((val, i) => (
+                <BlackPetal key={`bp-${val.en}`} index={i} />
+              ))}
               {VALUES.map((val, i) => (
                 <Petal key={val.en} index={i} rot={rot} active={i === active} sa={val.sa} />
               ))}
@@ -108,6 +112,18 @@ function Scene() {
         </div>
       </div>
     </section>
+  );
+}
+
+function BlackPetal({ index }: { index: number }) {
+  return (
+    <div
+      className="absolute left-1/2 top-1/2 h-[37%] w-[15%]"
+      style={{ transform: `translate(-50%, -50%) rotate(${index * STEP + STEP / 2}deg) translateY(-80%)` }}
+      aria-hidden="true"
+    >
+      <div className="h-full w-full rounded-[50%_50%_50%_50%/62%_62%_38%_38%] border border-ink/10 bg-paper shadow-[0_10px_30px_-12px_rgba(0,0,0,0.8)]" />
+    </div>
   );
 }
 
