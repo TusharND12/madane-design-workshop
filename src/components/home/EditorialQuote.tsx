@@ -30,13 +30,6 @@ const PILLARS = [
   { n: "03", title: "Detail", body: "The few things you actually touch are detailed to the tolerance of furniture." },
 ];
 
-const VALUES = [
-  { sa: "न्याय", tr: "Nyāya", en: "Justice", note: "Fairness to the client, the craft and the land." },
-  { sa: "धैर्य", tr: "Dhairya", en: "Fortitude", note: "The patience to carry a vision from first line to keys." },
-  { sa: "धर्म", tr: "Dharma", en: "Stewardship", note: "Design as duty — to the people and the generations who inherit it." },
-  { sa: "ज्ञान", tr: "Jñāna", en: "Knowledge", note: "Rigour, research and craft behind every decision." },
-];
-
 export function EditorialQuote() {
   const reduced = usePrefersReducedMotion();
   return (
@@ -109,35 +102,6 @@ export function EditorialQuote() {
           </div>
         </motion.div>
 
-        {/* What we hold to — four values, each carrying its Sanskrit root */}
-        <motion.div
-          variants={stagger(0.14)}
-          initial="hidden"
-          whileInView="show"
-          viewport={viewportOnce}
-          className="mt-20 md:mt-28"
-        >
-          <motion.span variants={fadeUp} className="section-index">
-            02 — What we hold to
-          </motion.span>
-          <div className="mt-10 grid gap-px overflow-hidden rounded-card border border-ink/10 bg-ink/10 sm:grid-cols-2">
-            {VALUES.map((v) => (
-              <motion.div key={v.en} variants={fadeUp} className="group relative overflow-hidden bg-stone p-8 md:p-10">
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute -right-3 -top-7 select-none text-[6rem] leading-none text-ink/[0.06] transition-all duration-500 ease-editorial group-hover:-translate-y-1 group-hover:text-ink/15 md:text-[8rem]"
-                >
-                  {v.sa}
-                </span>
-                <div className="relative">
-                  <span className="font-mono text-2xs uppercase tracking-[0.32em] text-ink-muted">{v.tr}</span>
-                  <h3 className="mt-3 font-display text-2xl tracking-tight md:text-3xl">{v.en}</h3>
-                  <p className="mt-3 max-w-[34ch] text-sm leading-relaxed text-ink-muted">{v.note}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
       </div>
     </section>
   );
