@@ -18,7 +18,7 @@ export function Footer() {
       {/* Giant wordmark watermark */}
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-[18%] select-none text-center font-display lowercase leading-[0.75] tracking-tighter text-ink/[0.05] text-[clamp(3rem,19vw,17rem)]"
+        className="pointer-events-none absolute inset-x-0 top-[clamp(0.5rem,2.5vw,2.5rem)] select-none text-center font-display lowercase leading-[0.75] tracking-tighter text-ink/[0.05] text-[clamp(3rem,19vw,17rem)]"
       >
         madane
       </span>
