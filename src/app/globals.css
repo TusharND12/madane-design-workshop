@@ -20,6 +20,12 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     scroll-behavior: auto; /* Lenis owns scrolling */
+
+    /* Fluid root scale — every rem-based size (type, spacing, radius) scales
+       with the viewport from one knob. Tuned to stay at 16px through 1440px
+       (where the layout is designed), then grow on larger monitors so the
+       site never looks small on big screens, and ease down on small phones. */
+    font-size: clamp(0.9375rem, 0.676rem + 0.36vw, 1.25rem);
   }
 
   body {
@@ -93,6 +99,14 @@
   video {
     display: block;
     max-width: 100%;
+  }
+
+  /* Keep form fields ≥16px so iOS never auto-zooms on focus, even when the
+     fluid root scale dips below 16px on small phones. */
+  input,
+  textarea,
+  select {
+    font-size: max(1rem, 16px);
   }
 
   /* Hide native cursor only when the custom cursor is active (desktop, pointer) */
