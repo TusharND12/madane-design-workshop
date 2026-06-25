@@ -1,78 +1,87 @@
 import Link from "next/link";
-import Image from "next/image";
 import { site } from "@/content/site";
-import { Bracket } from "@/components/primitives/Bracket";
-import { Reveal } from "@/components/primitives/Reveal";
 
-/** The calm full stop (PRD §6.4 Footer) — ink, large studio name, full nav. */
+/** The calm full stop — giant wordmark watermark, link columns, status bar. */
+const NAV = [
+  { label: "Studio", href: "/studio" },
+  { label: "Projects", href: "/projects" },
+  { label: "Services", href: "/services" },
+  { label: "Process", href: "/process" },
+  { label: "Contact", href: "/contact" },
+];
+
 export function Footer() {
   const year = 2026;
+
   return (
     <footer className="on-ink relative overflow-hidden bg-paper text-ink">
-      {/* Oversized wordmark band */}
-      <div className="shell-wide pb-12 pt-section">
-        <div className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-7">
-            <Bracket className="text-ink/50">Madane Design Workshop</Bracket>
-            <Reveal>
-              <p className="mt-8 max-w-prose font-display text-3xl leading-[1.08] tracking-tight text-ink md:text-4xl">
-                Let&rsquo;s design something quiet, precise, and built to last.
-              </p>
-            </Reveal>
-            <Reveal delay={0.08}>
-              <Link
-                href="/contact"
-                className="mt-10 inline-flex h-12 items-center rounded-none border border-ink/30 px-7 font-sans text-xs uppercase tracking-[0.16em] transition-colors duration-300 hover:bg-ink hover:text-paper"
-              >
-                Start an enquiry
-              </Link>
-            </Reveal>
+      {/* Giant wordmark watermark */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-[16%] select-none text-center font-display lowercase leading-[0.75] tracking-tighter text-ink/[0.045] text-[clamp(7rem,32vw,26rem)]"
+      >
+        madane
+      </span>
+
+      <div className="relative shell-wide pb-10 pt-section">
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-8">
+          {/* Logo + tagline */}
+          <div className="lg:col-span-5">
+            <Link href="/" className="inline-flex flex-col" aria-label="Madane Design Workshop — home">
+              <span className="font-display text-2xl lowercase leading-none tracking-tight">madane</span>
+              <span className="mt-1 font-mono text-[0.6rem] uppercase tracking-[0.34em] text-ink/45">Design Workshop</span>
+            </Link>
+            <p className="mt-6 max-w-xs text-sm leading-relaxed text-ink/55">
+              We design &amp; build — architecture, interiors and turnkey, since 2008.
+            </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-8 lg:col-span-5">
-            <nav aria-label="Footer" className="flex flex-col gap-3">
-              <Bracket className="mb-2 text-ink/40">Index</Bracket>
-              <Link href="/" className="link-underline text-sm text-ink/75">Home</Link>
-              {site.nav.map((n) => (
-                <Link key={n.href} href={n.href} className="link-underline text-sm text-ink/75">{n.label}</Link>
+          {/* Link columns */}
+          <div className="grid grid-cols-3 gap-6 sm:gap-8 lg:col-span-7">
+            <nav aria-label="Navigate" className="flex flex-col gap-3.5">
+              {NAV.map((n) => (
+                <Link key={n.href} href={n.href} className="link-underline text-sm text-ink/70">
+                  {n.label}
+                </Link>
               ))}
             </nav>
-            <div className="flex flex-col gap-3">
-              <Bracket className="mb-2 text-ink/40">Contact</Bracket>
-              <a href={site.contact.phoneHref} className="link-underline text-sm text-ink/75">{site.contact.phoneDisplay}</a>
-              <a href={`mailto:${site.contact.email}`} className="link-underline text-sm text-ink/75">{site.contact.email}</a>
-              <a href={`https://wa.me/${site.contact.whatsapp}`} className="link-underline text-sm text-ink/75">WhatsApp</a>
-              <p className="mt-2 text-sm text-ink/45">{site.contact.addressLine}</p>
-              <p className="text-sm text-ink/45">{site.contact.hours}</p>
-              <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1">
-                {site.socials.map((s) => (
-                  <a key={s.label} href={s.href} target="_blank" rel="noreferrer" className="link-underline font-mono text-2xs uppercase tracking-label text-ink/55">
-                    {s.label}
-                  </a>
-                ))}
-              </div>
-            </div>
+
+            <nav aria-label="Contact" className="flex flex-col gap-3.5">
+              <a href={`mailto:${site.contact.email}`} className="link-underline text-sm text-ink/70">Email</a>
+              <a href={site.contact.phoneHref} className="link-underline text-sm text-ink/70">Phone</a>
+              <a href={`https://wa.me/${site.contact.whatsapp}`} target="_blank" rel="noreferrer" className="link-underline text-sm text-ink/70">WhatsApp</a>
+              <span className="mt-1 text-sm text-ink/40">{site.contact.addressLine}</span>
+            </nav>
+
+            <nav aria-label="Social" className="flex flex-col gap-3.5">
+              {site.socials.map((s) => (
+                <a key={s.label} href={s.href} target="_blank" rel="noreferrer" className="link-underline text-sm text-ink/70">
+                  {s.label}
+                </a>
+              ))}
+            </nav>
           </div>
         </div>
       </div>
 
-      {/* Giant lockup */}
-      <div className="shell-wide border-t border-ink/12 py-12">
-        <div className="flex items-center justify-center opacity-90">
-          <Image src="/assets/logo-white.png" alt="Madane Design Workshop" width={307} height={409} className="h-28 w-auto md:h-36" />
-        </div>
-      </div>
-
-      <div className="shell-wide flex flex-col gap-3 border-t border-ink/12 py-7 font-mono text-2xs uppercase tracking-[0.12em] text-ink/45 sm:flex-row sm:items-center sm:justify-between">
-        <span>© {year} {site.legalName}</span>
-        <div className="flex gap-6">
-          <Link href="/privacy" className="link-underline">Privacy</Link>
-          <Link href="/terms" className="link-underline">Terms</Link>
-        </div>
-        <span>
-          Crafted by{" "}
-          <a href={site.credit.href} target="_blank" rel="noreferrer" className="link-underline">{site.credit.by}</a>
+      {/* Bottom bar */}
+      <div className="relative shell-wide flex flex-col gap-5 border-t border-ink/12 py-7 sm:flex-row sm:items-center sm:justify-between">
+        <span className="inline-flex w-fit items-center gap-2.5 rounded-full border border-ink/15 bg-mount px-4 py-2 font-mono text-2xs uppercase tracking-label text-ink/75">
+          <span className="relative flex h-2 w-2" aria-hidden="true">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/70" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+          </span>
+          Available for new projects
         </span>
+
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-2xs uppercase tracking-[0.12em] text-ink/45">
+          <span>© {year} {site.legalName}. All rights reserved</span>
+          <Link href="/privacy" className="link-underline">Privacy Policy</Link>
+          <Link href="/terms" className="link-underline">Terms of Use</Link>
+          <a href={site.credit.href} target="_blank" rel="noreferrer" className="link-underline text-ink/35">
+            By {site.credit.by}
+          </a>
+        </div>
       </div>
     </footer>
   );
