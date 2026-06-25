@@ -11,8 +11,8 @@ export const services: Service[] = [
       "Ground-up residential and commercial architecture — siting, form, structure and light resolved as one idea before a single wall is detailed.",
     forWhom: "Homeowners and developers building new, or reworking a structure to its bones.",
     includes: ["Site & feasibility", "Concept & form", "Structural coordination", "Statutory drawings", "Construction documentation"],
-    image: "/assets/hero/p-70.jpg",
-    imageAlt: "Architecture — a residence set low along its contour.",
+    image: "/assets/services/architecture.jpg",
+    imageAlt: "Architecture — a completed corporate reception and floor, conceived whole.",
     filterType: "Architecture",
   },
   {
