@@ -5,6 +5,7 @@ import { PageIntro } from "@/components/common/PageIntro";
 import { SectionHeader } from "@/components/primitives/SectionHeader";
 import { Reveal } from "@/components/primitives/Reveal";
 import { LeadershipShowcase } from "@/components/studio/LeadershipShowcase";
+import { PageZoom } from "@/components/common/PageZoom";
 import { EnquiryBand } from "@/components/common/EnquiryBand";
 
 export const metadata: Metadata = {
@@ -22,6 +23,7 @@ export default function StudioPage() {
 
   return (
     <>
+      <PageZoom value={0.9} />
       <PageIntro
         label="Studio · About"
         title="The frame that disappears."
