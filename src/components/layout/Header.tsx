@@ -96,8 +96,8 @@ export function Header() {
           className={cn(
             "flex h-14 w-full max-w-4xl items-center justify-between gap-6 rounded-full pl-6 pr-3 transition-[background-color,border-color,box-shadow] duration-300 ease-editorial",
             solid
-              ? "border border-hairline bg-paper/80 shadow-[0_10px_30px_-16px_rgba(0,0,0,0.5)] backdrop-blur-md"
-              : "border border-ink/10 bg-paper/40 backdrop-blur-md"
+              ? "border border-white/10 bg-paper/20 shadow-[0_10px_30px_-16px_rgba(0,0,0,0.5)] backdrop-blur-xl"
+              : "border border-white/5 bg-paper/5 backdrop-blur-xl"
           )}
         >
           <Logo subdued={!light} />
