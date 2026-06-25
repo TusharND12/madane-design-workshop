@@ -14,7 +14,7 @@ export function Footer() {
   const year = 2026;
 
   return (
-    <footer className="on-ink relative z-0 -mt-[clamp(2rem,6vw,5rem)] overflow-hidden bg-paper text-ink">
+    <footer className="on-ink relative z-0 overflow-hidden bg-paper text-ink">
       {/* Giant wordmark watermark */}
       <span
         aria-hidden="true"

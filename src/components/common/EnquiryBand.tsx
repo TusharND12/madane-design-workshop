@@ -16,13 +16,13 @@ export function EnquiryBand({
   const enquireHref = projectTag ? `/contact?project=${encodeURIComponent(projectTag)}` : "/contact";
 
   return (
-    <section className="relative z-10 bg-paper pt-section">
+    <section className="relative z-10 bg-paper pb-[clamp(3rem,7vw,6rem)] pt-section">
       <div className="shell-wide">
-        <div className="relative overflow-hidden rounded-[clamp(1.5rem,3vw,2.5rem)] border border-white/5 bg-gradient-to-br from-stone to-mount p-8 shadow-[0_44px_100px_-46px_rgba(0,0,0,0.7)] md:p-14">
+        <div className="relative isolate rounded-[clamp(1.5rem,3vw,2.5rem)] border border-white/5 bg-gradient-to-br from-stone to-mount p-8 shadow-[0_44px_100px_-46px_rgba(0,0,0,0.7)] md:p-14">
           {/* sheen + dotted accents */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0"
+            className="pointer-events-none absolute inset-0 rounded-[inherit]"
             style={{ background: "radial-gradient(130% 150% at 88% 130%, rgba(96,116,176,0.20), transparent 55%)" }}
           />
           <div
