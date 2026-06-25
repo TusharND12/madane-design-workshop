@@ -30,8 +30,19 @@ export function ServicesCards() {
           align="between"
         />
 
+        {/* Interaction hint */}
+        <div className="mt-8 flex justify-end md:mt-10">
+          <span className="inline-flex items-center gap-2.5 font-mono text-2xs uppercase tracking-label text-ink-muted">
+            <span className="relative flex h-1.5 w-1.5" aria-hidden="true">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-ink/70" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-ink" />
+            </span>
+            Hover or tap to explore
+          </span>
+        </div>
+
         {/* Accordion row */}
-        <div className="mt-12 flex h-[58vh] min-h-[420px] flex-col gap-1.5 md:mt-20 md:h-[68vh] md:flex-row md:gap-2.5">
+        <div className="mt-5 flex h-[58vh] min-h-[420px] flex-col gap-1.5 md:mt-7 md:h-[68vh] md:flex-row md:gap-2.5">
           {services.map((s, i) => {
             const isActive = i === active;
             return (
@@ -67,6 +78,18 @@ export function ServicesCards() {
                   <span className="absolute left-5 top-4 font-mono text-2xs tracking-label text-ink mix-blend-difference">
                     {s.index}
                   </span>
+
+                  {/* Expand affordance — a "+" on collapsed panels, fades when open */}
+                  <motion.span
+                    animate={{ opacity: isActive ? 0 : 1, rotate: isActive ? 45 : 0 }}
+                    transition={{ duration: 0.4, ease: EASE }}
+                    aria-hidden="true"
+                    className="pointer-events-none absolute right-3.5 top-3.5 flex h-7 w-7 items-center justify-center rounded-full border border-ink/45 bg-paper/15 backdrop-blur-sm transition-colors duration-500 group-hover:border-ink"
+                  >
+                    <svg width="11" height="11" viewBox="0 0 11 11" fill="none" className="text-ink">
+                      <path d="M5.5 0.5v10M0.5 5.5h10" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+                    </svg>
+                  </motion.span>
 
                   {/* Collapsed: vertical title */}
                   <motion.span
