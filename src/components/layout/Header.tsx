@@ -71,6 +71,17 @@ export function Header() {
 
   return (
     <>
+      {/* Top fade — content dissolves as it scrolls up into the header band and
+          returns to full opacity once it passes below. Hidden with the header. */}
+      <motion.div
+        aria-hidden="true"
+        initial={false}
+        animate={{ opacity: hidden ? 0 : 1 }}
+        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+        className="pointer-events-none fixed inset-x-0 top-0 z-40 h-[6.75rem]"
+        style={{ background: "linear-gradient(to bottom, var(--paper) 0%, var(--paper) 34%, transparent 100%)" }}
+      />
+
       <motion.header
         initial={false}
         animate={{ y: hidden ? -120 : 0, opacity: hidden ? 0 : 1 }}
