@@ -1,5 +1,6 @@
 import { getStudio } from "@/lib/cms";
 import { Reveal } from "@/components/primitives/Reveal";
+import { CardOutline } from "@/components/home/CardOutline";
 import { cn } from "@/lib/cn";
 
 /**
@@ -67,7 +68,7 @@ export function Recognition() {
   const { accreditations } = getStudio();
 
   return (
-    <section className="bg-paper">
+    <section className="bg-stone">
       <div className="shell-wide py-section">
         {/* Header — centered pill + title */}
         <Reveal className="flex flex-col items-center text-center">
@@ -90,15 +91,11 @@ export function Recognition() {
               key={c.key}
               delay={(i % 3) * 0.06}
               className={cn(
-                "group relative flex flex-col overflow-hidden rounded-card border border-hairline bg-stone p-6 transition-colors duration-500 hover:border-ink/25 md:p-7",
+                "group relative flex flex-col rounded-card p-6 md:p-7",
                 c.span,
               )}
             >
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0 opacity-70 transition-opacity duration-500 group-hover:opacity-100"
-                style={{ background: "radial-gradient(115% 105% at 0% 0%, rgba(236,236,230,0.045), transparent 55%)" }}
-              />
+              <CardOutline delay={(i % 3) * 0.06} />
               <div className="relative flex h-full flex-col">
                 <h3 className={cn("font-display tracking-tight text-ink", c.big ? "text-xl md:text-2xl" : "text-lg md:text-xl")}>
                   {c.title}
