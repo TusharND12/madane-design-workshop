@@ -37,8 +37,8 @@ export const services: Service[] = [
       "Façades, forecourts, signage and environmental identity — the exterior gesture that tells the street what a place is before you step inside.",
     forWhom: "Brands and owners who need their building to be legible at speed and at scale.",
     includes: ["Façade strategy", "Signage & graphics", "Lighting", "Forecourt & approach", "Material specification"],
-    image: "/assets/hero/p-81.jpg",
-    imageAlt: "Exterior — a confident, illuminated street-facing façade.",
+    image: "/assets/services/exterior.jpg",
+    imageAlt: "Exterior — a confident, street-facing façade and approach.",
     filterType: "Exterior",
   },
   {
