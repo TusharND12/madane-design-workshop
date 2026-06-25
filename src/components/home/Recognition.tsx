@@ -90,27 +90,26 @@ export function Recognition() {
               key={c.key}
               delay={(i % 3) * 0.06}
               className={cn(
-                "group relative flex flex-col overflow-hidden rounded-card border border-hairline p-6 transition-colors duration-500 hover:border-ink/20 md:p-7",
-                c.big ? "bg-stone/50" : "bg-mount",
+                "group relative flex flex-col overflow-hidden rounded-card border border-hairline bg-stone p-6 transition-colors duration-500 hover:border-ink/25 md:p-7",
                 c.span,
               )}
             >
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0 opacity-70 transition-opacity duration-500 group-hover:opacity-100"
-                style={{ background: "radial-gradient(115% 105% at 0% 0%, rgba(236,236,230,0.05), transparent 55%)" }}
+                style={{ background: "radial-gradient(115% 105% at 0% 0%, rgba(236,236,230,0.045), transparent 55%)" }}
               />
               <div className="relative flex h-full flex-col">
-                <h3 className={cn("font-display tracking-tight", c.big ? "text-xl md:text-2xl" : "text-lg md:text-xl")}>
+                <h3 className={cn("font-display tracking-tight text-ink", c.big ? "text-xl md:text-2xl" : "text-lg md:text-xl")}>
                   {c.title}
                 </h3>
-                <p className="mt-2 max-w-prose text-sm leading-relaxed text-ink-muted">{c.desc}</p>
+                <p className="mt-2 max-w-prose text-sm leading-relaxed text-ink/70">{c.desc}</p>
 
                 <div className="mt-5 flex flex-wrap gap-2">
                   {c.clients.map((n) => (
                     <span
                       key={n}
-                      className="rounded-full border border-hairline/70 bg-paper/70 px-3 py-1.5 font-mono text-2xs uppercase tracking-label text-ink/70 transition-colors duration-300 group-hover:text-ink/90"
+                      className="rounded-full border border-hairline bg-paper/60 px-3 py-1.5 font-mono text-2xs uppercase tracking-label text-ink/80 transition-colors duration-300 group-hover:text-ink"
                     >
                       {n}
                     </span>
