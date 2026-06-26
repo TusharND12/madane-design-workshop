@@ -61,13 +61,24 @@ export function ProjectsArchive({
     [projects, type, location]
   );
 
+  // After a filter changes, return to the top so the new results read from the
+  // start (use Lenis if present so it matches the site's smooth scrolling).
+  function scrollTop() {
+    if (typeof window === "undefined") return;
+    const lenis = window.__lenis;
+    if (lenis) lenis.scrollTo(0, { duration: 0.7 });
+    else window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
   function handleType(t: ProjectType | "All") {
     setType(t);
     syncUrl(t, location);
+    scrollTop();
   }
   function handleLocation(l: string | "All") {
     setLocation(l);
     syncUrl(type, l);
+    scrollTop();
   }
 
   return (
