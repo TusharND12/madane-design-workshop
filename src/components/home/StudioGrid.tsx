@@ -100,9 +100,9 @@ export function StudioGrid() {
 
           {/* Bottom-right CTA panel */}
           <motion.div variants={fadeUp} className={`${cell} relative flex flex-col justify-between overflow-hidden bg-sand p-7 sm:col-span-2 md:col-span-6 md:col-start-7 md:row-start-3`}>
-            <h3 className="max-w-[14ch] font-display text-2xl leading-tight tracking-tight md:text-3xl">Crafting your vision into space.</h3>
-            <div className="flex items-end justify-between gap-4">
-              <p className="max-w-[28ch] text-sm leading-relaxed text-ink-muted">
+            <h3 className="max-w-[20ch] font-display text-2xl leading-[1.12] tracking-tight">Crafting your vision into space.</h3>
+            <div className="mt-4 flex items-end justify-between gap-4">
+              <p className="max-w-[36ch] text-sm leading-snug text-ink-muted">
                 Whether it&rsquo;s a private home or a working floor, we shape it end to end.
               </p>
               <Button href="/contact" variant="tertiary" arrow>Start a project</Button>
