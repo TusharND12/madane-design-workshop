@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useMotionValue, useMotionValueEvent, useScroll } from "framer-motion";
 import { SectionHeader } from "@/components/primitives/SectionHeader";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
@@ -42,10 +42,11 @@ const TONES = ["#23262F", "#2A241E", "#272A2E", "#2C2622"];
 const NOISE =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
 
-// The studio route runs under CSS `zoom: 0.9` (PageZoom), which compresses the
-// usable scrollYProgress. Map the slide into the low end and hold at the end.
-const X_START = 0.04;
-const X_END = 0.62;
+// The slide is coupled to the *true* geometric pin progress (read live from
+// getBoundingClientRect), so it spans the whole pinned range regardless of the
+// CSS `zoom: 0.9` (PageZoom) skew. A small tail keeps the last card on screen
+// for a beat before the section releases.
+const TAIL = 0.06;
 const SHELL_PAD = "max(1.25rem,calc((100vw-1440px)/2+1.25rem))";
 
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
@@ -96,10 +97,21 @@ function ScrollSlider() {
   const stageRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const maxX = useRef(0);
-  const [, force] = useState(0);
 
-  const { scrollYProgress } = useScroll({ target: parentRef, offset: ["start start", "end end"] });
-  const x = useTransform(scrollYProgress, (p) => -maxX.current * clamp((p - X_START) / (X_END - X_START), 0, 1));
+  const { scrollY } = useScroll();
+  const x = useMotionValue(0);
+
+  const update = () => {
+    const parent = parentRef.current;
+    if (!parent) return;
+    const range = parent.offsetHeight - window.innerHeight;
+    if (range <= 0) return;
+    const top = parent.getBoundingClientRect().top; // 0 at pin-start → -range at pin-end
+    const p = clamp(-top / range / (1 - TAIL), 0, 1);
+    x.set(-maxX.current * p);
+  };
+
+  useMotionValueEvent(scrollY, "change", update);
 
   useEffect(() => {
     const measure = () => {
@@ -107,7 +119,7 @@ function ScrollSlider() {
       const stage = stageRef.current;
       if (!track || !stage) return;
       maxX.current = Math.max(0, track.scrollWidth - stage.clientWidth);
-      force((n) => n + 1);
+      update();
     };
     measure();
     const ro = new ResizeObserver(measure);
@@ -117,10 +129,11 @@ function ScrollSlider() {
       ro.disconnect();
       window.removeEventListener("resize", measure);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div ref={parentRef} style={{ height: `${TEAM.length * 17 + 60}vh` }}>
+    <div ref={parentRef} style={{ height: `${TEAM.length * 14 + 40}vh` }}>
       <div className="sticky top-0 flex h-[100svh] flex-col justify-center">
         <div ref={stageRef} className="w-full overflow-hidden">
           <motion.div ref={trackRef} style={{ x, paddingLeft: SHELL_PAD, paddingRight: SHELL_PAD }} className="flex gap-5 py-3 md:gap-6">
