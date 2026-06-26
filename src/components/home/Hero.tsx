@@ -92,7 +92,7 @@ export function Hero() {
               <Bracket className="text-ink/70">Architecture · Interiors · Turnkey</Bracket>
             </motion.div>
 
-            <h1 className="mt-7 max-w-[16ch] font-display text-[clamp(2.75rem,8vw,6rem)] font-medium leading-[0.98] tracking-tighter min-[1600px]:max-w-[14ch] min-[1600px]:text-[clamp(6rem,7.5vw,10rem)] min-[1600px]:leading-[0.9] min-[1600px]:tracking-[-0.03em]">
+            <h1 className="mt-7 w-full whitespace-nowrap font-display text-[length:min(5.4vw,78px)] font-medium leading-[1.04] tracking-tight">
               <motion.span variants={stagger(0.08, 0.1)} initial="hidden" animate="show" className="inline">
                 {HEADLINE.map((w, i) => (
                   <span key={i} className="inline-block overflow-hidden align-bottom">
