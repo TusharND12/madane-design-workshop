@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -18,6 +18,18 @@ export function ServicesCards() {
   const services = getServices();
   const reduced = usePrefersReducedMotion();
   const [active, setActive] = useState(0);
+
+  // On mobile the panels stack and grow in height; a gentler expansion ratio
+  // keeps the collapsed rows tall enough for their index + title. Desktop keeps
+  // the dramatic side-by-side reveal.
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)");
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
 
   return (
     <section className="bg-paper">
@@ -56,12 +68,12 @@ export function ServicesCards() {
                 aria-label={`${s.title} — ${s.tagline}`}
                 className="group relative block overflow-hidden rounded-card bg-mount md:h-full"
                 style={{
-                  flexGrow: reduced ? 1 : isActive ? 6 : 1,
+                  flexGrow: reduced ? 1 : isActive ? (isMobile ? 4 : 6) : 1,
                   flexBasis: 0,
                   transition: reduced ? undefined : "flex-grow 0.8s cubic-bezier(0.16,1,0.3,1)",
                 }}
               >
-                <div className="relative h-[16vh] w-full md:h-full">
+                <div className="relative h-full w-full">
                   <Image
                     src={s.image}
                     alt={s.imageAlt}
@@ -117,10 +129,14 @@ export function ServicesCards() {
                     </span>
                   </motion.div>
 
-                  {/* Mobile title (collapsed rows) */}
-                  <span className="absolute bottom-4 left-5 font-display text-base tracking-tight text-ink md:hidden">
+                  {/* Mobile title (collapsed rows) — fades out on the open panel */}
+                  <motion.span
+                    animate={{ opacity: isActive ? 0 : 1 }}
+                    transition={{ duration: 0.35, ease: EASE }}
+                    className="pointer-events-none absolute bottom-4 left-5 font-display text-base tracking-tight text-ink md:hidden"
+                  >
                     {s.title}
-                  </span>
+                  </motion.span>
                 </div>
               </Link>
             );
