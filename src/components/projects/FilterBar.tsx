@@ -32,9 +32,9 @@ export function FilterBar({
 }) {
   return (
     <div data-filter-bar className="sticky top-[clamp(0.75rem,1.6vw,1.25rem)] z-30 flex justify-center">
-      <div className="flex w-full max-w-4xl flex-col gap-4 rounded-[1.75rem] border border-white/10 bg-paper/20 px-5 py-3 shadow-[0_10px_30px_-16px_rgba(0,0,0,0.5)] backdrop-blur-xl lg:h-14 lg:flex-row lg:items-center lg:justify-between lg:gap-2 lg:rounded-full lg:border-hairline lg:bg-paper/80 lg:py-0 lg:pl-6 lg:pr-3 lg:backdrop-blur-md">
+      <div className="flex w-full max-w-4xl items-center gap-2 rounded-full border border-white/10 bg-paper/70 py-2 pl-4 pr-2 shadow-[0_10px_30px_-16px_rgba(0,0,0,0.5)] backdrop-blur-xl lg:h-14 lg:justify-between lg:border-hairline lg:bg-paper/80 lg:py-0 lg:pl-6 lg:pr-3 lg:backdrop-blur-md">
         {/* Type */}
-        <div className="flex flex-wrap items-center gap-x-1 gap-y-2 lg:flex-nowrap lg:gap-x-0" role="group" aria-label="Filter by type">
+        <div className="flex min-w-0 flex-1 items-center gap-x-1 overflow-x-auto [-ms-overflow-style:none] [mask-image:linear-gradient(to_right,#000_82%,transparent)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:flex-none lg:gap-x-0 lg:overflow-visible lg:[mask-image:none]" role="group" aria-label="Filter by type">
           <Chip label="All" count={total} active={activeType === "All"} onClick={() => onType("All")} />
           {types.map((t) => (
             <Chip key={t} label={t} count={counts[t] ?? 0} active={activeType === t} onClick={() => onType(t)} />
@@ -78,7 +78,7 @@ function Chip({ label, count, active, onClick }: { label: string; count: number;
       onClick={onClick}
       aria-pressed={active}
       className={cn(
-        "group inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 font-sans text-[0.7rem] uppercase tracking-[0.1em] transition-colors duration-300 lg:px-2.5",
+        "group inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1.5 font-sans text-[0.7rem] uppercase tracking-[0.1em] transition-colors duration-300",
         active ? "bg-ink text-paper" : "text-ink-muted hover:text-ink"
       )}
     >
