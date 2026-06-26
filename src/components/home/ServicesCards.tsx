@@ -18,6 +18,8 @@ export function ServicesCards() {
   const services = getServices();
   const reduced = usePrefersReducedMotion();
   const [active, setActive] = useState(0);
+  const N = services.length;
+  const step = (d: number) => setActive((a) => (a + d + N) % N);
 
   // On mobile the panels stack and grow in height; a gentler expansion ratio
   // keeps the collapsed rows tall enough for their index + title. Desktop keeps
@@ -141,6 +143,36 @@ export function ServicesCards() {
               </Link>
             );
           })}
+        </div>
+
+        {/* Mobile stepper — prev/next through the four services, with an index.
+            Tapping a panel still works; this is the explicit control on phones. */}
+        <div className="mt-6 flex items-center justify-between md:hidden">
+          <span className="font-mono text-2xs uppercase tracking-label tabular-nums text-ink-muted">
+            {String(active + 1).padStart(2, "0")} <span className="text-ink/30">/</span> {String(N).padStart(2, "0")}
+          </span>
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => step(-1)}
+              aria-label="Previous service"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-ink/25 text-ink transition-colors duration-300 hover:border-ink active:bg-ink/10"
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M8.5 2.5 4 7l4.5 4.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              onClick={() => step(1)}
+              aria-label="Next service"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-ink/25 text-ink transition-colors duration-300 hover:border-ink active:bg-ink/10"
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M5.5 2.5 10 7l-4.5 4.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </section>
