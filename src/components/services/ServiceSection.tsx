@@ -1,13 +1,12 @@
-import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/cn";
-import type { Service, Project } from "@/lib/schema";
+import type { Service } from "@/lib/schema";
 import { Bracket } from "@/components/primitives/Bracket";
 import { Reveal } from "@/components/primitives/Reveal";
 import { Button } from "@/components/primitives/Button";
 
 /** Immersive per-service section, deep-linking to a filtered archive (PRD §8.5). */
-export function ServiceSection({ service, projects, flip }: { service: Service; projects: Project[]; flip: boolean }) {
+export function ServiceSection({ service, flip }: { service: Service; flip: boolean }) {
   return (
     <section id={service.slug} className="scroll-mt-[var(--header-h)] border-t border-hairline bg-paper">
       <div className="shell-wide py-section">
@@ -53,25 +52,6 @@ export function ServiceSection({ service, projects, flip }: { service: Service; 
             </Reveal>
           </div>
         </div>
-
-        {/* Representative projects */}
-        {projects.length > 0 && (
-          <div className="mt-16 grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-3">
-            {projects.map((p) => (
-              <Reveal key={p.slug}>
-                <Link href={`/projects/${p.slug}`} data-cursor-view className="group block">
-                  <div className="relative aspect-[3/2] w-full overflow-hidden bg-mount">
-                    <Image src={p.cover} alt={p.coverAlt} fill sizes="(max-width:640px) 100vw, 33vw" className="object-cover transition-transform duration-700 ease-editorial group-hover:scale-[1.03]" />
-                  </div>
-                  <div className="mt-3 flex items-baseline justify-between">
-                    <span className="font-display text-lead tracking-tight">{p.name}</span>
-                    <span className="font-mono text-2xs uppercase tracking-label text-ink-muted">{p.city}</span>
-                  </div>
-                </Link>
-              </Reveal>
-            ))}
-          </div>
-        )}
       </div>
     </section>
   );
