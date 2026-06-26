@@ -5,6 +5,7 @@ import { PageIntro } from "@/components/common/PageIntro";
 import { SectionHeader } from "@/components/primitives/SectionHeader";
 import { Reveal } from "@/components/primitives/Reveal";
 import { LeadershipShowcase } from "@/components/studio/LeadershipShowcase";
+import { TeamShowcase } from "@/components/studio/TeamShowcase";
 import { PageZoom } from "@/components/common/PageZoom";
 import { EnquiryBand } from "@/components/common/EnquiryBand";
 
@@ -80,10 +81,13 @@ export default function StudioPage() {
         </div>
       </section>
 
+      {/* 03b — The crew */}
+      <TeamShowcase />
+
       {/* 04 — What we design & build */}
       <section className="bg-paper">
         <div className="shell-wide py-section">
-          <SectionHeader index="03" label="Capabilities" title="What we design & build." align="between" intro="From a single working floor to a whole building — across sectors, in India and internationally." />
+          <SectionHeader index="04" label="Capabilities" title="What we design & build." align="between" intro="From a single working floor to a whole building — across sectors, in India and internationally." />
           <div className="mt-12 grid grid-cols-1 gap-x-10 sm:grid-cols-2 lg:grid-cols-3">
             {studio.capabilities.map((c, i) => (
               <Reveal as="div" key={c} delay={(i % 3) * 0.04} className="flex items-baseline gap-4 border-t border-hairline py-5">
@@ -98,7 +102,7 @@ export default function StudioPage() {
       {/* 05 — Principles */}
       <section className="bg-stone/40">
         <div className="shell-wide py-section">
-          <SectionHeader index="04" label="Principles" title="Five things we hold to." />
+          <SectionHeader index="05" label="Principles" title="Five things we hold to." />
           <div className="mt-14 grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-5">
             {studio.principles.map((p, i) => (
               <Reveal key={p.en} delay={(i % 5) * 0.05} className="border-t border-hairline pt-6">
@@ -114,7 +118,7 @@ export default function StudioPage() {
       {/* 06 — Accreditations & Clients */}
       <section className="bg-paper">
         <div className="shell-wide py-section">
-          <SectionHeader index="05" label="Recognition" title="Accredited, and trusted." align="between" intro="IGBC & USGBC Platinum / Gold certified projects for the majority of our clients." />
+          <SectionHeader index="06" label="Recognition" title="Accredited, and trusted." align="between" intro="IGBC & USGBC Platinum / Gold certified projects for the majority of our clients." />
 
           <div className="mt-12 flex flex-wrap items-center gap-x-12 gap-y-5 border-t border-hairline pt-8">
             {studio.accreditations.map((a) => (
