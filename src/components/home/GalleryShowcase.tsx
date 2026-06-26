@@ -230,13 +230,21 @@ function Card({
         aria-hidden="true"
       />
 
+      {/* Readability scrim concentrated behind the headline so white type reads
+          on bright, daylit footage — the cinematic centre stays bright. */}
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-[60%] bg-gradient-to-b from-paper/75 via-paper/35 to-transparent"
+        aria-hidden="true"
+      />
+
       {/* Headline statement */}
       <motion.div
         className="absolute inset-x-0 top-[16%] z-10 px-6 text-center md:top-[18%]"
+        style={{ textShadow: "0 2px 28px rgba(15,15,15,0.55)" }}
         animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 18 }}
         transition={{ duration: 0.7, ease: EASE, delay: isActive ? 0.18 : 0 }}
       >
-        <span className="font-mono text-2xs uppercase tracking-[0.4em] text-ink/60">{slide.eyebrow}</span>
+        <span className="font-mono text-2xs uppercase tracking-[0.4em] text-ink/70">{slide.eyebrow}</span>
         <h3 className="mx-auto mt-5 max-w-[18ch] font-display text-[clamp(1.85rem,4.6vw,3.5rem)] font-medium leading-[1.04] tracking-tight text-ink">
           {slide.headline}
         </h3>
