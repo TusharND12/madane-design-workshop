@@ -32,7 +32,7 @@ export function FilterBar({
 }) {
   return (
     <div data-filter-bar className="sticky top-[clamp(0.75rem,1.6vw,1.25rem)] z-30 flex justify-center">
-      <div className="flex w-full max-w-4xl flex-col gap-4 rounded-[1.75rem] border border-hairline bg-paper/80 px-5 py-3 shadow-[0_10px_30px_-16px_rgba(0,0,0,0.5)] backdrop-blur-md lg:h-14 lg:flex-row lg:items-center lg:justify-between lg:gap-2 lg:rounded-full lg:py-0 lg:pl-6 lg:pr-3">
+      <div className="flex w-full max-w-4xl flex-col gap-4 rounded-[1.75rem] border border-white/10 bg-paper/20 px-5 py-3 shadow-[0_10px_30px_-16px_rgba(0,0,0,0.5)] backdrop-blur-xl lg:h-14 lg:flex-row lg:items-center lg:justify-between lg:gap-2 lg:rounded-full lg:border-hairline lg:bg-paper/80 lg:py-0 lg:pl-6 lg:pr-3 lg:backdrop-blur-md">
         {/* Type */}
         <div className="flex flex-wrap items-center gap-x-1 gap-y-2 lg:flex-nowrap lg:gap-x-0" role="group" aria-label="Filter by type">
           <Chip label="All" count={total} active={activeType === "All"} onClick={() => onType("All")} />
