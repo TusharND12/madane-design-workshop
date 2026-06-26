@@ -19,7 +19,11 @@ const FEATHER: CSSProperties = {
 /** Immersive per-service section, deep-linking to a filtered archive (PRD §8.5). */
 export function ServiceSection({ service, flip }: { service: Service; flip: boolean }) {
   const gx = flip ? 72 : 28; // colour bleed radiates from the image side
-  const bleedMask = `radial-gradient(78% 118% at ${gx}% 50%, #000 0%, #000 26%, transparent 74%)`;
+  // Radial keeps the bleed on the image side; the vertical fade makes it
+  // transparent at the section's top & bottom so sections meet seamlessly.
+  const bleedMask =
+    `radial-gradient(82% 130% at ${gx}% 50%, #000 0%, #000 24%, transparent 76%), ` +
+    `linear-gradient(to bottom, transparent 0%, #000 18%, #000 82%, transparent 100%)`;
   return (
     <section id={service.slug} className="relative overflow-hidden bg-paper scroll-mt-[var(--header-h)]">
       {/* Ambient colour bleed — a blurred copy of the image, its own colours flowing out */}
@@ -35,6 +39,8 @@ export function ServiceSection({ service, flip }: { service: Service; flip: bool
             objectPosition: flip ? "78% 50%" : "22% 50%",
             WebkitMaskImage: bleedMask,
             maskImage: bleedMask,
+            WebkitMaskComposite: "source-in",
+            maskComposite: "intersect",
           }}
         />
       </div>
