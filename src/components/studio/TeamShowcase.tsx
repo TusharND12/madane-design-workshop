@@ -50,10 +50,11 @@ const TAIL = 0.06;
 // Generous left/right breathing room so the first and last cards clear the edge
 // fade and read fully (not dissolved against the screen edges).
 const SHELL_PAD = "clamp(2.5rem, 7vw, 8rem)";
-// Horizontal fade — cards still dissolve softly as they slide past the edges, but
-// the band is narrow (outer ~6%) so cards parked inside the padding stay crisp.
+// Horizontal cut — a crisp line on each side past which the card images are not
+// visible at all (so they never bleed into the vacant rope space). The line sits
+// just outside the first/last card positions, so those stay fully crisp.
 const FADE =
-  "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 2.5%, #000 6%, #000 94%, rgba(0,0,0,0.6) 97.5%, transparent 100%)";
+  "linear-gradient(to right, transparent 0%, transparent 4.5%, #000 6%, #000 94%, transparent 95.5%, transparent 100%)";
 // Wave — each card rides a gentle sine as the row travels, so scrolling sideways
 // sends a wave rippling across the team.
 const WAVE_AMP = 22; // px
