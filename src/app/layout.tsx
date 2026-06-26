@@ -59,6 +59,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={avantGarde.variable}>
       <body>
+        {/* Runs during HTML parse — before the browser's load-time scroll
+            restoration — so every (re)load starts at the top, on every page. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "try{if('scrollRestoration' in history)history.scrollRestoration='manual';}catch(e){}",
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify([organizationSchema(), localBusinessSchema()]) }}
