@@ -91,7 +91,7 @@ export function GalleryShowcase() {
   }
 
   return (
-    <section ref={ref} className="overflow-hidden bg-paper py-section text-ink">
+    <section ref={ref} className="overflow-hidden bg-paper pt-section pb-[18vh] text-ink md:pb-[28vh]">
       <div className="shell-wide">
         <div className="flex items-baseline gap-4">
           <span className="section-index">04</span>
@@ -118,7 +118,7 @@ export function GalleryShowcase() {
         </motion.div>
 
         {/* Bottom control bar — segmented dot pager + play/pause */}
-        <div className="absolute inset-x-0 bottom-5 z-20 flex justify-center md:bottom-7">
+        <div className="absolute inset-x-0 bottom-5 z-30 flex justify-center md:bottom-7">
           <div className="flex items-center gap-4 rounded-full border border-ink/12 bg-paper/55 px-4 py-2.5 backdrop-blur-md">
             <div className="flex items-center gap-2">
               {SLIDES.map((s, i) => (
