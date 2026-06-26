@@ -134,7 +134,10 @@ function ScrollSlider() {
       const track = trackRef.current;
       const stage = stageRef.current;
       if (!track || !stage) return;
-      maxX.current = Math.max(0, track.scrollWidth - stage.clientWidth);
+      // scrollWidth includes the left padding but omits the right padding, so add
+      // it back — otherwise the last card parks flush to the edge (under the cut).
+      const padRight = parseFloat(getComputedStyle(track).paddingRight) || 0;
+      maxX.current = Math.max(0, track.scrollWidth - stage.clientWidth + padRight);
       update();
     };
     measure();
