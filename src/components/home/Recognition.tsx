@@ -11,7 +11,7 @@ export function Recognition() {
   const { accreditations } = getStudio();
 
   return (
-    <section className="relative z-10 overflow-hidden rounded-[clamp(1.75rem,5vw,3.25rem)] bg-stone shadow-[0_-30px_70px_-30px_rgba(0,0,0,0.6)]">
+    <section className="relative z-10 overflow-hidden rounded-[clamp(1.75rem,5vw,3.25rem)] bg-gradient-to-br from-[#202228] via-[#1e2025] to-[#1d1f23] shadow-[0_-30px_70px_-30px_rgba(0,0,0,0.6)]">
       <div className="shell-wide py-section">
         {/* Header — centered pill + title */}
         <Reveal className="flex flex-col items-center text-center">
