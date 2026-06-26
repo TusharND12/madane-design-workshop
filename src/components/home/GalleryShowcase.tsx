@@ -24,8 +24,8 @@ const SLIDES: Slide[] = [
   {
     eyebrow: "Living",
     headline: "Daylight does the dramatic work.",
-    video: "/assets/video/living-space.mp4",
-    poster: "/assets/hero/p-73.jpg",
+    video: "/assets/video/living-daylight.mp4",
+    poster: "/assets/video/living-daylight.jpg",
     alt: "A daylit living space, planned around its light edges.",
   },
   {
