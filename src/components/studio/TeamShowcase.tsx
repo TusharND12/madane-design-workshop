@@ -1,15 +1,15 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { SectionHeader } from "@/components/primitives/SectionHeader";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 /**
- * The crew — vertical "pill" (stadium) portrait cards mounted on a dark, plastered
- * wall. As you scroll into the section the cards rise and lock onto the wall one
- * after another; once placed they stay fixed. Drag / swipe through the whole team.
+ * The crew — vertical "pill" (stadium) portrait cards on a dark, plastered wall.
+ * The section pins and the row slides horizontally as you scroll vertically, so
+ * the whole team passes across the wall. Reduced motion shows a normal scroll row.
  */
 type Member = { name: string; src: string };
 
@@ -42,13 +42,17 @@ const TONES = ["#23262F", "#2A241E", "#272A2E", "#2C2622"];
 const NOISE =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
 
-// Card reveal pacing (in section-scroll progress). All cards are placed by ~0.55.
-const STEP = 0.024;
-const REVEAL = 0.13;
+// The studio route runs under CSS `zoom: 0.9` (PageZoom), which compresses the
+// usable scrollYProgress. Map the slide into the low end and hold at the end.
+const X_START = 0.04;
+const X_END = 0.62;
+const SHELL_PAD = "max(1.25rem,calc((100vw-1440px)/2+1.25rem))";
+
+const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 
 export function TeamShowcase() {
   return (
-    <section className="relative overflow-hidden bg-paper">
+    <section className="relative bg-paper">
       {/* Wall — base tone + soft top light + edge vignette */}
       <div
         aria-hidden
@@ -74,79 +78,89 @@ export function TeamShowcase() {
           />
         </div>
 
-        <Carousel />
+        <Slider />
       </div>
     </section>
   );
 }
 
-function Carousel() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const scroller = useRef<HTMLDivElement>(null);
-  const drag = useRef({ down: false, startX: 0, startLeft: 0 });
+function Slider() {
+  const reduced = usePrefersReducedMotion();
+  if (reduced) return <StaticRow />;
+  return <ScrollSlider />;
+}
 
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "center center"] });
+/** Pinned section — vertical scroll slides the row horizontally across the wall. */
+function ScrollSlider() {
+  const parentRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const maxX = useRef(0);
+  const [, force] = useState(0);
 
-  function onDown(e: React.PointerEvent) {
-    const el = scroller.current;
-    if (!el) return;
-    drag.current = { down: true, startX: e.pageX, startLeft: el.scrollLeft };
-    el.setPointerCapture(e.pointerId);
-  }
-  function onMove(e: React.PointerEvent) {
-    const el = scroller.current;
-    if (!el || !drag.current.down) return;
-    el.scrollLeft = drag.current.startLeft - (e.pageX - drag.current.startX);
-  }
-  function onUp(e: React.PointerEvent) {
-    const el = scroller.current;
-    drag.current.down = false;
-    if (el && el.hasPointerCapture(e.pointerId)) el.releasePointerCapture(e.pointerId);
-  }
+  const { scrollYProgress } = useScroll({ target: parentRef, offset: ["start start", "end end"] });
+  const x = useTransform(scrollYProgress, (p) => -maxX.current * clamp((p - X_START) / (X_END - X_START), 0, 1));
+
+  useEffect(() => {
+    const measure = () => {
+      const track = trackRef.current;
+      const stage = stageRef.current;
+      if (!track || !stage) return;
+      maxX.current = Math.max(0, track.scrollWidth - stage.clientWidth);
+      force((n) => n + 1);
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    if (trackRef.current) ro.observe(trackRef.current);
+    window.addEventListener("resize", measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, []);
 
   return (
-    <div ref={sectionRef} className="pb-section pt-12 md:pt-14">
-      <div
-        ref={scroller}
-        onPointerDown={onDown}
-        onPointerMove={onMove}
-        onPointerUp={onUp}
-        onPointerCancel={onUp}
-        className="flex cursor-grab snap-x snap-proximity gap-5 overflow-x-auto px-[max(1.25rem,calc((100vw-1440px)/2+1.25rem))] pb-6 pt-3 active:cursor-grabbing md:gap-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-      >
-        {TEAM.map((m, i) => (
-          <CardReveal key={m.src} progress={scrollYProgress} index={i}>
-            <PillCard member={m} tone={TONES[i % TONES.length]} priority={i < 5} />
-          </CardReveal>
-        ))}
-      </div>
+    <div ref={parentRef} style={{ height: `${TEAM.length * 17 + 60}vh` }}>
+      <div className="sticky top-0 flex h-[100svh] flex-col justify-center">
+        <div ref={stageRef} className="w-full overflow-hidden">
+          <motion.div ref={trackRef} style={{ x, paddingLeft: SHELL_PAD, paddingRight: SHELL_PAD }} className="flex gap-5 py-3 md:gap-6">
+            {TEAM.map((m, i) => (
+              <div key={m.src} className="shrink-0">
+                <PillCard member={m} tone={TONES[i % TONES.length]} priority={i < 5} />
+              </div>
+            ))}
+          </motion.div>
+        </div>
 
-      <div className="shell-wide mt-7 flex items-center justify-between font-mono text-2xs uppercase tracking-label text-ink-muted">
-        <span>Drag to meet the team</span>
-        <span>
-          {String(TEAM.length).padStart(2, "0")} <span className="text-ink/30">people</span>
-        </span>
+        <div className="shell-wide mt-9 flex items-center justify-between font-mono text-2xs uppercase tracking-label text-ink-muted">
+          <span>Scroll to meet the team</span>
+          <span>
+            {String(TEAM.length).padStart(2, "0")} <span className="text-ink/30">people</span>
+          </span>
+        </div>
       </div>
     </div>
   );
 }
 
-/** Scroll-driven mount — each card rises and locks onto the wall in sequence. */
-function CardReveal({ progress, index, children }: { progress: MotionValue<number>; index: number; children: React.ReactNode }) {
-  const reduced = usePrefersReducedMotion();
-  const a = index * STEP;
-  const b = a + REVEAL;
-  const opacity = useTransform(progress, [a, b], [0, 1]);
-  const y = useTransform(progress, [a, b], [64, 0]);
-  const scale = useTransform(progress, [a, b], [0.86, 1]);
-  const rotateX = useTransform(progress, [a, b], [14, 0]);
-
-  if (reduced) return <div className="shrink-0 snap-center">{children}</div>;
-
+/** Reduced-motion fallback — a plain horizontally-scrollable row. */
+function StaticRow() {
   return (
-    <motion.div className="shrink-0 snap-center" style={{ opacity, y, scale, rotateX, transformPerspective: 850 }}>
-      {children}
-    </motion.div>
+    <div className="pb-section pt-12 md:pt-14">
+      <div
+        className="flex gap-5 overflow-x-auto pb-6 pt-3 md:gap-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        style={{ paddingLeft: SHELL_PAD, paddingRight: SHELL_PAD }}
+      >
+        {TEAM.map((m, i) => (
+          <div key={m.src} className="shrink-0">
+            <PillCard member={m} tone={TONES[i % TONES.length]} priority={i < 5} />
+          </div>
+        ))}
+      </div>
+      <div className="shell-wide mt-7 font-mono text-2xs uppercase tracking-label text-ink-muted">
+        {String(TEAM.length).padStart(2, "0")} <span className="text-ink/30">people</span>
+      </div>
+    </div>
   );
 }
 
