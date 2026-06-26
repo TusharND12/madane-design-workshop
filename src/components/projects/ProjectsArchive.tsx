@@ -7,6 +7,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import type { Project, ProjectType } from "@/lib/schema";
 import { FilterBar } from "./FilterBar";
+import { ArchitectureFrame } from "./ArchitectureFrame";
 import { ButtonAction } from "@/components/primitives/Button";
 import { EASE } from "@/lib/motion";
 
@@ -96,22 +97,26 @@ export function ProjectsArchive({
       {filtered.length === 0 ? (
         <EmptyState onReset={() => { handleType("All"); handleLocation("All"); }} />
       ) : (
-        <motion.div layout className="mt-8 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 md:mt-10 lg:grid-cols-3">
-          <AnimatePresence mode="popLayout">
-            {filtered.map((p, i) => (
-              <motion.div
-                key={p.slug}
-                layout
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.45, ease: EASE, delay: Math.min(i * 0.04, 0.4) }}
-              >
-                <GalleryCard project={p} index={i + 1} priority={i < 6} />
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
+        <div className="relative mt-8 px-6 pb-14 pt-12 md:mt-10 md:px-12">
+          {/* Line-art building shell — the cards read as floors inside it */}
+          <ArchitectureFrame />
+          <motion.div layout className="relative z-10 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+            <AnimatePresence mode="popLayout">
+              {filtered.map((p, i) => (
+                <motion.div
+                  key={p.slug}
+                  layout
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.45, ease: EASE, delay: Math.min(i * 0.04, 0.4) }}
+                >
+                  <GalleryCard project={p} index={i + 1} priority={i < 6} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
+        </div>
       )}
     </div>
   );
