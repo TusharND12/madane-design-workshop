@@ -54,17 +54,25 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
             </button>
           </div>
 
+          {/* The items ride a convex arc — pushed out at the centre and easing
+              back at the ends — so the menu reads like an Apple-camera zoom dial.
+              Same labels, same sizes; only the horizontal offset curves. */}
           <nav aria-label="Primary" className="shell-wide flex flex-1 flex-col justify-center gap-1 py-12">
-            {site.nav.map((item, i) => (
-              <motion.div key={item.href} variants={line}>
-                <Link href={item.href} onClick={onClose} className="group flex items-baseline gap-5 py-2">
-                  <span className="font-mono text-2xs tracking-label text-ink/40">{String(i + 1).padStart(2, "0")}</span>
-                  <span className="font-display text-[15vw] leading-[1.02] tracking-tighter transition-opacity duration-300 group-hover:opacity-60 sm:text-6xl">
-                    {item.label}
-                  </span>
-                </Link>
-              </motion.div>
-            ))}
+            {site.nav.map((item, i) => {
+              const dmax = (site.nav.length - 1) / 2;
+              const t = dmax === 0 ? 0 : (i - dmax) / dmax; // -1 (top) … 1 (bottom)
+              const bulge = Math.sqrt(Math.max(0, 1 - t * t)); // 1 at centre, 0 at ends
+              return (
+                <motion.div key={item.href} variants={line} style={{ marginLeft: `${(bulge * 15).toFixed(2)}vw` }}>
+                  <Link href={item.href} onClick={onClose} className="group flex items-baseline gap-5 py-2">
+                    <span className="font-mono text-2xs tracking-label text-ink/40">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="font-display text-[15vw] leading-[1.02] tracking-tighter transition-opacity duration-300 group-hover:opacity-60 sm:text-6xl">
+                      {item.label}
+                    </span>
+                  </Link>
+                </motion.div>
+              );
+            })}
           </nav>
 
           <motion.div variants={line} className="shell-wide flex flex-col gap-4 border-t border-ink/15 py-8 sm:flex-row sm:items-center sm:justify-between">
