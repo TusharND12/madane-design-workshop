@@ -21,7 +21,7 @@ export function ServiceSection({ service, flip }: { service: Service; flip: bool
   const gx = flip ? 72 : 28; // colour bleed radiates from the image side
   const bleedMask = `radial-gradient(78% 118% at ${gx}% 50%, #000 0%, #000 26%, transparent 74%)`;
   return (
-    <section id={service.slug} className="relative overflow-hidden border-t border-hairline bg-paper scroll-mt-[var(--header-h)]">
+    <section id={service.slug} className="relative overflow-hidden bg-paper scroll-mt-[var(--header-h)]">
       {/* Ambient colour bleed — a blurred copy of the image, its own colours flowing out */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <Image
