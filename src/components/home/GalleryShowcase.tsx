@@ -210,17 +210,22 @@ function Card({
         preload={priority ? "auto" : "metadata"}
         aria-label={slide.alt}
         className={`absolute inset-0 h-full w-full object-cover transition-all duration-[1200ms] ease-editorial ${
-          isActive ? "scale-100 grayscale-0 brightness-[0.85]" : "scale-[1.04] grayscale brightness-[0.5]"
+          isActive ? "scale-100 grayscale-0 brightness-[1.04]" : "scale-[1.04] grayscale brightness-[0.35]"
         }`}
       >
         <source src={slide.video} type="video/mp4" />
       </video>
-      {/* Cinematic scrims */}
-      <div className="absolute inset-0 bg-gradient-to-b from-paper/70 via-paper/10 to-paper/60" aria-hidden="true" />
+      {/* Cinematic scrims — lighter on the active card so the centre reads bright */}
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-b from-paper/60 via-transparent to-paper/55"
+        animate={{ opacity: isActive ? 0.65 : 1 }}
+        transition={{ duration: 0.6, ease: EASE }}
+        aria-hidden="true"
+      />
       {/* Dim non-active neighbours further */}
       <motion.div
         className="absolute inset-0 bg-paper"
-        animate={{ opacity: isActive ? 0 : 0.45 }}
+        animate={{ opacity: isActive ? 0 : 0.62 }}
         transition={{ duration: 0.6, ease: EASE }}
         aria-hidden="true"
       />
