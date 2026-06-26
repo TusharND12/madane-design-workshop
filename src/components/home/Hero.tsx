@@ -29,8 +29,11 @@ export function Hero() {
   function onMouseMove(e: React.MouseEvent) {
     if (reduced) return;
     const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
-    mx.set(((e.clientX - r.left) / r.width - 0.5) * 18);
-    my.set(((e.clientY - r.top) / r.height - 0.5) * 12);
+    // Push the perspective harder on big monitors so the shot feels alive there;
+    // smaller screens keep the original subtle drift.
+    const f = typeof window !== "undefined" && window.innerWidth >= 1600 ? 1.8 : 1;
+    mx.set(((e.clientX - r.left) / r.width - 0.5) * 18 * f);
+    my.set(((e.clientY - r.top) / r.height - 0.5) * 12 * f);
   }
 
   return (
@@ -45,7 +48,7 @@ export function Hero() {
       <motion.div className="absolute inset-0" style={{ scale, y: yMedia }}>
         <motion.div className="absolute inset-[-4%]" style={{ x: px, y: py }}>
           <video
-            className="h-full w-full object-cover"
+            className="hero-cine h-full w-full object-cover"
             autoPlay
             muted
             loop
@@ -61,6 +64,26 @@ export function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-paper/55 via-paper/20 to-paper/70" aria-hidden="true" />
       <div className="absolute inset-0 bg-paper/10" aria-hidden="true" />
 
+      {/* Film grade — big monitors only. A cinematic vignette deepens the corners
+          and a faint warm bloom rides the upper edge, so the frame reads graded
+          and dramatic on large screens. Hidden at ≤1600px (smaller stays clean). */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 hidden min-[1600px]:block"
+        style={{
+          background:
+            "radial-gradient(125% 115% at 50% 42%, transparent 48%, rgba(15,15,15,0.30) 76%, rgba(15,15,15,0.62) 100%)",
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 hidden mix-blend-soft-light min-[1600px]:block"
+        style={{
+          background:
+            "radial-gradient(80% 55% at 50% 12%, rgba(214,184,140,0.22), transparent 70%)",
+        }}
+      />
+
       {/* Content */}
       <motion.div style={{ y: yText, opacity }} className="relative z-10 flex h-full flex-col justify-end">
         <div className="shell-wide pb-[14vh]">
@@ -69,7 +92,7 @@ export function Hero() {
               <Bracket className="text-ink/70">Architecture · Interiors · Turnkey</Bracket>
             </motion.div>
 
-            <h1 className="mt-7 max-w-[16ch] font-display text-[clamp(2.75rem,8vw,6rem)] font-medium leading-[0.98] tracking-tighter">
+            <h1 className="mt-7 max-w-[16ch] font-display text-[clamp(2.75rem,8vw,6rem)] font-medium leading-[0.98] tracking-tighter min-[1600px]:max-w-[14ch] min-[1600px]:text-[clamp(6rem,7.5vw,10rem)] min-[1600px]:leading-[0.9] min-[1600px]:tracking-[-0.03em]">
               <motion.span variants={stagger(0.08, 0.1)} initial="hidden" animate="show" className="inline">
                 {HEADLINE.map((w, i) => (
                   <span key={i} className="inline-block overflow-hidden align-bottom">

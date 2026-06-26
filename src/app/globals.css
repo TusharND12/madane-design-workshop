@@ -210,6 +210,21 @@
   transform: none;
 }
 
+/* Big-screen hero — a slow continuous push so the shot feels alive and cinematic.
+   Scoped to large monitors; smaller screens keep the original static framing.
+   (Disabled under reduced motion by the global rule below.) */
+@media (min-width: 1600px) {
+  @keyframes hero-cine {
+    from { transform: scale(1); }
+    to { transform: scale(1.09); }
+  }
+  .hero-cine {
+    animation: hero-cine 24s ease-in-out infinite alternate;
+    transform-origin: 50% 45%;
+    will-change: transform;
+  }
+}
+
 /* Slow Ken Burns push for device-screen stills */
 @keyframes kenburns {
   from { transform: scale(1.02); }
