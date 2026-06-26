@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
-import { motion, useMotionValue, useMotionValueEvent, useScroll } from "framer-motion";
+import { motion, useMotionValue, useMotionValueEvent, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { SectionHeader } from "@/components/primitives/SectionHeader";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
@@ -47,11 +47,17 @@ const NOISE =
 // CSS `zoom: 0.9` (PageZoom) skew. A small tail keeps the last card on screen
 // for a beat before the section releases.
 const TAIL = 0.06;
-const SHELL_PAD = "max(1.25rem,calc((100vw-1440px)/2+1.25rem))";
-// Horizontal fade — cards fade in as they slide in from the right and fade out
-// to the left. Wide, eased transitions so the edges dissolve softly (no hard cut).
+// Generous left/right breathing room so the first and last cards clear the edge
+// fade and read fully (not dissolved against the screen edges).
+const SHELL_PAD = "clamp(2.5rem, 7vw, 8rem)";
+// Horizontal fade — cards still dissolve softly as they slide past the edges, but
+// the band is narrow (outer ~6%) so cards parked inside the padding stay crisp.
 const FADE =
-  "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.15) 5%, rgba(0,0,0,0.55) 10%, #000 18%, #000 82%, rgba(0,0,0,0.55) 90%, rgba(0,0,0,0.15) 95%, transparent 100%)";
+  "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 2.5%, #000 6%, #000 94%, rgba(0,0,0,0.6) 97.5%, transparent 100%)";
+// Wave — each card rides a gentle sine as the row travels, so scrolling sideways
+// sends a wave rippling across the team.
+const WAVE_AMP = 22; // px
+const wavePhase = (index: number, xv: number) => index * 0.9 + xv * 0.004;
 
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 
@@ -140,11 +146,11 @@ function ScrollSlider() {
     <div ref={parentRef} style={{ height: `${TEAM.length * 14 + 40}vh` }}>
       <div className="sticky top-0 flex h-[100svh] flex-col justify-center">
         <div ref={stageRef} className="w-full overflow-hidden" style={{ WebkitMaskImage: FADE, maskImage: FADE }}>
-          <motion.div ref={trackRef} style={{ x, paddingLeft: SHELL_PAD, paddingRight: SHELL_PAD }} className="flex gap-5 py-3 md:gap-6">
+          <motion.div ref={trackRef} style={{ x, paddingLeft: SHELL_PAD, paddingRight: SHELL_PAD }} className="flex items-center gap-5 py-9 md:gap-6">
             {TEAM.map((m, i) => (
-              <div key={m.src} className="shrink-0">
+              <WaveCard key={m.src} x={x} index={i}>
                 <PillCard member={m} tone={TONES[i % TONES.length]} priority={i < 5} />
-              </div>
+              </WaveCard>
             ))}
           </motion.div>
         </div>
@@ -157,6 +163,17 @@ function ScrollSlider() {
         </div>
       </div>
     </div>
+  );
+}
+
+/** One card riding the wave — vertical offset follows a sine of its position +
+    the row's travel, so sliding the row ripples a wave across the team. */
+function WaveCard({ x, index, children }: { x: MotionValue<number>; index: number; children: React.ReactNode }) {
+  const y = useTransform(x, (xv) => Math.sin(wavePhase(index, xv)) * WAVE_AMP);
+  return (
+    <motion.div style={{ y }} className="shrink-0">
+      {children}
+    </motion.div>
   );
 }
 
