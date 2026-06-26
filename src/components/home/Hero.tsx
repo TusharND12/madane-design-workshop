@@ -52,7 +52,7 @@ export function Hero() {
             playsInline
             preload="auto"
           >
-            <source src="/assets/video/hero-landing.mp4" type="video/mp4" />
+            <source src="/assets/video/hero-daylight.mp4" type="video/mp4" />
           </video>
         </motion.div>
       </motion.div>
