@@ -23,8 +23,11 @@ const FACES = Array.from({ length: N }, (_, i) => ((i + 0.5) / N) * 100);
 const STAGE_ASPECT = 1672 / 665; // wide landscape card (like the previous reel)
 const ZOOM = 1.8; // background-size height multiple
 const POS_Y = 13; // background vertical position, % (head framing)
-const TILT = 6; // degrees of 3D tilt
-const P_END = 0.94; // scroll fraction where the pan finishes
+const TILT = 6; // resting 3D tilt during the pan (degrees)
+const TILT_ENTRY = 12; // stronger tilt while the panel is small
+const SCALE_FROM = 0.7; // card size at rest, before scrolling
+const P_START = 0.18; // scroll fraction where the grow-in finishes / pan begins
+const P_END = 0.95; // scroll fraction where the pan finishes
 
 const SX = (ZOOM * IMG_ASPECT) / STAGE_ASPECT; // image width / stage width
 
@@ -32,7 +35,8 @@ const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 const pad = (n: number) => String(n).padStart(2, "0");
 
-const panT = (p: number) => clamp(p / P_END, 0, 1);
+// Pan only starts once the panel has grown to full size.
+const panT = (p: number) => clamp((p - P_START) / (P_END - P_START), 0, 1);
 function faceFracAt(p: number) {
   const t = panT(p) * (N - 1);
   const i = Math.min(N - 2, Math.floor(t));
@@ -71,7 +75,9 @@ function StripReel() {
 
   const posX = useTransform(scrollYProgress, (p) => `${bgXFor(faceFracAt(p)) * 100}%`);
   const backgroundPosition = useMotionTemplate`${posX} ${POS_Y}%`;
-  const rotateX = useTransform(scrollYProgress, [0, 0.05, 1], [0, TILT, TILT]);
+  // Small + strongly tilted at rest → grows to full size and settles as you scroll.
+  const scale = useTransform(scrollYProgress, [0, P_START], [SCALE_FROM, 1]);
+  const rotateX = useTransform(scrollYProgress, [0, P_START, 1], [TILT_ENTRY, TILT, TILT]);
 
   useMotionValueEvent(scrollYProgress, "change", (p) => {
     setActive(Math.max(0, Math.min(N - 1, Math.round(panT(p) * (N - 1)))));
@@ -88,6 +94,7 @@ function StripReel() {
             backgroundRepeat: "no-repeat",
             backgroundSize: `auto ${ZOOM * 100}%`,
             backgroundPosition,
+            scale,
             rotateX,
             transformPerspective: 1100,
           }}
