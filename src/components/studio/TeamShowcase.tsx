@@ -1,61 +1,45 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion, useMotionTemplate, useMotionValueEvent, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
+import Image from "next/image";
 import { SectionHeader } from "@/components/primitives/SectionHeader";
-import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 /**
- * The crew — a filmstrip of individual portraits. A wide card pans through the
- * whole team as you scroll, with a gentle 3D tilt. Reduced motion shows the full
- * strip static.
+ * The crew — a horizontal carousel of vertical "pill" (stadium) cards, one per
+ * team member. A dark-toned header holds the name; the portrait fills the lower,
+ * fully-rounded section. Drag, swipe or trackpad-scroll through the whole team.
  */
-// Sharp composite stitched from the 19 individual high-res studio portraits,
-// uniform panels of aspect 0.5 (see scripts/strip note). 9500×1000.
-const STRIP = "/assets/team/strip-hd.jpg";
-const N = 19;
-const PANEL_ASPECT = 0.5;
-const IMG_ASPECT = N * PANEL_ASPECT; // 9.5 — strip width / height
+type Member = { name: string; src: string };
 
-// Uniform panels → each person's horizontal centre is evenly spaced (% of width).
-const FACES = Array.from({ length: N }, (_, i) => ((i + 0.5) / N) * 100);
+// Left→right order, individual high-res portraits from /assets/team.
+const TEAM: Member[] = [
+  { name: "Aasawari", src: "/assets/team/aasawari.png" },
+  { name: "Aishwarya Joil", src: "/assets/team/aishwarya-joil.png" },
+  { name: "Chaavi", src: "/assets/team/chaavi.png" },
+  { name: "Nidhi Jain", src: "/assets/team/nidhi-jain.png" },
+  { name: "Shatbdi Ojha", src: "/assets/team/shatbdi-ojha.png" },
+  { name: "Mahesh Khandekar", src: "/assets/team/mahesh-khandekar.jpeg" },
+  { name: "Ajay Gupta", src: "/assets/team/ajay-gupta.jpeg" },
+  { name: "Nikita Rane", src: "/assets/team/nikita-rane.jpeg" },
+  { name: "Ravindra", src: "/assets/team/ravindra.png" },
+  { name: "Harshad", src: "/assets/team/harshad.png" },
+  { name: "Komal Kharat", src: "/assets/team/komal-kharat.png" },
+  { name: "Vaishnavi", src: "/assets/team/vaishnavi.png" },
+  { name: "Shweta", src: "/assets/team/shweta.png" },
+  { name: "Ajinkya", src: "/assets/team/ajinkya.jpeg" },
+  { name: "Priyanka Gupta", src: "/assets/team/priyanka-gupta.png" },
+  { name: "Madhuri", src: "/assets/team/madhuri.jpeg" },
+  { name: "Laveena", src: "/assets/team/laveena.jpeg" },
+  { name: "Pratik", src: "/assets/team/pratik.png" },
+  { name: "Prince", src: "/assets/team/prince.png" },
+];
 
-const STAGE_ASPECT = 1672 / 665; // wide landscape card (like the previous reel)
-const ZOOM = 1.8; // background-size height multiple
-const POS_Y = 13; // background vertical position, % (head framing)
-const TILT = 6; // resting 3D tilt during the pan (degrees)
-const TILT_ENTRY = 12; // stronger tilt while the panel is small
-const SCALE_FROM = 0.7; // card size at rest, before scrolling
-// NOTE: the studio route is rendered under CSS `zoom: 0.9` (PageZoom), which
-// compresses the usable scrollYProgress to ~0.69 at the section's end. So the
-// grow-in and pan are mapped into the low end of progress, and the last face is
-// held for the remaining scroll before the section unpins.
-const P_START = 0.12; // scroll fraction where the grow-in finishes / pan begins
-const P_END = 0.6; // scroll fraction where the pan finishes (face 19 reached, then held)
-
-const SX = (ZOOM * IMG_ASPECT) / STAGE_ASPECT; // image width / stage width
-
-const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
-const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
-const pad = (n: number) => String(n).padStart(2, "0");
-
-// Pan only starts once the panel has grown to full size.
-const panT = (p: number) => clamp((p - P_START) / (P_END - P_START), 0, 1);
-function faceFracAt(p: number) {
-  const t = panT(p) * (N - 1);
-  const i = Math.min(N - 2, Math.floor(t));
-  // Dwell on each face, then transition quickly to the next.
-  const e = clamp((t - i - 0.3) / 0.4, 0, 1);
-  return lerp(FACES[i], FACES[i + 1], e) / 100;
-}
-// background-position-x (%) that centres image fraction f within the stage.
-const bgXFor = (f: number) => clamp((f * SX - 0.5) / (SX - 1), 0, 1);
+// Dark-theme header tones, cycled across the cards for subtle variety.
+const TONES = ["#23262F", "#2A241E", "#272A2E", "#2C2622"];
 
 export function TeamShowcase() {
-  const reduced = usePrefersReducedMotion();
-
   return (
-    <section className="bg-paper">
+    <section className="overflow-hidden bg-paper">
       <div className="shell-wide pt-section">
         <SectionHeader
           index="03"
@@ -66,63 +50,83 @@ export function TeamShowcase() {
         />
       </div>
 
-      {reduced ? <StripStatic /> : <StripReel />}
+      <Carousel />
     </section>
   );
 }
 
-/** Portrait card that pans through the strip, one person at a time. */
-function StripReel() {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const [active, setActive] = useState(0);
+function Carousel() {
+  const scroller = useRef<HTMLDivElement>(null);
+  const drag = useRef({ down: false, startX: 0, startLeft: 0, moved: false });
 
-  const posX = useTransform(scrollYProgress, (p) => `${bgXFor(faceFracAt(p)) * 100}%`);
-  const backgroundPosition = useMotionTemplate`${posX} ${POS_Y}%`;
-  // Small + strongly tilted at rest → grows to full size and settles as you scroll.
-  const scale = useTransform(scrollYProgress, [0, P_START], [SCALE_FROM, 1]);
-  const rotateX = useTransform(scrollYProgress, [0, P_START, 1], [TILT_ENTRY, TILT, TILT]);
-
-  useMotionValueEvent(scrollYProgress, "change", (p) => {
-    setActive(Math.max(0, Math.min(N - 1, Math.round(panT(p) * (N - 1)))));
-  });
+  function onDown(e: React.PointerEvent) {
+    const el = scroller.current;
+    if (!el) return;
+    drag.current = { down: true, startX: e.pageX, startLeft: el.scrollLeft, moved: false };
+    el.setPointerCapture(e.pointerId);
+  }
+  function onMove(e: React.PointerEvent) {
+    const el = scroller.current;
+    if (!el || !drag.current.down) return;
+    const dx = e.pageX - drag.current.startX;
+    if (Math.abs(dx) > 3) drag.current.moved = true;
+    el.scrollLeft = drag.current.startLeft - dx;
+  }
+  function onUp(e: React.PointerEvent) {
+    const el = scroller.current;
+    drag.current.down = false;
+    if (el && el.hasPointerCapture(e.pointerId)) el.releasePointerCapture(e.pointerId);
+  }
 
   return (
-    <div ref={ref} style={{ height: `${N * 16}vh` }}>
-      <div className="sticky top-0 flex h-[100svh] items-center">
-        <div className="shell-wide w-full">
-        <motion.div
-          className="relative aspect-[1672/665] w-full overflow-hidden rounded-card bg-mount"
-          style={{
-            backgroundImage: `url(${STRIP})`,
-            backgroundRepeat: "no-repeat",
-            backgroundSize: `auto ${ZOOM * 100}%`,
-            backgroundPosition,
-            scale,
-            rotateX,
-            transformPerspective: 1100,
-          }}
-        />
+    <div className="pb-section pt-12 md:pt-14">
+      <div
+        ref={scroller}
+        onPointerDown={onDown}
+        onPointerMove={onMove}
+        onPointerUp={onUp}
+        onPointerCancel={onUp}
+        className="flex cursor-grab snap-x snap-proximity gap-5 overflow-x-auto px-[max(1.25rem,calc((100vw-1440px)/2+1.25rem))] pb-4 active:cursor-grabbing md:gap-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {TEAM.map((m, i) => (
+          <PillCard key={m.src} member={m} tone={TONES[i % TONES.length]} priority={i < 5} />
+        ))}
+      </div>
 
-        <div className="mt-6 flex w-full items-center justify-between font-mono text-2xs uppercase tracking-label text-ink-muted">
-          <span>The studio team</span>
-          <span>
-            {pad(active + 1)} <span className="text-ink/30">/ {pad(N)}</span>
-          </span>
-        </div>
-        </div>
+      <div className="shell-wide mt-7 flex items-center justify-between font-mono text-2xs uppercase tracking-label text-ink-muted">
+        <span>Drag to meet the team</span>
+        <span>
+          {String(TEAM.length).padStart(2, "0")} <span className="text-ink/30">people</span>
+        </span>
       </div>
     </div>
   );
 }
 
-/** Reduced-motion fallback — the whole strip, shown calmly. */
-function StripStatic() {
+function PillCard({ member, tone, priority }: { member: Member; tone: string; priority: boolean }) {
   return (
-    <div className="shell-wide pb-section pt-12">
-      <div className="relative w-full overflow-hidden rounded-card bg-mount" style={{ aspectRatio: String(IMG_ASPECT) }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={STRIP} alt="The Madane Design Workshop studio team." className="h-full w-full object-cover" />
+    <div
+      className="group relative aspect-[1/2.35] w-[clamp(11rem,17vw,13.5rem)] shrink-0 snap-center select-none overflow-hidden rounded-full"
+      style={{ backgroundColor: tone }}
+    >
+      {/* Name header */}
+      <div className="absolute inset-x-0 top-[7.5%] z-10 px-5 text-center">
+        <span className="block truncate font-display text-lg leading-tight tracking-tight text-ink md:text-xl">
+          {member.name}
+        </span>
+      </div>
+
+      {/* Portrait — fully rounded bottom to follow the pill, gentle top corners */}
+      <div className="absolute inset-x-2 bottom-2 top-[22%] overflow-hidden rounded-b-full rounded-t-[1.75rem] bg-mount">
+        <Image
+          src={member.src}
+          alt={`${member.name} — Madane Design Workshop.`}
+          fill
+          draggable={false}
+          sizes="(max-width:640px) 45vw, 220px"
+          priority={priority}
+          className="object-cover object-[50%_18%] grayscale transition-[filter,transform] duration-700 ease-editorial group-hover:scale-[1.03] group-hover:grayscale-0"
+        />
       </div>
     </div>
   );
