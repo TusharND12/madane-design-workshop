@@ -3,7 +3,7 @@ import { Bracket } from "@/components/primitives/Bracket";
 import { Reveal } from "@/components/primitives/Reveal";
 
 /**
- * Overview — the architecture-studio case-study header: an oversized concept
+ * Overview, the architecture-studio case-study header: an oversized concept
  * statement and supporting narrative on the left, a sticky specification table
  * on the right.
  */
@@ -22,7 +22,7 @@ export function Narrative({ project }: { project: Project }) {
     ...(project.client ? [{ label: "Client", value: project.client }] : []),
     { label: "Scope", value: project.scope.join(", ") },
     { label: "Services", value: project.services.join(" · ") },
-  ];
+  ].filter((s) => s.value !== "" && s.value !== null && s.value !== undefined);
 
   return (
     <section className="bg-paper">

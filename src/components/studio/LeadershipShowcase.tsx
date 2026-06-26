@@ -18,7 +18,7 @@ const initials = (name: string) =>
     .join("");
 
 /**
- * Leadership — an active portrait beside a clickable strip of the team. Selecting
+ * Leadership, an active portrait beside a clickable strip of the team. Selecting
  * a face grows its portrait to fill the frame and swaps the name, role and bio
  * alongside it. Mirrors the services accordion mechanic, synced to the copy.
  */
@@ -32,7 +32,7 @@ export function LeadershipShowcase({ items, socials, email }: { items: readonly 
 
   return (
     <div className="mt-12 grid gap-10 md:mt-16 md:grid-cols-12 md:gap-12">
-      {/* Left — the active leader */}
+      {/* Left, the active leader */}
       <div className="md:col-span-5 md:self-center">
         <AnimatePresence mode="wait">
           <motion.div
@@ -53,7 +53,7 @@ export function LeadershipShowcase({ items, socials, email }: { items: readonly 
                   href={s.href}
                   target={s.href.startsWith("http") ? "_blank" : undefined}
                   rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                  aria-label={`${a.name} — ${s.label}`}
+                  aria-label={`${a.name}, ${s.label}`}
                   className="flex h-9 w-9 items-center justify-center rounded-full border border-hairline text-ink-muted transition-colors duration-300 hover:border-ink hover:text-ink"
                 >
                   <SocialIcon label={s.label} />
@@ -91,7 +91,7 @@ export function LeadershipShowcase({ items, socials, email }: { items: readonly 
         </div>
       </div>
 
-      {/* Right — portrait strip */}
+      {/* Right, portrait strip */}
       <div className="md:col-span-7">
         <div className="flex h-[60vh] min-h-[420px] flex-col gap-2 md:h-[clamp(380px,52vh,520px)] md:flex-row">
           {items.map((m, i) => {
@@ -115,7 +115,7 @@ export function LeadershipShowcase({ items, socials, email }: { items: readonly 
                 {m.portrait ? (
                   <Image
                     src={m.portrait}
-                    alt={`${m.name} — ${m.role}.`}
+                    alt={`${m.name}, ${m.role}.`}
                     fill
                     sizes="(max-width:768px) 100vw, 40vw"
                     className={`object-cover object-top transition-all duration-700 ease-editorial ${isActive ? "grayscale-0 brightness-100" : "grayscale brightness-[0.78] group-hover:brightness-90"}`}

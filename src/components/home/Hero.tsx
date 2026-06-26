@@ -20,7 +20,7 @@ export function Hero() {
   const yText = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
-  // Mouse parallax — very subtle perspective shift.
+  // Mouse parallax, very subtle perspective shift.
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
   const px = useSpring(mx, { stiffness: 60, damping: 20 });
@@ -60,11 +60,11 @@ export function Hero() {
         </motion.div>
       </motion.div>
 
-      {/* Legibility scrim — quiet, no gradient colour, just ink falloff */}
+      {/* Legibility scrim, quiet, no gradient colour, just ink falloff */}
       <div className="absolute inset-0 bg-gradient-to-b from-paper/55 via-paper/20 to-paper/70" aria-hidden="true" />
       <div className="absolute inset-0 bg-paper/10" aria-hidden="true" />
 
-      {/* Film grade — big monitors only. A cinematic vignette deepens the corners
+      {/* Film grade, big monitors only. A cinematic vignette deepens the corners
           and a faint warm bloom rides the upper edge, so the frame reads graded
           and dramatic on large screens. Hidden at ≤1600px (smaller stays clean). */}
       <div
@@ -105,7 +105,7 @@ export function Hero() {
             </h1>
 
             <motion.p variants={wordReveal} className="mt-8 max-w-lead text-lead font-light text-ink/80">
-              A quiet, precise design workshop — architecture, interiors and turnkey delivery for living and for work.
+              A quiet, precise design workshop, architecture, interiors and turnkey delivery for living and for work.
             </motion.p>
 
             <motion.div variants={wordReveal} className="mt-10 flex flex-wrap items-center gap-6">

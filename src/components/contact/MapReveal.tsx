@@ -15,7 +15,7 @@ export function MapReveal() {
     <div ref={ref} className="relative h-[52vh] min-h-[360px] w-full overflow-hidden bg-stone">
       {inView && (
         <iframe
-          title={`Map — ${site.contact.city}`}
+          title={`Map, ${site.contact.city}`}
           src={src}
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"

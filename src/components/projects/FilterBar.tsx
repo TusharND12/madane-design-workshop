@@ -8,7 +8,7 @@ import type { ProjectType } from "@/lib/schema";
 const OPTION_STYLE: React.CSSProperties = { backgroundColor: "#181818", color: "#ECECE6" };
 
 /**
- * Archive filter — by type and location, instant + animated + URL-synced.
+ * Archive filter, by type and location, instant + animated + URL-synced.
  * Stateless; parent owns the active values and persists them to the URL.
  */
 export function FilterBar({

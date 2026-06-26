@@ -12,7 +12,7 @@ import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 /**
  * Services as cinematic, pinned "acts" (Apple iPhone-Pro style). Each service
- * fills the screen — macro image + giant Gantari name — handing off on scroll.
+ * fills the screen, macro image + giant Gantari name, handing off on scroll.
  */
 export function ServicesShowcase() {
   const services = getServices();

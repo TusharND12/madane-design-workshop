@@ -8,7 +8,7 @@ import { MapReveal } from "@/components/contact/MapReveal";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Start an enquiry with Madane Design Workshop — architecture, interiors and turnkey for homes and workspaces. WhatsApp, call or email the studio directly.",
+    "Start an enquiry with Madane Design Workshop, architecture, interiors and turnkey for homes and workspaces. WhatsApp, call or email the studio directly.",
   alternates: { canonical: "/contact" },
 };
 

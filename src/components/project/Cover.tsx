@@ -15,7 +15,12 @@ export function Cover({ project }: { project: Project }) {
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "14%"]);
   const fade = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
-  const meta = [project.type, project.location, String(project.year), project.area];
+  const meta = [
+    { label: "Discipline", value: project.type },
+    { label: "Location", value: project.location },
+    { label: "Year", value: String(project.year) },
+    { label: "Area", value: project.area },
+  ].filter((m) => m.value !== "" && m.value !== null && m.value !== undefined);
 
   return (
     <section ref={ref} data-invert-zone className="on-ink relative h-[100svh] min-h-[600px] w-full overflow-hidden bg-paper text-ink">
@@ -37,10 +42,10 @@ export function Cover({ project }: { project: Project }) {
               {project.narrative.brief}
             </motion.p>
             <motion.dl variants={wordReveal} className="mt-10 flex flex-wrap gap-x-10 gap-y-3 border-t border-ink/20 pt-6 font-mono text-2xs uppercase tracking-label text-ink/75">
-              {meta.map((m, i) => (
-                <div key={i} className="flex flex-col gap-1">
-                  <dt className="text-ink/45">{["Discipline", "Location", "Year", "Area"][i]}</dt>
-                  <dd className="text-ink">{m}</dd>
+              {meta.map((m) => (
+                <div key={m.label} className="flex flex-col gap-1">
+                  <dt className="text-ink/45">{m.label}</dt>
+                  <dd className="text-ink">{m.value}</dd>
                 </div>
               ))}
             </motion.dl>

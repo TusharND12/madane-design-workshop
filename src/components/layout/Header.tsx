@@ -41,7 +41,7 @@ export function Header() {
         setHidden(bottom > 120);
       } else {
         // On pages with a sticky filter bar (the projects archive), hide the
-        // main header once that bar scrolls up and sticks to the top — so the
+        // main header once that bar scrolls up and sticks to the top, so the
         // two bars never stack.
         const filter = document.querySelector<HTMLElement>("[data-filter-bar]");
         if (filter) {
@@ -71,7 +71,7 @@ export function Header() {
 
   return (
     <>
-      {/* Top fade — content dissolves as it scrolls up into the header band and
+      {/* Top fade, content dissolves as it scrolls up into the header band and
           returns to full opacity once it passes below. Hidden with the header. */}
       <motion.div
         aria-hidden="true"

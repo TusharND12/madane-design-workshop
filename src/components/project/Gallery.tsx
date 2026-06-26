@@ -8,7 +8,7 @@ import type { GalleryImage } from "@/lib/schema";
 import { Bracket } from "@/components/primitives/Bracket";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
-/** Mixed-ratio image sequence — full-bleed, two-up, detail crops (PRD P3). */
+/** Mixed-ratio image sequence, full-bleed, two-up, detail crops (PRD P3). */
 export function Gallery({ images, name }: { images: GalleryImage[]; name: string }) {
   return (
     <section className="bg-paper">
@@ -41,7 +41,7 @@ function Figure({ img, name, index }: { img: GalleryImage; name: string; index: 
   const ref = useRef<HTMLDivElement>(null);
   const reduced = usePrefersReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  // 8% parallax travel — felt, not seen (PRD §6.5).
+  // 8% parallax travel, felt, not seen (PRD §6.5).
   const y = useTransform(scrollYProgress, [0, 1], reduced ? ["0%", "0%"] : ["-8%", "8%"]);
 
   return (
@@ -66,7 +66,7 @@ function Figure({ img, name, index }: { img: GalleryImage; name: string; index: 
         </motion.div>
       </div>
       <figcaption className="mt-3 font-mono text-2xs uppercase tracking-label text-ink-muted">
-        {String(index + 1).padStart(2, "0")} · {img.alt.replace(`${name} — `, "")}
+        {String(index + 1).padStart(2, "0")} · {img.alt.replace(`${name}, `, "")}
       </figcaption>
     </motion.figure>
   );

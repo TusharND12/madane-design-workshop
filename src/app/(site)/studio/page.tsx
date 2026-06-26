@@ -12,7 +12,7 @@ import { EnquiryBand } from "@/components/common/EnquiryBand";
 export const metadata: Metadata = {
   title: "Studio",
   description:
-    "Madane Design Workshop is a Mumbai-based, full-service architecture and design-build studio founded in 2008 — leadership, capabilities, principles and accreditations.",
+    "Madane Design Workshop is a Mumbai-based, full-service architecture and design-build studio founded in 2008, leadership, capabilities, principles and accreditations.",
   alternates: { canonical: "/studio" },
 };
 
@@ -38,7 +38,7 @@ export default function StudioPage() {
         }
       />
 
-      {/* 01 — Who we are */}
+      {/* 01, Who we are */}
       <section className="bg-paper">
         <div className="shell-wide pb-section">
           <SectionHeader index="01" label="Who we are" title="A full-service design-build studio." align="between" intro={studio.philosophy[0]} />
@@ -52,7 +52,7 @@ export default function StudioPage() {
         </div>
       </section>
 
-      {/* 02 — Numbers */}
+      {/* 02, Numbers */}
       <section className="bg-paper">
         <div className="shell-wide pb-section">
           <Reveal className="grid grid-cols-2 gap-px overflow-hidden rounded-card border border-hairline bg-hairline md:grid-cols-4">
@@ -66,7 +66,7 @@ export default function StudioPage() {
         </div>
       </section>
 
-      {/* 03 — Leadership */}
+      {/* 03, Leadership */}
       <section className="bg-stone/40">
         <div className="shell-wide py-section">
           <SectionHeader index="02" label="Leadership" title="The partners behind the practice." align="between" intro="A multidisciplinary leadership team with deep roots in architecture, design, contracts and strategy. Select a face to read more." />
@@ -81,13 +81,13 @@ export default function StudioPage() {
         </div>
       </section>
 
-      {/* 03b — The crew */}
+      {/* 03b, The crew */}
       <TeamShowcase />
 
-      {/* 04 — What we design & build */}
+      {/* 04, What we design & build */}
       <section className="bg-paper">
         <div className="shell-wide py-section">
-          <SectionHeader index="04" label="Capabilities" title="What we design & build." align="between" intro="From a single working floor to a whole building — across sectors, in India and internationally." />
+          <SectionHeader index="04" label="Capabilities" title="What we design & build." align="between" intro="From a single working floor to a whole building, across sectors, in India and internationally." />
           <div className="mt-12 grid grid-cols-1 gap-x-10 sm:grid-cols-2 lg:grid-cols-3">
             {studio.capabilities.map((c, i) => (
               <Reveal as="div" key={c} delay={(i % 3) * 0.04} className="flex items-baseline gap-4 border-t border-hairline py-5">
@@ -99,7 +99,7 @@ export default function StudioPage() {
         </div>
       </section>
 
-      {/* 05 — Principles */}
+      {/* 05, Principles */}
       <section className="bg-stone/40">
         <div className="shell-wide py-section">
           <SectionHeader index="05" label="Principles" title="Five things we hold to." />
@@ -115,7 +115,7 @@ export default function StudioPage() {
         </div>
       </section>
 
-      {/* 06 — Accreditations & Clients */}
+      {/* 06, Accreditations & Clients */}
       <section className="bg-paper">
         <div className="shell-wide py-section">
           <SectionHeader index="06" label="Recognition" title="Accredited, and trusted." align="between" intro="IGBC & USGBC Platinum / Gold certified projects for the majority of our clients." />

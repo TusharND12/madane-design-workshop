@@ -2,7 +2,7 @@ import Link from "next/link";
 import { site } from "@/content/site";
 import { FooterMark } from "@/components/layout/FooterMark";
 
-/** The calm full stop — giant wordmark, link columns, status bar (dark theme). */
+/** The calm full stop, giant wordmark, link columns, status bar (dark theme). */
 const NAV = [
   { label: "Studio", href: "/studio" },
   { label: "Projects", href: "/projects" },
@@ -16,19 +16,19 @@ export function Footer() {
 
   return (
     <footer className="on-ink relative z-0 overflow-hidden bg-paper text-ink">
-      {/* Giant wordmark — sits in the band between the CTA card and the columns */}
+      {/* Giant wordmark, sits in the band between the CTA card and the columns */}
       <FooterMark />
 
       <div className="relative shell-wide pb-10 pt-[clamp(2.5rem,6vw,4.5rem)]">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-8">
           {/* Logo + tagline */}
           <div className="lg:col-span-5">
-            <Link href="/" className="inline-flex flex-col" aria-label="Madane Design Workshop — home">
+            <Link href="/" className="inline-flex flex-col" aria-label="Madane Design Workshop, home">
               <span className="font-display text-2xl lowercase leading-none tracking-tight text-ink">madane</span>
               <span className="mt-1 font-mono text-[0.6rem] uppercase tracking-[0.34em] text-ink/45">Design Workshop</span>
             </Link>
             <p className="mt-6 max-w-xs text-sm leading-relaxed text-ink/55">
-              We design &amp; build — architecture, interiors and turnkey, since 2008.
+              We design &amp; build, architecture, interiors and turnkey, since 2008.
             </p>
           </div>
 

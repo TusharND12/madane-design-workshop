@@ -4,7 +4,7 @@ import { getServices } from "@/lib/cms";
 import { SectionHeader } from "@/components/primitives/SectionHeader";
 import { Reveal } from "@/components/primitives/Reveal";
 
-/** Four soft teaser cards — the GrandPool density block (PRD H5, §6.3 radius). */
+/** Four soft teaser cards, the GrandPool density block (PRD H5, §6.3 radius). */
 export function ServicesTeaser() {
   const services = getServices();
   return (
@@ -14,7 +14,7 @@ export function ServicesTeaser() {
           index="03"
           label="Services"
           title="Four ways we work."
-          intro="From a single room to a whole building, designed and — when you want it — delivered."
+          intro="From a single room to a whole building, designed and, when you want it, delivered."
           align="between"
         />
 

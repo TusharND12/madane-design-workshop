@@ -40,7 +40,7 @@ export function ServicesCards() {
           index="03"
           label="Services"
           title="Four ways we work."
-          intro="From a single room to a whole building, designed and — when you want it — delivered."
+          intro="From a single room to a whole building, designed and, when you want it, delivered."
           align="between"
         />
 
@@ -67,7 +67,7 @@ export function ServicesCards() {
                 onMouseEnter={() => setActive(i)}
                 onFocus={() => setActive(i)}
                 onClick={() => setActive(i)}
-                aria-label={`${s.title} — ${s.tagline}`}
+                aria-label={`${s.title}, ${s.tagline}`}
                 className="group relative block overflow-hidden rounded-card bg-mount md:h-full"
                 style={{
                   flexGrow: reduced ? 1 : isActive ? (isMobile ? 4 : 6) : 1,
@@ -88,12 +88,12 @@ export function ServicesCards() {
                   {/* Scrim for legibility */}
                   <div className="absolute inset-0 bg-gradient-to-t from-paper/85 via-paper/10 to-paper/15" aria-hidden="true" />
 
-                  {/* Index — always visible */}
+                  {/* Index, always visible */}
                   <span className="absolute left-5 top-4 font-mono text-2xs tracking-label text-ink mix-blend-difference">
                     {s.index}
                   </span>
 
-                  {/* Expand affordance — a "+" on collapsed panels, fades when open */}
+                  {/* Expand affordance, a "+" on collapsed panels, fades when open */}
                   <motion.span
                     animate={{ opacity: isActive ? 0 : 1, rotate: isActive ? 45 : 0 }}
                     transition={{ duration: 0.4, ease: EASE }}
@@ -131,7 +131,7 @@ export function ServicesCards() {
                     </span>
                   </motion.div>
 
-                  {/* Mobile title (collapsed rows) — fades out on the open panel */}
+                  {/* Mobile title (collapsed rows), fades out on the open panel */}
                   <motion.span
                     animate={{ opacity: isActive ? 0 : 1 }}
                     transition={{ duration: 0.35, ease: EASE }}
@@ -145,7 +145,7 @@ export function ServicesCards() {
           })}
         </div>
 
-        {/* Mobile stepper — prev/next through the four services, with an index.
+        {/* Mobile stepper, prev/next through the four services, with an index.
             Tapping a panel still works; this is the explicit control on phones. */}
         <div className="mt-6 flex items-center justify-between md:hidden">
           <span className="font-mono text-2xs uppercase tracking-label tabular-nums text-ink-muted">

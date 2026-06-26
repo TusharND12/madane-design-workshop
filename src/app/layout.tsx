@@ -4,7 +4,7 @@ import { site } from "@/content/site";
 import { organizationSchema, localBusinessSchema } from "@/lib/seo";
 import "./globals.css";
 
-// ITC Avant Garde Gothic LT — the studio typeface, used site-wide. Only Extra
+// ITC Avant Garde Gothic LT, the studio typeface, used site-wide. Only Extra
 // Light and Medium weights (+ obliques) are supplied, so heavier requests fall
 // back to Medium and lighter to Extra Light via the browser's weight matching.
 const avantGarde = localFont({
@@ -28,7 +28,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} — Architecture, Interiors & Turnkey`,
+    default: `${site.name}, Architecture, Interiors & Turnkey`,
     template: `%s · ${site.name}`,
   },
   description: site.description,
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: site.name,
-    title: `${site.name} — Architecture, Interiors & Turnkey`,
+    title: `${site.name}, Architecture, Interiors & Turnkey`,
     description: site.description,
     url: site.url,
     locale: "en_IN",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.name} — Architecture, Interiors & Turnkey`,
+    title: `${site.name}, Architecture, Interiors & Turnkey`,
     description: site.description,
     images: ["/assets/hero/p-34.jpg"],
   },
@@ -59,8 +59,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={avantGarde.variable}>
       <body>
-        {/* Runs during HTML parse — before the browser's load-time scroll
-            restoration — so every (re)load starts at the top, on every page. */}
+        {/* Runs during HTML parse, before the browser's load-time scroll
+            restoration, so every (re)load starts at the top, on every page. */}
         <script
           dangerouslySetInnerHTML={{
             __html: "try{if('scrollRestoration' in history)history.scrollRestoration='manual';}catch(e){}",

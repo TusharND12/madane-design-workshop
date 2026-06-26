@@ -97,7 +97,7 @@ function Cell({
 
   return (
     <div className={cn("group relative flex flex-col rounded-card p-6 md:p-7", card.span)}>
-      {/* outline — draws with scroll */}
+      {/* outline, draws with scroll */}
       <svg
         className="pointer-events-none absolute inset-0 h-full w-full text-hairline transition-colors duration-500 group-hover:text-ink/35"
         aria-hidden="true"

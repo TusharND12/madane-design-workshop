@@ -9,7 +9,7 @@ import { cn } from "@/lib/cn";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 /**
- * By the numbers — the studio's record read against its own built work. The four
+ * By the numbers, the studio's record read against its own built work. The four
  * figures count up across the top while a faint line-art skyline (the same
  * drawing used on the home page) rises behind them, so the proof literally
  * stands on the architecture.
@@ -110,7 +110,7 @@ function Stat({ value, play, className }: { value: string; play: boolean; classN
 }
 
 /* ------------------------------------------------------------------ */
-/*  Warli art — a faint tribal frieze (Maharashtra) drawn in line:     */
+/*  Warli art, a faint tribal frieze (Maharashtra) drawn in line:     */
 /*  the tarpa dancers, trees, huts and sun. Background ornament only.   */
 /* ------------------------------------------------------------------ */
 const GROUND = 262;

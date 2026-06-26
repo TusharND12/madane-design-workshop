@@ -54,7 +54,7 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
             </button>
           </div>
 
-          {/* Right-hand camera-zoom dial — the items ride a gentle arc anchored to
+          {/* Right-hand camera-zoom dial, the items ride a gentle arc anchored to
               the right edge: the centre item reaches furthest in and the ends ease
               back. Same labels, same sizes; only a per-row right offset curves it. */}
           <nav aria-label="Primary" className="shell-wide flex flex-1 flex-col items-end justify-center gap-1 py-12 text-right">

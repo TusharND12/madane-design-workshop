@@ -21,7 +21,7 @@
     -moz-osx-font-smoothing: grayscale;
     scroll-behavior: auto; /* Lenis owns scrolling */
 
-    /* Fluid root scale — every rem-based size (type, spacing, radius) scales
+    /* Fluid root scale, every rem-based size (type, spacing, radius) scales
        with the viewport from one knob. Tuned to stay at 16px through 1440px
        (where the layout is designed), then grow on larger monitors so the
        site never looks small on big screens, and ease down on small phones. */
@@ -63,7 +63,7 @@
     .wave-drift { animation: none; }
   }
 
-  /* Seamless credential ticker — two identical tracks slide one full width */
+  /* Seamless credential ticker, two identical tracks slide one full width */
   @keyframes marquee {
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
@@ -80,7 +80,7 @@
     text-wrap: balance;
   }
 
-  /* Visible, on-brand focus (a11y — WCAG 2.1 AA) */
+  /* Visible, on-brand focus (a11y, WCAG 2.1 AA) */
   :focus-visible {
     outline: 1.5px solid var(--ink);
     outline-offset: 3px;
@@ -210,7 +210,7 @@
   transform: none;
 }
 
-/* Big-screen hero — a slow continuous push so the shot feels alive and cinematic.
+/* Big-screen hero, a slow continuous push so the shot feels alive and cinematic.
    Scoped to large monitors; smaller screens keep the original static framing.
    (Disabled under reduced motion by the global rule below.) */
 @media (min-width: 1600px) {
@@ -278,7 +278,7 @@
 }
 
 /* ------------------------------------------------------------------ */
-/*  Reduced motion — all motion becomes an instant cross-fade (PRD)   */
+/*  Reduced motion, all motion becomes an instant cross-fade (PRD)   */
 /* ------------------------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -299,7 +299,7 @@
 }
 
 /* ------------------------------------------------------------------ */
-/*  Reduced transparency — drop the purely decorative grain so the     */
+/*  Reduced transparency, drop the purely decorative grain so the     */
 /*  composite is simpler; informational surfaces keep their own solid  */
 /*  fallbacks. (No effect unless the user opts in at the OS level.)     */
 /* ------------------------------------------------------------------ */
@@ -310,7 +310,7 @@
 }
 
 /* ------------------------------------------------------------------ */
-/*  Windows High Contrast / forced-colors — keep the site usable when  */
+/*  Windows High Contrast / forced-colors, keep the site usable when  */
 /*  the OS overrides the palette: map focus to system colours and hide */
 /*  decorative-only layers that carry no information. (Scoped to the    */
 /*  forced-colors mode, so zero effect for everyone else.)             */

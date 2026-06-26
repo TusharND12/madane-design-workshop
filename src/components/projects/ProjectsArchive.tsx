@@ -98,7 +98,7 @@ export function ProjectsArchive({
         <EmptyState onReset={() => { handleType("All"); handleLocation("All"); }} />
       ) : (
         <div className="relative mt-8 px-6 pb-14 pt-12 md:mt-10 md:px-12">
-          {/* Line-art building shell — the cards read as floors inside it */}
+          {/* Line-art building shell, the cards read as floors inside it */}
           <ArchitectureFrame />
           <motion.div layout className="relative z-10 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
             <AnimatePresence mode="popLayout">
@@ -126,7 +126,7 @@ function GalleryCard({ project, index, priority }: { project: Project; index: nu
   return (
     <Link
       href={`/projects/${project.slug}`}
-      aria-label={`${project.name} — ${project.type}, ${project.city} ${project.year}`}
+      aria-label={`${project.name}, ${project.type}, ${project.city} ${project.year}`}
       className="group block"
     >
       {/* Image */}
@@ -161,7 +161,7 @@ function GalleryCard({ project, index, priority }: { project: Project; index: nu
 function EmptyState({ onReset }: { onReset: () => void }) {
   return (
     <div className="flex flex-col items-center gap-6 border-t border-hairline py-32 text-center">
-      <p className="font-display text-2xl tracking-tight">No projects in this combination — yet.</p>
+      <p className="font-display text-2xl tracking-tight">No projects in this combination, yet.</p>
       <p className="max-w-prose text-sm text-ink-muted">Every filter is shareable; try a broader discipline or a different city.</p>
       <ButtonAction variant="tertiary" onClick={onReset} arrow>
         Reset filters

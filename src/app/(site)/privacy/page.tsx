@@ -19,7 +19,7 @@ export default function PrivacyPage() {
         {
           heading: "What we collect",
           body: [
-            "When you submit an enquiry we collect the details you provide — your name, contact details, and what you tell us about your project. We also collect basic, anonymised analytics about how the site is used so we can improve it.",
+            "When you submit an enquiry we collect the details you provide, your name, contact details, and what you tell us about your project. We also collect basic, anonymised analytics about how the site is used so we can improve it.",
             "We do not collect sensitive personal data, and we never sell or rent your information to anyone.",
           ],
         },

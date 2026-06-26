@@ -61,7 +61,7 @@ export function ContactForm() {
           <motion.circle cx="22" cy="22" r="21" stroke="currentColor" strokeWidth="1" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.8, ease: EASE }} />
           <motion.path d="M13 22.5l6 6 12-13" stroke="currentColor" strokeWidth="1.4" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ delay: 0.4, duration: 0.6, ease: EASE }} />
         </motion.svg>
-        <h2 className="mt-8 font-display text-3xl tracking-tight">Thank you — it&rsquo;s with us.</h2>
+        <h2 className="mt-8 font-display text-3xl tracking-tight">Thank you, it&rsquo;s with us.</h2>
         <p className="mt-4 max-w-prose text-base text-ink-muted">
           We read every enquiry ourselves and reply within one working day. For anything urgent, WhatsApp is the fastest way to reach the studio.
         </p>
@@ -99,7 +99,7 @@ export function ContactForm() {
         <AnimatePresence>
           {status === "error" && (
             <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="font-mono text-2xs uppercase tracking-label text-ink">
-              Something went wrong — please WhatsApp us instead.
+              Something went wrong, please WhatsApp us instead.
             </motion.span>
           )}
         </AnimatePresence>
@@ -165,7 +165,7 @@ function SelectField({
           className="w-full appearance-none rounded-none border-0 border-b border-ink/20 bg-transparent py-3 pr-8 text-lead text-ink outline-none transition-colors duration-300 focus:border-ink"
         >
           {options.map((o) => (
-            <option key={o || "none"} value={o}>{o === "" ? placeholder ?? "—" : o}</option>
+            <option key={o || "none"} value={o}>{o === "" ? placeholder ?? "" : o}</option>
           ))}
         </select>
         <span className="pointer-events-none absolute right-1 top-1/2 -translate-y-1/2 text-ink-muted" aria-hidden="true">↓</span>

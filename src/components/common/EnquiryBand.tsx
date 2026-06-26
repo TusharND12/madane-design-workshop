@@ -2,7 +2,7 @@ import Link from "next/link";
 import { site } from "@/content/site";
 
 /**
- * Closing CTA — a floating dark card on the light footer region (reference
+ * Closing CTA, a floating dark card on the light footer region (reference
  * layout). Heading on the left, supporting line + actions on the right.
  */
 export function EnquiryBand({
@@ -43,7 +43,7 @@ export function EnquiryBand({
 
             <div className="md:pl-8">
               <p className="max-w-sm text-sm leading-relaxed text-ink/55">
-                Architecture, interiors and turnkey delivery — tell us about the space and we&rsquo;ll shape it with you.
+                Architecture, interiors and turnkey delivery, tell us about the space and we&rsquo;ll shape it with you.
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
                 <Link

@@ -3,7 +3,7 @@ import { Reveal } from "@/components/primitives/Reveal";
 import { cn } from "@/lib/cn";
 
 /**
- * Calm inner-page opener — bracket label + oversized Gantari title + lead.
+ * Calm inner-page opener, bracket label + oversized Gantari title + lead.
  * Sits below the fixed header (top padding reserved). No layout shift.
  */
 export function PageIntro({

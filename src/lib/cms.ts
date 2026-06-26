@@ -6,7 +6,7 @@ import type { Project, ProjectType } from "@/lib/schema";
 
 /**
  * Read API for content. This is the single seam between the UI and the data
- * source — today it reads typed local content; swapping to Sanity means
+ * source, today it reads typed local content; swapping to Sanity means
  * reimplementing only these functions (PRD §7, §10 CMS).
  */
 

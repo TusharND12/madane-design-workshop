@@ -3,7 +3,7 @@ import { z } from "zod";
 /**
  * Content schemas (Zod). These mirror a headless-CMS model 1:1 (PRD §F-1, §7).
  * The local /content layer validates against these; swapping to Sanity later
- * requires no component changes — only the loader in lib/cms.ts.
+ * requires no component changes, only the loader in lib/cms.ts.
  */
 
 export const ProjectType = z.enum(["Architecture", "Interior", "Exterior", "Turnkey"]);

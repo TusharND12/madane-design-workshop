@@ -1,18 +1,18 @@
 import type { TeamMember, Client } from "@/lib/schema";
 
 /**
- * Studio content — real facts sourced from Madane Design Workshop's company
+ * Studio content, real facts sourced from Madane Design Workshop's company
  * profile (00_DOCUMENTS: PHILOSOPHY+VISION+ABOUT US, CLIENT LIST, NEWS).
  * Founded 2008, Chembur, Mumbai. NOTE: milestone years beyond the 2008 founding
- * are indicative — confirm exact dates with the studio.
+ * are indicative, confirm exact dates with the studio.
  */
 export const studio = {
   philosophyLead:
-    "We design and build — architecture, interiors and turnkey delivery — and try, above all, to make the result feel inevitable.",
+    "We design and build, architecture, interiors and turnkey delivery, and try, above all, to make the result feel inevitable.",
   philosophy: [
-    "Madane Design Workshop LLP is a Mumbai-based, full-service architecture and design-build studio founded in 2008. From our base in Chembur, a 52-person creative team works alongside specialist contracting partners to deliver high-performance, energy-efficient and sustainable spaces — corporate headquarters, commercial offices, industrial facilities, dark stores, luxury residences and hospitality — across India and internationally.",
-    "We believe a space is finished not when there is nothing left to add, but when there is nothing left to remove. We hold to a single material logic, let daylight do the dramatic work, and detail the few things you actually touch to the tolerance of furniture — so the result feels as though it could not have been any other way.",
-    "Our work is grounded in five principles — knowledge, patience, love, justice and dedication. We work the same way whether the project is a private villa or a corporate floor: understand it completely, commit to one idea, and deliver it through BIM-integrated workflows and IGBC & USGBC green-building standards.",
+    "Madane Design Workshop LLP is a Mumbai-based, full-service architecture and design-build studio founded in 2008. From our base in Chembur, a 52-person creative team works alongside specialist contracting partners to deliver high-performance, energy-efficient and sustainable spaces, corporate headquarters, commercial offices, industrial facilities, dark stores, luxury residences and hospitality, across India and internationally.",
+    "We believe a space is finished not when there is nothing left to add, but when there is nothing left to remove. We hold to a single material logic, let daylight do the dramatic work, and detail the few things you actually touch to the tolerance of furniture, so the result feels as though it could not have been any other way.",
+    "Our work is grounded in five principles, knowledge, patience, love, justice and dedication. We work the same way whether the project is a private villa or a corporate floor: understand it completely, commit to one idea, and deliver it through BIM-integrated workflows and IGBC & USGBC green-building standards.",
   ],
   vision: "Giving the world things they haven't imagined before.",
   accreditations: ["COA", "IGBC", "IIID", "IIA", "USGBC"],
@@ -43,7 +43,7 @@ export const studio = {
       name: "Akshay Arun Madane",
       role: "Founding Partner · Business & Contracting",
       credential: "Contracts & turnkey delivery",
-      bio: "Founding partner heading business and contracting. He runs turnkey delivery end to end — procurement, contracts and site execution — keeping every project accountable to one team, on time.",
+      bio: "Founding partner heading business and contracting. He runs turnkey delivery end to end, procurement, contracts and site execution, keeping every project accountable to one team, on time.",
       portrait: "/assets/team-clean/akshay.jpg",
     },
     {
@@ -57,7 +57,7 @@ export const studio = {
       name: "Priyanka Akshay Madane",
       role: "Partner · Business Development & Marketing",
       credential: "Growth & client relations",
-      bio: "Partner leading business development and marketing. She owns client relationships, growth and the studio's brand — the first point of contact for new work.",
+      bio: "Partner leading business development and marketing. She owns client relationships, growth and the studio's brand, the first point of contact for new work.",
       portrait: "",
     },
   ],
@@ -86,7 +86,7 @@ export const studio = {
   ],
 };
 
-// Real leadership — the four founding/partner team (company profile).
+// Real leadership, the four founding/partner team (company profile).
 // Portraits map to the studio's own team photography where available; Priyanka
 // falls back to an initial-monogram avatar (portrait: "").
 export const team: TeamMember[] = [

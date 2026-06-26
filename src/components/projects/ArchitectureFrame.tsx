@@ -5,7 +5,7 @@ import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { EASE } from "@/lib/motion";
 
 /**
- * Decorative line-art "building" wrapped around the project grid — a flat-roof
+ * Decorative line-art "building" wrapped around the project grid, a flat-roof
  * structure standing on slender pilotis above a ground line, drawn from
  * hairlines, so the cards read as floors placed inside an architectural shell.
  * Purely decorative; the lines draw in once on scroll.

@@ -13,7 +13,7 @@ export function SelectedWork() {
           index="01"
           label="Selected Work"
           title="A practice measured in finished rooms."
-          intro="Six recent projects across homes and workspaces — each resolved to a single, quiet idea."
+          intro="Six recent projects across homes and workspaces, each resolved to a single, quiet idea."
           align="between"
         />
       </div>

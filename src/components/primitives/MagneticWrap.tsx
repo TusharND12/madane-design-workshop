@@ -5,7 +5,7 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 /**
- * Magnetic hover — the element drifts a few px toward the cursor, then settles.
+ * Magnetic hover, the element drifts a few px toward the cursor, then settles.
  * Subtle, no overshoot. Disabled for reduced motion and coarse pointers.
  */
 export function MagneticWrap({ children, strength = 0.35 }: { children: React.ReactNode; strength?: number }) {

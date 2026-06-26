@@ -1,7 +1,7 @@
 import { site } from "@/content/site";
 import { Bracket } from "@/components/primitives/Bracket";
 
-/** Direct channels beside the form — WhatsApp-first for Indian enquiries (PRD §8.7). */
+/** Direct channels beside the form, WhatsApp-first for Indian enquiries (PRD §8.7). */
 export function ContactRail() {
   const channels = [
     { label: "WhatsApp", value: "Message the studio", href: `https://wa.me/${site.contact.whatsapp}?text=${encodeURIComponent(site.contact.whatsappMessage)}` },

@@ -228,7 +228,7 @@ const SCREEN_MATRIX =
 function Monitor({ project, active }: { project: Project; active: number }) {
   return (
     <div className="relative h-[1024px] w-[1536px]">
-      {/* The mockup frame (screen blackened — video replaces it exactly) */}
+      {/* The mockup frame (screen blackened, video replaces it exactly) */}
       <Image
         src="/assets/mockups/monitor-clean.png"
         alt="A Madane project on a studio display."

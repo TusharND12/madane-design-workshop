@@ -13,7 +13,7 @@ export function Facts({ project }: { project: Project }) {
     { label: "Scope", value: project.scope.join(", ") },
     { label: "Services", value: project.services.join(" · ") },
     ...(project.client ? [{ label: "Client", value: project.client }] : []),
-  ];
+  ].filter((r) => r.value !== "" && r.value !== null && r.value !== undefined);
 
   return (
     <section className="bg-sand/50">

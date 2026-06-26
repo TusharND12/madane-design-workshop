@@ -4,7 +4,7 @@ import { EnquiryBand } from "@/components/common/EnquiryBand";
 
 export type LegalSection = { heading: string; body: string[] };
 
-/** Shared template for privacy / terms — inherits the design system (PRD §8.9). */
+/** Shared template for privacy / terms, inherits the design system (PRD §8.9). */
 export function LegalPage({ label, title, updated, sections }: { label: string; title: string; updated: string; sections: LegalSection[] }) {
   return (
     <>

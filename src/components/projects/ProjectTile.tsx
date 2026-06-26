@@ -33,7 +33,7 @@ export function ProjectTile({
       href={`/projects/${project.slug}`}
       className={cn("group block", className)}
       data-cursor-view
-      aria-label={`${project.name} — ${project.type}, ${project.city} ${project.year}`}
+      aria-label={`${project.name}, ${project.type}, ${project.city} ${project.year}`}
     >
       <div className={cn("relative w-full overflow-hidden bg-mount", aspect)}>
         <motion.div

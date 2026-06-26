@@ -7,7 +7,7 @@ import { EnquiryBand } from "@/components/common/EnquiryBand";
 export const metadata: Metadata = {
   title: "Process",
   description:
-    "How Madane Design Workshop works — Discovery, Concept, Design Development, Execution and Handover. A clear sequence with no surprises.",
+    "How Madane Design Workshop works, Discovery, Concept, Design Development, Execution and Handover. A clear sequence with no surprises.",
   alternates: { canonical: "/process" },
 };
 

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 /**
- * Custom cursor — a hairline ink ring that trails the pointer and grows over
+ * Custom cursor, a hairline ink ring that trails the pointer and grows over
  * interactive / media elements. Desktop + fine-pointer only; off for reduced
  * motion and touch (native cursor restored).
  */

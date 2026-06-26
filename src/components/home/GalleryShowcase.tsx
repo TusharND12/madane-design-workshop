@@ -47,14 +47,14 @@ const SLIDES: Slide[] = [
     headline: "Architecture and interior, one continuous gesture.",
     video: "/assets/video/architecture-gesture.mp4",
     poster: "/assets/video/architecture-gesture.jpg",
-    alt: "Dawn Villa — architecture and interior conceived as one.",
+    alt: "Dawn Villa, architecture and interior conceived as one.",
   },
   {
     eyebrow: "Restraint",
     headline: "Finished when there is nothing left to remove.",
     video: "/assets/video/restraint-quiet.mp4",
     poster: "/assets/video/restraint-quiet.jpg",
-    alt: "A quiet, resolved space — restraint reading as confidence.",
+    alt: "A quiet, resolved space, restraint reading as confidence.",
   },
 ];
 
@@ -99,7 +99,7 @@ export function GalleryShowcase() {
         </div>
       </div>
 
-      {/* Carousel viewport — narrower than the section so neighbours peek */}
+      {/* Carousel viewport, narrower than the section so neighbours peek */}
       <div
         className="relative mx-auto mt-10 w-[88%] max-w-[1320px] touch-pan-y md:mt-14"
         onPointerDown={onPointerDown}
@@ -117,7 +117,7 @@ export function GalleryShowcase() {
           ))}
         </motion.div>
 
-        {/* Bottom control bar — segmented dot pager + play/pause */}
+        {/* Bottom control bar, segmented dot pager + play/pause */}
         <div className="absolute inset-x-0 bottom-5 z-30 flex justify-center md:bottom-7">
           <div className="flex items-center gap-4 rounded-full border border-ink/12 bg-paper/55 px-4 py-2.5 backdrop-blur-md">
             <div className="flex items-center gap-2">
@@ -215,7 +215,7 @@ function Card({
       >
         <source src={slide.video} type="video/mp4" />
       </video>
-      {/* Cinematic scrims — lighter on the active card so the centre reads bright */}
+      {/* Cinematic scrims, lighter on the active card so the centre reads bright */}
       <motion.div
         className="absolute inset-0 bg-gradient-to-b from-paper/60 via-transparent to-paper/55"
         animate={{ opacity: isActive ? 0.65 : 1 }}
@@ -231,7 +231,7 @@ function Card({
       />
 
       {/* Readability scrim concentrated behind the headline so white type reads
-          on bright, daylit footage — the cinematic centre stays bright. */}
+          on bright, daylit footage, the cinematic centre stays bright. */}
       <div
         className="pointer-events-none absolute inset-x-0 top-0 h-[60%] bg-gradient-to-b from-paper/75 via-paper/35 to-transparent"
         aria-hidden="true"

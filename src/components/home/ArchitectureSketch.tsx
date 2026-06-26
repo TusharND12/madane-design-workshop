@@ -16,7 +16,7 @@ import { Bracket } from "@/components/primitives/Bracket";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 /**
- * Architecture, drawn — the studio's built work reduced to a single line-art
+ * Architecture, drawn, the studio's built work reduced to a single line-art
  * skyline on black. As you scroll, the panorama assembles itself: equal columns
  * draw up from the ground one after another, left to right, until the whole
  * elevation stands complete and seamless, reading as one continuous drawing.
@@ -31,7 +31,7 @@ const ASPECT = 2.985; // 2167 × 726 source
 // width then follows from the aspect ratio and fills as much screen as it can.
 const MAX_H = "min(64vh, 760px)";
 const SKY_STYLE = { width: `min(100%, calc(${MAX_H} * ${ASPECT}))`, aspectRatio: `${ASPECT}` } as const;
-// How many slices the skyline is drawn in — finer than the building count for a
+// How many slices the skyline is drawn in, finer than the building count for a
 // smoother left-to-right assembly. Each column is a vertical window onto the
 // same image, so the slices tile back into the original panorama.
 const COLUMNS = 12;
@@ -69,7 +69,7 @@ function Scene({ total }: { total: number }) {
             </span>
           </div>
 
-          {/* Skyline — full-bleed, sized by the artwork's aspect ratio. Equal
+          {/* Skyline, full-bleed, sized by the artwork's aspect ratio. Equal
               columns slice the one panorama; they draw in left to right and tile
               back into a single seamless image on black. */}
           <div className="mt-auto w-full px-[var(--gutter)]">
@@ -126,7 +126,7 @@ function SketchColumn({
   );
 }
 
-/* Reduced motion — the full skyline shown at rest, no pin, no assembly. */
+/* Reduced motion, the full skyline shown at rest, no pin, no assembly. */
 function StaticSketch() {
   return (
     <section className="bg-black">

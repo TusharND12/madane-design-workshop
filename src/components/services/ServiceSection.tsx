@@ -26,7 +26,7 @@ export function ServiceSection({ service, flip }: { service: Service; flip: bool
     `linear-gradient(to bottom, transparent 0%, #000 18%, #000 82%, transparent 100%)`;
   return (
     <section id={service.slug} className="relative overflow-hidden bg-paper scroll-mt-[var(--header-h)]">
-      {/* Ambient colour bleed — a blurred copy of the image, its own colours flowing out */}
+      {/* Ambient colour bleed, a blurred copy of the image, its own colours flowing out */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <Image
           src={service.image}

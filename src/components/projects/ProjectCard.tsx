@@ -5,7 +5,7 @@ import Image from "next/image";
 import type { Project } from "@/lib/schema";
 
 /**
- * Project card — dark/black framed card with the cover floating on a near-black
+ * Project card, dark/black framed card with the cover floating on a near-black
  * panel, a title + short descriptor, and a pill "View project" action with a
  * circular arrow. Comes in two sizes (wide / narrow) for a bento archive grid.
  */
@@ -26,7 +26,7 @@ export function ProjectCard({
     <Link
       href={`/projects/${project.slug}`}
       data-cursor-view
-      aria-label={`${project.name} — ${project.type}, ${project.city} ${project.year}`}
+      aria-label={`${project.name}, ${project.type}, ${project.city} ${project.year}`}
       className="group flex h-full flex-col rounded-[18px] border border-hairline bg-mount p-3.5 transition-all duration-500 ease-editorial hover:-translate-y-1 hover:border-ink/20 hover:shadow-[0_38px_70px_-34px_rgba(0,0,0,0.9)]"
     >
       {/* Image floats on a near-black panel with breathing room */}
@@ -51,7 +51,7 @@ export function ProjectCard({
         <span className="font-mono text-[0.6rem] uppercase tracking-[0.22em] text-ink-muted">{project.type}</span>
         <h3 className="mt-2 font-display text-xl leading-tight tracking-tight md:text-2xl">{project.name}</h3>
         <p className="mt-1.5 text-sm leading-relaxed text-ink-muted">
-          {project.scope[0]} — {project.city}.
+          {project.scope[0]}, {project.city}.
         </p>
 
         <div className="mt-6 flex items-center justify-between pt-1">

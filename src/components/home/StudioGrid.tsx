@@ -10,7 +10,7 @@ import { fadeUp, stagger, viewportOnce } from "@/lib/motion";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 /**
- * Studio bento grid (AEROTECH-style) — a central brand panel framed by project
+ * Studio bento grid (AEROTECH-style), a central brand panel framed by project
  * image cards, manifesto blocks and a gallery strip. Cells fade in one by one.
  */
 const cell = "rounded-card border border-hairline";
@@ -49,7 +49,7 @@ export function StudioGrid() {
           <ImageCell
             className="md:col-span-3 md:col-start-1 md:row-start-1"
             src="/assets/hero/p-30.jpg"
-            alt="A Madane workspace — open floor and daylight."
+            alt="A Madane workspace, open floor and daylight."
             label="Workspaces"
           />
 
@@ -62,21 +62,21 @@ export function StudioGrid() {
             <div className="mt-8">
               <Button href="/studio" variant="secondary" arrow>Explore the studio</Button>
             </div>
-            <span className="mt-6 font-mono text-2xs tracking-label text-ink-muted/60">01 — Inside & out</span>
+            <span className="mt-6 font-mono text-2xs tracking-label text-ink-muted/60">01, Inside & out</span>
           </motion.div>
 
           {/* Top-right project image */}
           <ImageCell
             className="md:col-span-3 md:col-start-10 md:row-start-1"
             src="/assets/hero/p-38.jpg"
-            alt="A Madane interior — material and light."
+            alt="A Madane interior, material and light."
             label="Interiors"
           />
 
           {/* Mid-left manifesto */}
           <motion.div variants={fadeUp} className={`${cell} flex flex-col justify-between bg-stone/60 p-7 md:col-span-3 md:col-start-1 md:row-start-2`}>
             <p className="font-display text-lead leading-snug tracking-tight">
-              Two neutrals, one material logic — daylight doing the dramatic work.
+              Two neutrals, one material logic, daylight doing the dramatic work.
             </p>
             <Link href="/studio" className="link-underline font-mono text-2xs uppercase tracking-label text-ink-muted">Our approach →</Link>
           </motion.div>

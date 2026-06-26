@@ -4,7 +4,7 @@ import { EnquirySchema } from "@/lib/enquiry";
 /**
  * Enquiry handler (PRD §10 FORMS): validates, drops honeypot hits, rate-limits,
  * then routes the enquiry. By default it logs server-side and (if configured)
- * forwards to a webhook — set ENQUIRY_WEBHOOK_URL to wire email/WhatsApp/CRM.
+ * forwards to a webhook, set ENQUIRY_WEBHOOK_URL to wire email/WhatsApp/CRM.
  * Replace this seam with your provider at launch; the contract stays the same.
  */
 
@@ -26,7 +26,7 @@ function limited(ip: string) {
 export async function POST(req: Request) {
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "anon";
   if (limited(ip)) {
-    return NextResponse.json({ ok: false, error: "Too many enquiries — please try again shortly." }, { status: 429 });
+    return NextResponse.json({ ok: false, error: "Too many enquiries, please try again shortly." }, { status: 429 });
   }
 
   let body: unknown;
@@ -63,7 +63,7 @@ export async function POST(req: Request) {
       console.error("Enquiry webhook failed", err);
     }
   } else {
-    // No provider configured yet — make the lead visible in server logs.
+    // No provider configured yet, make the lead visible in server logs.
     console.info("[enquiry] new lead:", record);
   }
 

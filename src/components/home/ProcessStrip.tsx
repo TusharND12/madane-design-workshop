@@ -7,7 +7,7 @@ import { SectionHeader } from "@/components/primitives/SectionHeader";
 import { Button } from "@/components/primitives/Button";
 import { Reveal } from "@/components/primitives/Reveal";
 
-/** Working method, condensed — horizontal on desktop with a drawing line (PRD H6). */
+/** Working method, condensed, horizontal on desktop with a drawing line (PRD H6). */
 export function ProcessStrip() {
   const steps = getProcess();
   const ref = useRef<HTMLDivElement>(null);
@@ -26,7 +26,7 @@ export function ProcessStrip() {
         />
 
         <div ref={ref} className="relative mt-12 md:mt-16">
-          {/* Connecting line (desktop) — drawn as you scroll */}
+          {/* Connecting line (desktop), drawn as you scroll */}
           <div className="absolute left-6 right-6 top-[34px] hidden h-px bg-hairline lg:block" aria-hidden="true">
             <motion.div className="h-full origin-left bg-ink" style={{ scaleX: lineScale }} />
           </div>

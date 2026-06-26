@@ -1,20 +1,20 @@
 /* ------------------------------------------------------------------
-   Madane Design Workshop — design tokens as CSS custom properties.
+   Madane Design Workshop, design tokens as CSS custom properties.
    Source of truth alongside tailwind.config.ts (PRD §6). Build everything
    from these so the whole site updates from one place.
 ------------------------------------------------------------------ */
 :root {
-  /* Colour — dark theme. ink = light foreground, paper = dark surface. */
+  /* Colour, dark theme. ink = light foreground, paper = dark surface. */
   --ink: #ecece6; /* primary foreground (light) */
   --paper: #0f0f0f; /* page background (near-black) */
-  --stone: #23262f; /* cool dark tint — section tint / hovers */
-  --sand: #2a241e; /* warm dark tint — accent blocks / cards */
+  --stone: #23262f; /* cool dark tint, section tint / hovers */
+  --sand: #2a241e; /* warm dark tint, accent blocks / cards */
   --mount: #181818; /* card / image-mount surface */
   --hairline: #2c2c2c;
   --ink-muted: #9c9c97; /* muted light text */
   --paper-muted: #5a5a55;
 
-  /* Motion — the one signature ease + durations */
+  /* Motion, the one signature ease + durations */
   --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
   --dur-fast: 300ms;
   --dur-reveal: 720ms;

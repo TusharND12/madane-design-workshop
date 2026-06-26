@@ -18,7 +18,7 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: Params): Metadata {
   const project = getProject(params.slug);
   if (!project) return {};
-  const title = project.seo?.title ?? `${project.name} — ${project.type}`;
+  const title = project.seo?.title ?? `${project.name}, ${project.type}`;
   const description = project.seo?.description ?? project.narrative.brief;
   return {
     title,

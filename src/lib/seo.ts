@@ -19,7 +19,7 @@ export function organizationSchema() {
   };
 }
 
-/** LocalBusiness schema — local intent (PRD §11). */
+/** LocalBusiness schema, local intent (PRD §11). */
 export function localBusinessSchema() {
   return {
     "@context": "https://schema.org",

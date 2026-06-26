@@ -15,7 +15,7 @@ import { cn } from "@/lib/cn";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 /**
- * What we hold to — the studio's four values, drawn as the petals of one flower.
+ * What we hold to, the studio's four values, drawn as the petals of one flower.
  * As you scroll, the flower spins a turn and settles on the next petal while the
  * matching word and its meaning slide in alongside. Each petal's Sanskrit root
  * counter-rotates so it always stays upright through the spin.
@@ -23,7 +23,7 @@ import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 const VALUES = [
   { sa: "न्याय", tr: "Nyāya", en: "Justice", note: "Fairness to the client, the craft and the land." },
   { sa: "धैर्य", tr: "Dhairya", en: "Fortitude", note: "The patience to carry a vision from first line to keys." },
-  { sa: "धर्म", tr: "Dharma", en: "Stewardship", note: "Design as duty — to the people and the generations who inherit it." },
+  { sa: "धर्म", tr: "Dharma", en: "Stewardship", note: "Design as duty, to the people and the generations who inherit it." },
   { sa: "ज्ञान", tr: "Jñāna", en: "Knowledge", note: "Rigour, research and craft behind every decision." },
 ];
 const N = VALUES.length;
@@ -40,7 +40,7 @@ function Scene() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
   const sp = useSpring(scrollYProgress, { stiffness: 55, damping: 20, mass: 0.9 });
 
-  // A single quarter-turn between values — the flower rotates one petal forward
+  // A single quarter-turn between values, the flower rotates one petal forward
   // on each scroll step and settles, swapping the word alongside.
   const stops = VALUES.map((_, i) => (N > 1 ? i / (N - 1) : 0));
   const rots = VALUES.map((_, i) => -i * STEP);
@@ -56,7 +56,7 @@ function Scene() {
     <section ref={ref} className="relative h-[400vh] bg-stone">
       <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden pt-[5.5rem] md:pt-0">
         <div className="shell-wide grid w-full items-center gap-6 md:grid-cols-2 md:gap-8">
-          {/* Left — the spinning flower */}
+          {/* Left, the spinning flower */}
           <div className="relative mx-auto flex aspect-square w-full max-w-[clamp(180px,52vw,500px)] items-center justify-center md:max-w-[clamp(240px,40vw,500px)]">
             <motion.div className="relative h-full w-full" style={{ rotate: rot }}>
               {/* blank petals interleaved, matching the word petals, for a fuller bloom */}
@@ -72,7 +72,7 @@ function Scene() {
             </motion.div>
           </div>
 
-          {/* Right — the active word + meaning */}
+          {/* Right, the active word + meaning */}
           <div className="relative">
             <Bracket>Principles</Bracket>
             <div className="mt-7 flex items-center gap-4 font-mono text-2xs uppercase tracking-label text-ink-muted">
@@ -152,7 +152,7 @@ function Petal({ index, rot, active, sa }: { index: number; rot: MotionValue<num
   );
 }
 
-/* Reduced motion — a calm four-up list, no spin, no pin. */
+/* Reduced motion, a calm four-up list, no spin, no pin. */
 function StaticValues() {
   return (
     <section className="bg-stone">

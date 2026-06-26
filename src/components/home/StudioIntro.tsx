@@ -20,13 +20,13 @@ export function StudioIntro() {
           <SectionHeader index="02" label="Studio" />
           <Reveal>
             <p className="mt-10 max-w-prose font-display text-2xl leading-[1.25] tracking-tight md:text-3xl">
-              We design the interior and exterior of homes and workspaces — and we try, above all, to disappear.
+              We design the interior and exterior of homes and workspaces, and we try, above all, to disappear.
             </p>
           </Reveal>
           <Reveal delay={0.08}>
             <p className="mt-7 max-w-prose text-base text-ink-muted">
               Two neutrals, a single material logic, and daylight doing the dramatic work. The result should feel
-              inevitable — as though the space could not have been any other way.
+              inevitable, as though the space could not have been any other way.
             </p>
           </Reveal>
           <Reveal delay={0.14} className="mt-10">

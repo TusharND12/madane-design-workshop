@@ -10,7 +10,7 @@ const base =
   "group/btn relative inline-flex items-center justify-center gap-3 font-sans text-xs uppercase tracking-[0.16em] transition-colors duration-300 ease-editorial select-none";
 
 const variants: Record<Variant, string> = {
-  // Ink fill, paper text — one primary per view (PRD §6.4)
+  // Ink fill, paper text, one primary per view (PRD §6.4)
   primary: "h-12 rounded-none bg-ink px-7 text-paper hover:bg-ink/90",
   // Hairline outline
   secondary: "h-12 rounded-none border border-ink/25 px-7 text-ink hover:border-ink",

@@ -7,7 +7,7 @@ import { EnquiryBand } from "@/components/common/EnquiryBand";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Architecture, Interior, Exterior and Turnkey — four ways Madane Design Workshop works, from a single room to a whole building, designed and delivered.",
+    "Architecture, Interior, Exterior and Turnkey, four ways Madane Design Workshop works, from a single room to a whole building, designed and delivered.",
   alternates: { canonical: "/services" },
 };
 
@@ -19,7 +19,7 @@ export default function ServicesPage() {
       <PageIntro
         label="Services"
         title="Four ways we work."
-        lead="From ground-up architecture to a finished, photograph-ready handover — each discipline is a way into the same standard of work."
+        lead="From ground-up architecture to a finished, photograph-ready handover, each discipline is a way into the same standard of work."
       />
       {services.map((service, i) => (
         <ServiceSection key={service.slug} service={service} flip={i % 2 === 1} />
