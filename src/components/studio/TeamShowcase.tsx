@@ -59,6 +59,11 @@ const FADE =
 const WAVE_AMP = 22; // px
 const wavePhase = (index: number, xv: number) => index * 0.9 + xv * 0.004;
 
+// A slender cord that hangs and sways in the vacant wall space beside the row —
+// two path keyframes the rope eases between (the weight at the bottom rides along).
+const ROPE_A = "M30 0 C 26 220, 21 520, 19 788";
+const ROPE_B = "M30 0 C 34 220, 39 520, 41 788";
+
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 
 export function TeamShowcase() {
@@ -145,7 +150,9 @@ function ScrollSlider() {
   return (
     <div ref={parentRef} style={{ height: `${TEAM.length * 14 + 40}vh` }}>
       <div className="sticky top-0 flex h-[100svh] flex-col justify-center">
-        <div ref={stageRef} className="w-full overflow-hidden" style={{ WebkitMaskImage: FADE, maskImage: FADE }}>
+        <Rope side="left" />
+        <Rope side="right" />
+        <div ref={stageRef} className="relative z-10 w-full overflow-hidden" style={{ WebkitMaskImage: FADE, maskImage: FADE }}>
           <motion.div ref={trackRef} style={{ x, paddingLeft: SHELL_PAD, paddingRight: SHELL_PAD }} className="flex items-center gap-5 py-9 md:gap-6">
             {TEAM.map((m, i) => (
               <WaveCard key={m.src} x={x} index={i}>
@@ -155,7 +162,7 @@ function ScrollSlider() {
           </motion.div>
         </div>
 
-        <div className="shell-wide mt-9 flex items-center justify-between font-mono text-2xs uppercase tracking-label text-ink-muted">
+        <div className="relative z-10 shell-wide mt-9 flex items-center justify-between font-mono text-2xs uppercase tracking-label text-ink-muted">
           <span>Scroll to meet the team</span>
           <span>
             {String(TEAM.length).padStart(2, "0")} <span className="text-ink/30">people</span>
@@ -174,6 +181,40 @@ function WaveCard({ x, index, children }: { x: MotionValue<number>; index: numbe
     <motion.div style={{ y }} className="shrink-0">
       {children}
     </motion.div>
+  );
+}
+
+/** Decorative swaying cord for the vacant wall space on either side of the row. */
+function Rope({ side }: { side: "left" | "right" }) {
+  const reduced = usePrefersReducedMotion();
+  const t = { duration: 7, repeat: Infinity, repeatType: "mirror" as const, ease: "easeInOut" as const };
+  return (
+    <div
+      aria-hidden
+      className={`pointer-events-none absolute top-1/2 z-0 hidden h-[64vh] w-[clamp(3rem,6vw,7rem)] -translate-y-1/2 opacity-40 md:block ${
+        side === "left" ? "left-[1.5%]" : "right-[1.5%] -scale-x-100"
+      }`}
+    >
+      <svg viewBox="0 0 60 800" preserveAspectRatio="xMidYMid meet" className="h-full w-full">
+        <motion.path
+          d={ROPE_A}
+          fill="none"
+          stroke="#ECECE6"
+          strokeWidth={2.4}
+          strokeLinecap="round"
+          animate={reduced ? undefined : { d: [ROPE_A, ROPE_B] }}
+          transition={reduced ? undefined : t}
+        />
+        <motion.circle
+          cx={19}
+          cy={788}
+          r={5}
+          fill="#ECECE6"
+          animate={reduced ? undefined : { cx: [19, 41] }}
+          transition={reduced ? undefined : t}
+        />
+      </svg>
+    </div>
   );
 }
 
