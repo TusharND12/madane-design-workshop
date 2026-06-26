@@ -181,16 +181,23 @@ function StaticRow() {
 }
 
 function PillCard({ member, tone, priority }: { member: Member; tone: string; priority: boolean }) {
+  const [first, ...rest] = member.name.split(" ");
+  const last = rest.join(" ");
   return (
     <div
       className="group relative aspect-[1/2.35] w-[clamp(11rem,17vw,13.5rem)] select-none overflow-hidden rounded-full shadow-[0_26px_55px_-22px_rgba(0,0,0,0.85)] ring-1 ring-white/[0.04]"
       style={{ backgroundColor: tone }}
     >
-      {/* Name header */}
-      <div className="absolute inset-x-0 top-[7.5%] z-10 px-5 text-center">
-        <span className="block truncate font-display text-lg leading-tight tracking-tight text-ink md:text-xl">
-          {member.name}
+      {/* Name — thin Avant Garde Extra Light, lowercase, first name over surname */}
+      <div className="absolute inset-x-0 top-[6.5%] z-10 px-4 text-center leading-[0.95]">
+        <span className="block font-display text-[1.35rem] font-light lowercase tracking-[0.01em] text-ink">
+          {first}
         </span>
+        {last && (
+          <span className="mt-1 block font-display text-[0.82rem] font-light lowercase tracking-[0.16em] text-ink/55">
+            {last}
+          </span>
+        )}
       </div>
 
       {/* Portrait — fully rounded bottom to follow the pill, gentle top corners */}
