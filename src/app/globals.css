@@ -282,3 +282,29 @@
     display: none;
   }
 }
+
+/* ------------------------------------------------------------------ */
+/*  Reduced transparency — drop the purely decorative grain so the     */
+/*  composite is simpler; informational surfaces keep their own solid  */
+/*  fallbacks. (No effect unless the user opts in at the OS level.)     */
+/* ------------------------------------------------------------------ */
+@media (prefers-reduced-transparency: reduce) {
+  .grain {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Windows High Contrast / forced-colors — keep the site usable when  */
+/*  the OS overrides the palette: map focus to system colours and hide */
+/*  decorative-only layers that carry no information. (Scoped to the    */
+/*  forced-colors mode, so zero effect for everyone else.)             */
+/* ------------------------------------------------------------------ */
+@media (forced-colors: active) {
+  :focus-visible {
+    outline-color: Highlight;
+  }
+  .grain {
+    display: none;
+  }
+}
