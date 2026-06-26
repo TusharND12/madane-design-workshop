@@ -54,8 +54,8 @@ function Scene() {
 
   return (
     <section ref={ref} className="relative h-[400vh] bg-stone">
-      <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden">
-        <div className="shell-wide grid w-full items-center gap-10 md:grid-cols-2 md:gap-8">
+      <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden pt-[5.5rem] md:pt-0">
+        <div className="shell-wide grid w-full items-center gap-6 md:grid-cols-2 md:gap-8">
           {/* Left — the spinning flower */}
           <div className="relative mx-auto flex aspect-square w-full max-w-[clamp(180px,52vw,500px)] items-center justify-center md:max-w-[clamp(240px,40vw,500px)]">
             <motion.div className="relative h-full w-full" style={{ rotate: rot }}>
@@ -82,7 +82,7 @@ function Scene() {
               <span className="h-px flex-1 bg-hairline" />
             </div>
 
-            <div className="relative mt-8 min-h-[clamp(230px,40vh,360px)]">
+            <div className="relative mt-8 min-h-[clamp(200px,30vh,360px)] md:min-h-[clamp(230px,40vh,360px)]">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={active}
