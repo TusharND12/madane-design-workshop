@@ -73,7 +73,10 @@ function Scene({ total }: { total: number }) {
               columns slice the one panorama; they draw in left to right and tile
               back into a single seamless image on black. */}
           <div className="mt-auto w-full px-[var(--gutter)]">
-            <div className="mx-auto flex items-end gap-0 bg-black" style={SKY_STYLE}>
+            {/* On phones the panorama is so wide it fits at a tiny height, so
+                scale it up from the bottom-centre (the section clips the far
+                edges) to give the buildings real presence. Desktop unchanged. */}
+            <div className="mx-auto flex origin-bottom scale-[2.2] items-end gap-0 bg-black md:scale-100" style={SKY_STYLE}>
               {Array.from({ length: COLUMNS }, (_, i) => (
                 <SketchColumn key={i} progress={scrollYProgress} index={i} total={COLUMNS} />
               ))}
@@ -135,7 +138,7 @@ function StaticSketch() {
           </h2>
         </div>
         <div className="mt-12 w-full px-[var(--gutter)]">
-          <div className="relative mx-auto bg-black" style={SKY_STYLE}>
+          <div className="relative mx-auto origin-bottom scale-[2.2] bg-black md:scale-100" style={SKY_STYLE}>
             <Image src={PANORAMA} alt="The studio's built work, drawn in line." fill sizes="100vw" className="object-contain object-bottom" />
           </div>
         </div>
