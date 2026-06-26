@@ -26,8 +26,12 @@ const POS_Y = 13; // background vertical position, % (head framing)
 const TILT = 6; // resting 3D tilt during the pan (degrees)
 const TILT_ENTRY = 12; // stronger tilt while the panel is small
 const SCALE_FROM = 0.7; // card size at rest, before scrolling
-const P_START = 0.18; // scroll fraction where the grow-in finishes / pan begins
-const P_END = 0.95; // scroll fraction where the pan finishes
+// NOTE: the studio route is rendered under CSS `zoom: 0.9` (PageZoom), which
+// compresses the usable scrollYProgress to ~0.69 at the section's end. So the
+// grow-in and pan are mapped into the low end of progress, and the last face is
+// held for the remaining scroll before the section unpins.
+const P_START = 0.12; // scroll fraction where the grow-in finishes / pan begins
+const P_END = 0.6; // scroll fraction where the pan finishes (face 19 reached, then held)
 
 const SX = (ZOOM * IMG_ASPECT) / STAGE_ASPECT; // image width / stage width
 
