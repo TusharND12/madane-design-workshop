@@ -41,6 +41,7 @@ const ZOOM = 2.2; // zoom level once focused on a face
 const TILT = 6; // degrees of 3D perspective tilt while zoomed
 const FOCUS_FULL = 50; // vertical centre for the full group
 const FOCUS_FACE = 47; // vertical centre for the face row
+const HEAD_FY = 0.42; // top-of-head vertical fraction in the photo (arrow target)
 const P_INTRO = 0.12; // scroll fraction spent zooming in from the full group
 const P_END = 0.95; // scroll fraction where the pan finishes
 
@@ -63,6 +64,16 @@ function focusXAt(p: number) {
 }
 function focusYAt(p: number) {
   return p <= P_INTRO ? lerp(FOCUS_FULL, FOCUS_FACE, p / P_INTRO) : FOCUS_FACE;
+}
+// On-screen position (0..1) of the focused head, given the live zoom + pan.
+function headScreenX(p: number) {
+  const s = scaleAt(p);
+  const fxf = focusXAt(p) / 100;
+  return clamp(s * fxf + clamp(0.5 - s * fxf, 1 - s, 0), 0.14, 0.86);
+}
+function headScreenY(p: number) {
+  const s = scaleAt(p);
+  return clamp(s * HEAD_FY + clamp(0.5 - (s * FOCUS_FACE) / 100, 1 - s, 0), 0.1, 0.9);
 }
 
 export function TeamShowcase() {
@@ -105,12 +116,10 @@ function GroupReel() {
   const rotateX = useTransform(scrollYProgress, [0, P_INTRO, 1], [0, TILT, TILT]);
 
   // Where the focused head sits on screen — drives the name + arrow position.
-  const headX = useTransform(scrollYProgress, (p) => {
-    const s = scaleAt(p);
-    const fxf = focusXAt(p) / 100;
-    const tx = clamp(0.5 - s * fxf, 1 - s, 0);
-    return `${clamp(s * fxf + tx, 0.18, 0.82) * 100}%`;
-  });
+  const headX = useTransform(scrollYProgress, (p) => `${headScreenX(p) * 100}%`);
+  // Arrow stretches from just under the name down to the head's exact position.
+  const ARROW_TOP = 11;
+  const arrowH = useTransform(scrollYProgress, (p) => `${headScreenY(p) * 100 - ARROW_TOP}%`);
 
   useMotionValueEvent(scrollYProgress, "change", (p) => {
     setActive(p < P_INTRO ? -1 : Math.round(panT(p) * (N - 1)));
@@ -135,29 +144,35 @@ function GroupReel() {
               />
             </motion.div>
 
-            {/* Name in the vacant space above the head, with a hand-drawn arrow */}
-            <motion.div
-              className="pointer-events-none absolute top-[4%] z-10 flex flex-col items-center text-center text-[#1c1712]"
-              style={{ left: headX, x: "-50%" }}
-            >
+            {/* Name in the vacant space above the head, with a hand-drawn arrow
+               whose tip lands exactly on the focused head. */}
+            <div className="pointer-events-none absolute inset-0 z-10 text-[#1c1712]">
               <AnimatePresence mode="wait">
                 {active >= 0 && (
                   <motion.div
                     key={active}
-                    initial={{ opacity: 0, y: -8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.32, ease: EASE }}
-                    className="flex flex-col items-center"
+                    className="absolute inset-0"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3, ease: EASE }}
                   >
-                    <span className="whitespace-nowrap font-display text-[clamp(0.95rem,1.9vw,1.65rem)] font-medium tracking-tight">
+                    <motion.span
+                      className="absolute top-[3%] -translate-x-1/2 whitespace-nowrap font-display text-[clamp(0.95rem,1.9vw,1.65rem)] font-medium tracking-tight"
+                      style={{ left: headX }}
+                    >
                       {NAMES[active]}
-                    </span>
-                    <ArrowDoodle className="mt-1 h-[clamp(2.75rem,7vw,4.75rem)] w-auto" />
+                    </motion.span>
+                    <motion.div
+                      className="absolute -translate-x-1/2"
+                      style={{ left: headX, top: `${ARROW_TOP}%`, height: arrowH }}
+                    >
+                      <ArrowDoodle className="h-full w-auto" />
+                    </motion.div>
                   </motion.div>
                 )}
               </AnimatePresence>
-            </motion.div>
+            </div>
           </motion.div>
 
           <div className="mt-6 flex items-center justify-between font-mono text-2xs uppercase tracking-label text-ink-muted">
@@ -175,16 +190,17 @@ function ArrowDoodle({ className }: { className?: string }) {
   return (
     <svg
       className={className}
-      viewBox="0 0 50 76"
+      viewBox="0 0 50 66"
       fill="none"
       stroke="currentColor"
       strokeWidth="2.4"
       strokeLinecap="round"
       strokeLinejoin="round"
+      preserveAspectRatio="xMidYMax meet"
       aria-hidden="true"
     >
-      <path d="M33 4C44 16 20 22 31 35c9 10-11 15-2 25" />
-      <path d="M29 65l-9-4M29 65l5-8" />
+      <path d="M33 4C44 16 20 22 31 33c9 10-11 15-2 25" />
+      <path d="M29 62l-9-4M29 62l5-8" />
     </svg>
   );
 }
