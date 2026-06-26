@@ -49,8 +49,9 @@ const NOISE =
 const TAIL = 0.06;
 const SHELL_PAD = "max(1.25rem,calc((100vw-1440px)/2+1.25rem))";
 // Horizontal fade — cards fade in as they slide in from the right and fade out
-// to the left, so the reveal reads as a scroll-driven fade.
-const FADE = "linear-gradient(to right, transparent 0%, #000 5%, #000 86%, transparent 100%)";
+// to the left. Wide, eased transitions so the edges dissolve softly (no hard cut).
+const FADE =
+  "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.15) 5%, rgba(0,0,0,0.55) 10%, #000 18%, #000 82%, rgba(0,0,0,0.55) 90%, rgba(0,0,0,0.15) 95%, transparent 100%)";
 
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 
