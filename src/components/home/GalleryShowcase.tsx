@@ -31,22 +31,22 @@ const SLIDES: Slide[] = [
   {
     eyebrow: "Detail",
     headline: "Detailed to the tolerance of furniture.",
-    video: "/assets/video/kitchen.mp4",
-    poster: "/assets/hero/p-56.jpg",
+    video: "/assets/video/detail-furniture.mp4",
+    poster: "/assets/video/detail-furniture.jpg",
     alt: "A kitchen resolved to near-furniture tolerance.",
   },
   {
     eyebrow: "Material",
     headline: "Two neutrals and a single material logic.",
-    video: "/assets/video/villa-interior.mp4",
-    poster: "/assets/hero/p-77.jpg",
+    video: "/assets/video/material-neutrals.mp4",
+    poster: "/assets/video/material-neutrals.jpg",
     alt: "A villa interior in two neutrals and one material logic.",
   },
   {
     eyebrow: "Architecture",
     headline: "Architecture and interior, one continuous gesture.",
-    video: "/assets/video/dawn-villa.mp4",
-    poster: "/assets/hero/p-70.jpg",
+    video: "/assets/video/architecture-gesture.mp4",
+    poster: "/assets/video/architecture-gesture.jpg",
     alt: "Dawn Villa — architecture and interior conceived as one.",
   },
   {
