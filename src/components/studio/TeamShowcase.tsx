@@ -48,6 +48,9 @@ const NOISE =
 // for a beat before the section releases.
 const TAIL = 0.06;
 const SHELL_PAD = "max(1.25rem,calc((100vw-1440px)/2+1.25rem))";
+// Horizontal fade — cards fade in as they slide in from the right and fade out
+// to the left, so the reveal reads as a scroll-driven fade.
+const FADE = "linear-gradient(to right, transparent 0%, #000 5%, #000 86%, transparent 100%)";
 
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 
@@ -135,7 +138,7 @@ function ScrollSlider() {
   return (
     <div ref={parentRef} style={{ height: `${TEAM.length * 14 + 40}vh` }}>
       <div className="sticky top-0 flex h-[100svh] flex-col justify-center">
-        <div ref={stageRef} className="w-full overflow-hidden">
+        <div ref={stageRef} className="w-full overflow-hidden" style={{ WebkitMaskImage: FADE, maskImage: FADE }}>
           <motion.div ref={trackRef} style={{ x, paddingLeft: SHELL_PAD, paddingRight: SHELL_PAD }} className="flex gap-5 py-3 md:gap-6">
             {TEAM.map((m, i) => (
               <div key={m.src} className="shrink-0">
@@ -162,7 +165,7 @@ function StaticRow() {
     <div className="pb-section pt-12 md:pt-14">
       <div
         className="flex gap-5 overflow-x-auto pb-6 pt-3 md:gap-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        style={{ paddingLeft: SHELL_PAD, paddingRight: SHELL_PAD }}
+        style={{ paddingLeft: SHELL_PAD, paddingRight: SHELL_PAD, WebkitMaskImage: FADE, maskImage: FADE }}
       >
         {TEAM.map((m, i) => (
           <div key={m.src} className="shrink-0">
