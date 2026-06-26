@@ -1,24 +1,19 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import Image from "next/image";
-import { motion, useMotionValueEvent, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { SectionHeader } from "@/components/primitives/SectionHeader";
 import { Reveal } from "@/components/primitives/Reveal";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 /**
- * The crew — the studio group portrait, brought to life by a scroll-driven
- * camera that zooms in and pans across the photo, settling on one face at a
- * time. One image; the scroll is the dolly. Reduced motion shows it static.
+ * The crew — the studio group portrait that starts in its original full framing
+ * and, as you scroll, eases into a gentle 3D dolly-in: a small zoom with a slight
+ * perspective tilt for depth. Reduced motion shows it static.
  */
-
-// Horizontal centre of each face across the group photo (left→right, % of width).
-const FACES = [6, 14, 21, 29, 37, 44, 52, 60, 68, 76, 83, 90, 95];
-const FOCUS_Y = 52; // vertical centre, biased down so seated hands stay in frame
-const ZOOM = 1.15;
-
-const pad = (n: number) => String(n).padStart(2, "0");
+const ZOOM_END = 1.16; // how far the little zoom pushes in
+const TILT_END = 6; // degrees of perspective tilt at the end (the 3D feel)
 
 export function TeamShowcase() {
   const reduced = usePrefersReducedMotion();
@@ -40,53 +35,34 @@ export function TeamShowcase() {
   );
 }
 
-/** Scroll-driven zoom + pan across the faces of the group photo. */
+/** Original framing first, then a small 3D zoom as you scroll. */
 function GroupReel() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const [active, setActive] = useState(0);
-  const N = FACES.length;
 
-  // Centre each face: with transform-origin top-left and scale Z, the face at x%
-  // lands at frame centre when translateX = 50 − Z·x%. Clamp so the photo always
-  // fills the frame (end faces sit toward the edge instead of leaving a gap).
-  const minX = (1 - ZOOM) * 100;
-  const clampX = (v: number) => Math.min(0, Math.max(minX, v));
-  const inputs = FACES.map((_, i) => i / (N - 1));
-  const x = useTransform(
-    scrollYProgress,
-    inputs,
-    FACES.map((fx) => `${clampX(50 - ZOOM * fx)}%`)
-  );
-  const y = `${50 - ZOOM * FOCUS_Y}%`;
-
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
-    setActive(Math.max(0, Math.min(N - 1, Math.round(v * (N - 1)))));
-  });
+  const scale = useTransform(scrollYProgress, [0, 1], [1, ZOOM_END]);
+  const rotateX = useTransform(scrollYProgress, [0, 1], [0, TILT_END]);
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "-3%"]);
 
   return (
-    <div ref={ref} style={{ height: `${N * 22}vh` }}>
-      <div className="sticky top-0 flex h-[100svh] flex-col items-center justify-center">
+    <div ref={ref} style={{ height: "200vh" }}>
+      <div className="sticky top-0 flex h-[100svh] items-center" style={{ perspective: "1100px" }}>
         <div className="shell-wide w-full">
-          <div className="relative aspect-[1672/665] w-full overflow-hidden rounded-card bg-mount">
-            <motion.div className="absolute inset-0 origin-top-left" style={{ x, y, scale: ZOOM }}>
-              <Image
-                src="/assets/team/group.png"
-                alt="The Madane Design Workshop studio team."
-                fill
-                sizes="100vw"
-                priority
-                className="object-cover"
-              />
-            </motion.div>
-          </div>
+          <motion.div
+            className="relative aspect-[1672/665] w-full overflow-hidden rounded-card bg-mount"
+            style={{ scale, rotateX, y, transformOrigin: "50% 70%", transformPerspective: 1100 }}
+          >
+            <Image
+              src="/assets/team/group.png"
+              alt="The Madane Design Workshop studio team."
+              fill
+              sizes="100vw"
+              priority
+              className="object-cover"
+            />
+          </motion.div>
 
-          <div className="mt-6 flex items-center justify-between font-mono text-2xs uppercase tracking-label text-ink-muted">
-            <span>The studio team</span>
-            <span>
-              {pad(active + 1)} <span className="text-ink/30">/ {pad(N)}</span>
-            </span>
-          </div>
+          <div className="mt-6 font-mono text-2xs uppercase tracking-label text-ink-muted">The studio team</div>
         </div>
       </div>
     </div>
