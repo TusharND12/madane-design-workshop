@@ -10,16 +10,19 @@ import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
  * whole team as you scroll, with a gentle 3D tilt. Reduced motion shows the full
  * strip static.
  */
-const STRIP = "/assets/team/strip.jpg";
-const IMG_ASPECT = 8.263; // strip width / height
+// Sharp composite stitched from the 19 individual high-res studio portraits,
+// uniform panels of aspect 0.5 (see scripts/strip note). 9500×1000.
+const STRIP = "/assets/team/strip-hd.jpg";
+const N = 19;
+const PANEL_ASPECT = 0.5;
+const IMG_ASPECT = N * PANEL_ASPECT; // 9.5 — strip width / height
 
-// Horizontal centre of each person across the strip (left→right, % of width).
-const FACES = [1.5, 6.5, 11.7, 16.8, 22.9, 27.8, 33.2, 39.1, 44.2, 50.4, 55, 59.3, 64.6, 69.4, 75.2, 81.1, 85.7, 91.8, 97.7];
-const N = FACES.length;
+// Uniform panels → each person's horizontal centre is evenly spaced (% of width).
+const FACES = Array.from({ length: N }, (_, i) => ((i + 0.5) / N) * 100);
 
 const STAGE_ASPECT = 1672 / 665; // wide landscape card (like the previous reel)
 const ZOOM = 1.8; // background-size height multiple
-const POS_Y = 8; // background vertical position, % (head framing)
+const POS_Y = 13; // background vertical position, % (head framing)
 const TILT = 6; // degrees of 3D tilt
 const P_END = 0.94; // scroll fraction where the pan finishes
 
