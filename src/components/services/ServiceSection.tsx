@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/cn";
 import type { Service } from "@/lib/schema";
@@ -5,17 +6,47 @@ import { Bracket } from "@/components/primitives/Bracket";
 import { Reveal } from "@/components/primitives/Reveal";
 import { Button } from "@/components/primitives/Button";
 
+// Tints sampled from each service's hero image — glow = highlight, wash = mid
+// tone. The section background is a soft gradient pulled from these.
+const TINT: Record<string, { glow: string; wash: string }> = {
+  architecture: { glow: "249,239,219", wash: "156,146,129" },
+  interior: { glow: "157,129,105", wash: "70,58,49" },
+  exterior: { glow: "208,195,167", wash: "101,81,59" },
+  turnkey: { glow: "158,123,91", wash: "85,62,43" },
+};
+
+// Feather all four edges so the image dissolves into the section gradient.
+const FEATHER_MASK =
+  "linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 8%, #000 92%, transparent 100%)";
+const FEATHER: CSSProperties = {
+  WebkitMaskImage: FEATHER_MASK,
+  maskImage: FEATHER_MASK,
+  WebkitMaskComposite: "source-in",
+  maskComposite: "intersect",
+};
+
 /** Immersive per-service section, deep-linking to a filtered archive (PRD §8.5). */
 export function ServiceSection({ service, flip }: { service: Service; flip: boolean }) {
+  const t = TINT[service.slug] ?? TINT.architecture;
+  const gx = flip ? 78 : 22; // glow sits on the image side
   return (
-    <section id={service.slug} className="scroll-mt-[var(--header-h)] border-t border-hairline bg-paper">
+    <section
+      id={service.slug}
+      className="scroll-mt-[var(--header-h)] border-t border-hairline"
+      style={{
+        backgroundColor: "#0F0F0F",
+        backgroundImage:
+          `radial-gradient(75% 120% at ${gx}% 42%, rgba(${t.glow},0.17), rgba(${t.glow},0) 56%),` +
+          `linear-gradient(${flip ? "to left" : "to right"}, rgba(${t.wash},0.13), rgba(15,15,15,0) 70%)`,
+      }}
+    >
       <div className="shell-wide py-section">
         <div className={cn("grid items-center gap-12 md:grid-cols-12 md:gap-8", flip && "md:[direction:rtl]")}>
           {/* Image */}
           <div className="md:col-span-6 md:[direction:ltr]">
-            <Reveal className="relative aspect-[4/3] w-full overflow-hidden bg-mount">
-              <Image src={service.image} alt={service.imageAlt} fill sizes="(max-width:768px) 100vw, 50vw" className="object-cover" />
-              <span className="absolute left-5 top-5 font-mono text-2xs tracking-label text-ink mix-blend-difference">{service.index}</span>
+            <Reveal className="relative aspect-[4/3] w-full">
+              <Image src={service.image} alt={service.imageAlt} fill sizes="(max-width:768px) 100vw, 50vw" className="object-cover" style={FEATHER} />
+              <span className="absolute left-6 top-6 font-mono text-2xs tracking-label text-ink mix-blend-difference">{service.index}</span>
             </Reveal>
           </div>
 
