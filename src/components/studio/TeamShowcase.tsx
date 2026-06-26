@@ -18,7 +18,7 @@ import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 const FACES = [6, 14, 21, 29, 37, 44, 52, 60, 68, 76, 83, 90, 95];
 const N = FACES.length;
 
-const ZOOM = 2.6; // zoom level once focused on a face
+const ZOOM = 2.2; // zoom level once focused on a face
 const TILT = 6; // degrees of 3D perspective tilt while zoomed
 const FOCUS_FULL = 50; // vertical centre for the full group
 const FOCUS_FACE = 47; // vertical centre for the face row
