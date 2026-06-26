@@ -6,16 +6,7 @@ import { Bracket } from "@/components/primitives/Bracket";
 import { Reveal } from "@/components/primitives/Reveal";
 import { Button } from "@/components/primitives/Button";
 
-// Tints sampled from each service's hero image — glow = highlight, wash = mid
-// tone. The section background is a soft gradient pulled from these.
-const TINT: Record<string, { glow: string; wash: string }> = {
-  architecture: { glow: "249,239,219", wash: "156,146,129" },
-  interior: { glow: "157,129,105", wash: "70,58,49" },
-  exterior: { glow: "208,195,167", wash: "101,81,59" },
-  turnkey: { glow: "158,123,91", wash: "85,62,43" },
-};
-
-// Feather all four edges so the image dissolves into the section gradient.
+// Feather all four edges so the image dissolves into its own colour bleed.
 const FEATHER_MASK =
   "linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 8%, #000 92%, transparent 100%)";
 const FEATHER: CSSProperties = {
@@ -27,20 +18,28 @@ const FEATHER: CSSProperties = {
 
 /** Immersive per-service section, deep-linking to a filtered archive (PRD §8.5). */
 export function ServiceSection({ service, flip }: { service: Service; flip: boolean }) {
-  const t = TINT[service.slug] ?? TINT.architecture;
-  const gx = flip ? 78 : 22; // glow sits on the image side
+  const gx = flip ? 72 : 28; // colour bleed radiates from the image side
+  const bleedMask = `radial-gradient(78% 118% at ${gx}% 50%, #000 0%, #000 26%, transparent 74%)`;
   return (
-    <section
-      id={service.slug}
-      className="scroll-mt-[var(--header-h)] border-t border-hairline"
-      style={{
-        backgroundColor: "#0F0F0F",
-        backgroundImage:
-          `radial-gradient(75% 120% at ${gx}% 42%, rgba(${t.glow},0.17), rgba(${t.glow},0) 56%),` +
-          `linear-gradient(${flip ? "to left" : "to right"}, rgba(${t.wash},0.13), rgba(15,15,15,0) 70%)`,
-      }}
-    >
-      <div className="shell-wide py-section">
+    <section id={service.slug} className="relative overflow-hidden border-t border-hairline bg-paper scroll-mt-[var(--header-h)]">
+      {/* Ambient colour bleed — a blurred copy of the image, its own colours flowing out */}
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <Image
+          src={service.image}
+          alt=""
+          fill
+          aria-hidden
+          sizes="100vw"
+          className="scale-110 object-cover opacity-[0.55] blur-[72px] saturate-[1.25]"
+          style={{
+            objectPosition: flip ? "78% 50%" : "22% 50%",
+            WebkitMaskImage: bleedMask,
+            maskImage: bleedMask,
+          }}
+        />
+      </div>
+
+      <div className="relative shell-wide py-section">
         <div className={cn("grid items-center gap-12 md:grid-cols-12 md:gap-8", flip && "md:[direction:rtl]")}>
           {/* Image */}
           <div className="md:col-span-6 md:[direction:ltr]">
