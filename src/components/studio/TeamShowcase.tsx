@@ -15,8 +15,8 @@ import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 // Horizontal centre of each face across the group photo (left→right, % of width).
 const FACES = [6, 14, 21, 29, 37, 44, 52, 60, 68, 76, 83, 90, 95];
-const FOCUS_Y = 50; // vertical centre of the face row, % of the photo height
-const ZOOM = 1.9;
+const FOCUS_Y = 54; // vertical centre, biased down so seated hands stay in frame
+const ZOOM = 1.4;
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
