@@ -49,10 +49,10 @@ const NAMES = [
   "Prince",
 ];
 
-const STAGE_ASPECT = 0.5; // 1:2 tall card ≈ one portrait panel
-const ZOOM = 1.15; // background-size height multiple (frames ~1 person)
-const POS_Y = 2; // background vertical position, % (head framing)
-const HEAD_SY = 0.3; // focused head's vertical position on screen (0..1)
+const STAGE_ASPECT = 1672 / 665; // wide landscape card (like the previous reel)
+const ZOOM = 1.8; // background-size height multiple
+const POS_Y = 8; // background vertical position, % (head framing)
+const HEAD_SY = 0.34; // focused head's vertical position on screen (0..1)
 const ARROW_TOP = 9; // % from top where the arrow starts
 const TILT = 6; // degrees of 3D tilt
 const P_END = 0.94; // scroll fraction where the pan finishes
@@ -119,9 +119,10 @@ function StripReel() {
 
   return (
     <div ref={ref} style={{ height: `${N * 16}vh` }}>
-      <div className="sticky top-0 flex h-[100svh] flex-col items-center justify-center">
+      <div className="sticky top-0 flex h-[100svh] items-center">
+        <div className="shell-wide w-full">
         <motion.div
-          className="relative aspect-[1/2] w-full max-w-[clamp(14rem,32vw,20rem)] overflow-hidden rounded-card bg-mount"
+          className="relative aspect-[1672/665] w-full overflow-hidden rounded-card bg-mount"
           style={{
             backgroundImage: `url(${STRIP})`,
             backgroundRepeat: "no-repeat",
@@ -156,11 +157,12 @@ function StripReel() {
           </div>
         </motion.div>
 
-        <div className="mt-6 flex w-full max-w-[clamp(14rem,32vw,20rem)] items-center justify-between font-mono text-2xs uppercase tracking-label text-ink-muted">
+        <div className="mt-6 flex w-full items-center justify-between font-mono text-2xs uppercase tracking-label text-ink-muted">
           <span>The studio team</span>
           <span>
             {pad(active + 1)} <span className="text-ink/30">/ {pad(N)}</span>
           </span>
+        </div>
         </div>
       </div>
     </div>
