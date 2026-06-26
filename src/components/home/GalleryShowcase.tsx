@@ -52,8 +52,8 @@ const SLIDES: Slide[] = [
   {
     eyebrow: "Restraint",
     headline: "Finished when there is nothing left to remove.",
-    video: "/assets/video/homepage-hero.mp4",
-    poster: "/assets/hero/p-67.jpg",
+    video: "/assets/video/restraint-quiet.mp4",
+    poster: "/assets/video/restraint-quiet.jpg",
     alt: "A quiet, resolved space — restraint reading as confidence.",
   },
 ];
