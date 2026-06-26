@@ -57,7 +57,7 @@ function Scene() {
       <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden">
         <div className="shell-wide grid w-full items-center gap-10 md:grid-cols-2 md:gap-8">
           {/* Left — the spinning flower */}
-          <div className="relative mx-auto flex aspect-square w-full max-w-[clamp(240px,40vw,500px)] items-center justify-center">
+          <div className="relative mx-auto flex aspect-square w-full max-w-[clamp(180px,52vw,500px)] items-center justify-center md:max-w-[clamp(240px,40vw,500px)]">
             <motion.div className="relative h-full w-full" style={{ rotate: rot }}>
               {/* blank petals interleaved, matching the word petals, for a fuller bloom */}
               {VALUES.map((val, i) => (
