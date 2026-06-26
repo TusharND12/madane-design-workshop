@@ -1,16 +1,23 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValueEvent,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import { SectionHeader } from "@/components/primitives/SectionHeader";
 import { Reveal } from "@/components/primitives/Reveal";
+import { EASE } from "@/lib/motion";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 /**
- * The crew — the full studio team. A wide group portrait band, then a gallery of
- * portraits that each zoom in as they scroll through the viewport, with the name
- * and a diagonal arrow beneath. Editorial, monochrome, with a young kinetic feel.
+ * The crew — a wide group portrait band, then a scroll-driven reel that brings up
+ * one face at a time, zooming into each portrait as it comes, with the name, a
+ * diagonal arrow and a counter. One person in focus at a time (not a grid).
  */
 type Member = { src: string; name: string };
 
@@ -36,12 +43,14 @@ const TEAM: Member[] = [
   { src: "/assets/team/prince.png", name: "Prince" },
 ];
 
+const pad = (n: number) => String(n).padStart(2, "0");
+
 export function TeamShowcase() {
   const reduced = usePrefersReducedMotion();
 
   return (
     <section className="bg-paper">
-      <div className="shell-wide py-section">
+      <div className="shell-wide pt-section">
         <SectionHeader
           index="03"
           label="The crew"
@@ -61,70 +70,119 @@ export function TeamShowcase() {
             className="object-cover"
           />
         </Reveal>
-
-        {/* Portrait gallery — each photo zooms in on scroll */}
-        <div className="mt-14 grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-3 md:mt-16 lg:grid-cols-4">
-          {TEAM.map((m, i) => (
-            <MemberCard key={m.src} member={m} index={i} reduced={reduced} />
-          ))}
-        </div>
       </div>
+
+      {reduced ? <TeamStatic /> : <TeamReel />}
     </section>
   );
 }
 
-function MemberCard({ member, index, reduced }: { member: Member; index: number; reduced: boolean }) {
+/** Scroll-driven reel — one zooming face at a time. */
+function TeamReel() {
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const scale = useTransform(scrollYProgress, [0, 1], [1.04, 1.26]);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+  const [active, setActive] = useState(0);
+
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    const i = Math.max(0, Math.min(TEAM.length - 1, Math.floor(v * TEAM.length)));
+    setActive(i);
+  });
+
+  // Zoom in within each face's own slice of the scroll, then reset for the next.
+  const scale = useTransform(scrollYProgress, (v) => {
+    const seg = v * TEAM.length;
+    return 1.06 + (seg - Math.floor(seg)) * 0.2;
+  });
+  const barWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
+  const member = TEAM[active];
 
   return (
-    <Reveal as="div" delay={(index % 4) * 0.05} className="group">
-      <div ref={ref} className="relative aspect-[3/4] w-full overflow-hidden rounded-card bg-mount">
-        <ZoomImage src={member.src} name={member.name} scale={scale} reduced={reduced} />
-      </div>
+    <div ref={ref} style={{ height: `${TEAM.length * 26}vh` }}>
+      <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden">
+        <div className="shell-wide grid w-full items-center gap-8 md:grid-cols-[1fr_minmax(0,28rem)] md:gap-12">
+          {/* Name + arrow + counter */}
+          <div className="order-2 md:order-1">
+            <span className="font-mono text-2xs uppercase tracking-label text-ink-muted">
+              {pad(active + 1)} <span className="text-ink/30">/ {pad(TEAM.length)}</span>
+            </span>
+            <div className="mt-4 flex items-start gap-3 md:mt-6">
+              <AnimatePresence mode="wait">
+                <motion.h3
+                  key={member.name}
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -14 }}
+                  transition={{ duration: 0.45, ease: EASE }}
+                  className="font-display text-[clamp(2rem,5vw,3.75rem)] font-light leading-[1.02] tracking-tight"
+                >
+                  {member.name}
+                </motion.h3>
+              </AnimatePresence>
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                aria-hidden="true"
+                className="mt-2 shrink-0 text-ink-muted md:mt-4"
+              >
+                <path d="M7 17 17 7M17 7H8M17 7v9" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
 
-      <div className="mt-4 flex items-center justify-between gap-3 border-t border-hairline pt-3">
-        <h3 className="min-w-0 truncate font-display text-lead tracking-tight transition-colors duration-300 group-hover:text-ink">
-          {member.name}
-        </h3>
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.6"
-          aria-hidden="true"
-          className="shrink-0 text-ink-muted transition-all duration-300 ease-editorial group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ink"
-        >
-          <path d="M7 17 17 7M17 7H8M17 7v9" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
+            {/* Progress bar */}
+            <div className="mt-8 h-px w-full max-w-xs bg-hairline md:mt-10">
+              <motion.div className="h-full bg-ink" style={{ width: barWidth }} />
+            </div>
+          </div>
+
+          {/* Zooming portrait — one face at a time */}
+          <div className="relative order-1 mx-auto aspect-[4/5] w-full max-w-[28rem] overflow-hidden rounded-card bg-mount md:order-2">
+            <AnimatePresence>
+              <motion.div
+                key={active}
+                className="absolute inset-0"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.6, ease: EASE }}
+              >
+                <motion.div className="absolute inset-0" style={{ scale }}>
+                  <Image
+                    src={member.src}
+                    alt={`${member.name} — Madane Design Workshop.`}
+                    fill
+                    sizes="(max-width:768px) 92vw, 28rem"
+                    priority={active === 0}
+                    className="object-cover grayscale"
+                  />
+                </motion.div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
       </div>
-    </Reveal>
+    </div>
   );
 }
 
-function ZoomImage({
-  src,
-  name,
-  scale,
-  reduced,
-}: {
-  src: string;
-  name: string;
-  scale: MotionValue<number>;
-  reduced: boolean;
-}) {
+/** Reduced-motion fallback — a calm static grid, no scroll choreography. */
+function TeamStatic() {
   return (
-    <motion.div className="absolute inset-0" style={reduced ? undefined : { scale }}>
-      <Image
-        src={src}
-        alt={`${name} — Madane Design Workshop.`}
-        fill
-        sizes="(max-width:640px) 50vw, (max-width:1024px) 33vw, 25vw"
-        className="object-cover grayscale transition-[filter] duration-500 ease-editorial group-hover:grayscale-0"
-      />
-    </motion.div>
+    <div className="shell-wide pb-section pt-14">
+      <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4">
+        {TEAM.map((m) => (
+          <div key={m.src}>
+            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-card bg-mount">
+              <Image src={m.src} alt={`${m.name} — Madane Design Workshop.`} fill sizes="25vw" className="object-cover grayscale" />
+            </div>
+            <h3 className="mt-3 font-display text-lead tracking-tight">{m.name}</h3>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
