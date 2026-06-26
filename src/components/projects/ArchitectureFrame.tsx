@@ -25,14 +25,14 @@ export function ArchitectureFrame() {
     };
   };
 
-  const line = "absolute bg-ink/22";
+  const line = "absolute bg-ink/25";
   const stilts = [12, 31, 50, 69, 88];
 
   return (
     <div aria-hidden="true" className="pointer-events-none absolute inset-0">
       {/* roof penthouse box */}
       <motion.span
-        className="absolute left-1/2 top-2 h-3 w-20 -translate-x-1/2 border-x border-t border-ink/22"
+        className="absolute left-1/2 top-2 h-3 w-20 -translate-x-1/2 border-x border-t border-ink/25"
         initial={reduced ? undefined : { opacity: 0 }}
         whileInView={reduced ? undefined : { opacity: 1 }}
         viewport={{ once: true, amount: 0.2 }}
