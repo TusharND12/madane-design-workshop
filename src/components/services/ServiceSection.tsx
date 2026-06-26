@@ -30,7 +30,7 @@ export function ServiceSection({ service, flip }: { service: Service; flip: bool
           fill
           aria-hidden
           sizes="100vw"
-          className="scale-110 object-cover opacity-[0.55] blur-[72px] saturate-[1.25]"
+          className="scale-110 object-cover opacity-[0.42] blur-[80px] saturate-[0.55] brightness-[0.8]"
           style={{
             objectPosition: flip ? "78% 50%" : "22% 50%",
             WebkitMaskImage: bleedMask,
