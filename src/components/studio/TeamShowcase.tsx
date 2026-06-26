@@ -2,16 +2,17 @@
 
 import { useRef } from "react";
 import Image from "next/image";
+import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { SectionHeader } from "@/components/primitives/SectionHeader";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 /**
- * The crew — a horizontal carousel of vertical "pill" (stadium) cards, one per
- * team member. A dark-toned header holds the name; the portrait fills the lower,
- * fully-rounded section. Drag, swipe or trackpad-scroll through the whole team.
+ * The crew — vertical "pill" (stadium) portrait cards mounted on a dark, plastered
+ * wall. As you scroll into the section the cards rise and lock onto the wall one
+ * after another; once placed they stay fixed. Drag / swipe through the whole team.
  */
 type Member = { name: string; src: string };
 
-// Left→right order, individual high-res portraits from /assets/team.
 const TEAM: Member[] = [
   { name: "Aasawari", src: "/assets/team/aasawari.png" },
   { name: "Aishwarya Joil", src: "/assets/team/aishwarya-joil.png" },
@@ -37,40 +38,65 @@ const TEAM: Member[] = [
 // Dark-theme header tones, cycled across the cards for subtle variety.
 const TONES = ["#23262F", "#2A241E", "#272A2E", "#2C2622"];
 
+// Fine grain for the plastered-wall feel (grayscale fractal noise).
+const NOISE =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
+
+// Card reveal pacing (in section-scroll progress). All cards are placed by ~0.55.
+const STEP = 0.024;
+const REVEAL = 0.13;
+
 export function TeamShowcase() {
   return (
-    <section className="overflow-hidden bg-paper">
-      <div className="shell-wide pt-section">
-        <SectionHeader
-          index="03"
-          label="The crew"
-          title="The people behind the calm."
-          align="between"
-          intro="Architects, designers and project leads — the team that turns the studio's quiet into built work."
-        />
-      </div>
+    <section className="relative overflow-hidden bg-paper">
+      {/* Wall — base tone + soft top light + edge vignette */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          backgroundColor: "#141414",
+          backgroundImage:
+            "radial-gradient(120% 70% at 50% -10%, rgba(236,236,230,0.06), transparent 55%)," +
+            "radial-gradient(120% 90% at 50% 120%, rgba(0,0,0,0.55), transparent 60%)",
+        }}
+      />
+      {/* Wall grain */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-[0.05]" style={{ backgroundImage: NOISE }} />
 
-      <Carousel />
+      <div className="relative z-10">
+        <div className="shell-wide pt-section">
+          <SectionHeader
+            index="03"
+            label="The crew"
+            title="The people behind the calm."
+            align="between"
+            intro="Architects, designers and project leads — the team that turns the studio's quiet into built work."
+          />
+        </div>
+
+        <Carousel />
+      </div>
     </section>
   );
 }
 
 function Carousel() {
+  const sectionRef = useRef<HTMLDivElement>(null);
   const scroller = useRef<HTMLDivElement>(null);
-  const drag = useRef({ down: false, startX: 0, startLeft: 0, moved: false });
+  const drag = useRef({ down: false, startX: 0, startLeft: 0 });
+
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "center center"] });
 
   function onDown(e: React.PointerEvent) {
     const el = scroller.current;
     if (!el) return;
-    drag.current = { down: true, startX: e.pageX, startLeft: el.scrollLeft, moved: false };
+    drag.current = { down: true, startX: e.pageX, startLeft: el.scrollLeft };
     el.setPointerCapture(e.pointerId);
   }
   function onMove(e: React.PointerEvent) {
     const el = scroller.current;
     if (!el || !drag.current.down) return;
-    const dx = e.pageX - drag.current.startX;
-    if (Math.abs(dx) > 3) drag.current.moved = true;
-    el.scrollLeft = drag.current.startLeft - dx;
+    el.scrollLeft = drag.current.startLeft - (e.pageX - drag.current.startX);
   }
   function onUp(e: React.PointerEvent) {
     const el = scroller.current;
@@ -79,17 +105,19 @@ function Carousel() {
   }
 
   return (
-    <div className="pb-section pt-12 md:pt-14">
+    <div ref={sectionRef} className="pb-section pt-12 md:pt-14">
       <div
         ref={scroller}
         onPointerDown={onDown}
         onPointerMove={onMove}
         onPointerUp={onUp}
         onPointerCancel={onUp}
-        className="flex cursor-grab snap-x snap-proximity gap-5 overflow-x-auto px-[max(1.25rem,calc((100vw-1440px)/2+1.25rem))] pb-4 active:cursor-grabbing md:gap-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex cursor-grab snap-x snap-proximity gap-5 overflow-x-auto px-[max(1.25rem,calc((100vw-1440px)/2+1.25rem))] pb-6 pt-3 active:cursor-grabbing md:gap-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {TEAM.map((m, i) => (
-          <PillCard key={m.src} member={m} tone={TONES[i % TONES.length]} priority={i < 5} />
+          <CardReveal key={m.src} progress={scrollYProgress} index={i}>
+            <PillCard member={m} tone={TONES[i % TONES.length]} priority={i < 5} />
+          </CardReveal>
         ))}
       </div>
 
@@ -103,10 +131,29 @@ function Carousel() {
   );
 }
 
+/** Scroll-driven mount — each card rises and locks onto the wall in sequence. */
+function CardReveal({ progress, index, children }: { progress: MotionValue<number>; index: number; children: React.ReactNode }) {
+  const reduced = usePrefersReducedMotion();
+  const a = index * STEP;
+  const b = a + REVEAL;
+  const opacity = useTransform(progress, [a, b], [0, 1]);
+  const y = useTransform(progress, [a, b], [64, 0]);
+  const scale = useTransform(progress, [a, b], [0.86, 1]);
+  const rotateX = useTransform(progress, [a, b], [14, 0]);
+
+  if (reduced) return <div className="shrink-0 snap-center">{children}</div>;
+
+  return (
+    <motion.div className="shrink-0 snap-center" style={{ opacity, y, scale, rotateX, transformPerspective: 850 }}>
+      {children}
+    </motion.div>
+  );
+}
+
 function PillCard({ member, tone, priority }: { member: Member; tone: string; priority: boolean }) {
   return (
     <div
-      className="group relative aspect-[1/2.35] w-[clamp(11rem,17vw,13.5rem)] shrink-0 snap-center select-none overflow-hidden rounded-full"
+      className="group relative aspect-[1/2.35] w-[clamp(11rem,17vw,13.5rem)] select-none overflow-hidden rounded-full shadow-[0_26px_55px_-22px_rgba(0,0,0,0.85)] ring-1 ring-white/[0.04]"
       style={{ backgroundColor: tone }}
     >
       {/* Name header */}
