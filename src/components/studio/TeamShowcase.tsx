@@ -2,9 +2,10 @@
 
 import { useRef, useState } from "react";
 import Image from "next/image";
-import { motion, useMotionValueEvent, useScroll, useTransform } from "framer-motion";
+import { AnimatePresence, motion, useMotionValueEvent, useScroll, useTransform } from "framer-motion";
 import { SectionHeader } from "@/components/primitives/SectionHeader";
 import { Reveal } from "@/components/primitives/Reveal";
+import { EASE } from "@/lib/motion";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 /**
@@ -17,6 +18,24 @@ import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 // Horizontal centre of each face across the group photo (left→right, % of width).
 const FACES = [6, 14, 21, 29, 37, 44, 52, 60, 68, 76, 83, 90, 95];
 const N = FACES.length;
+
+// Left→right names of the people in the group photo. PLACEHOLDER ORDER — pending
+// the correct order from the studio.
+const NAMES = [
+  "Nidhi Jain",
+  "Shatbdi Ojha",
+  "Mahesh Khandekar",
+  "Ajay Gupta",
+  "Nikita Rane",
+  "Aishwarya Joil",
+  "Ravindra",
+  "Harshad",
+  "Komal Kharat",
+  "Vaishnavi",
+  "Shweta",
+  "Ajinkya",
+  "Aasawari",
+];
 
 const ZOOM = 2.2; // zoom level once focused on a face
 const TILT = 6; // degrees of 3D perspective tilt while zoomed
@@ -85,6 +104,14 @@ function GroupReel() {
   // Outer layer: the 3D tilt, about centre.
   const rotateX = useTransform(scrollYProgress, [0, P_INTRO, 1], [0, TILT, TILT]);
 
+  // Where the focused head sits on screen — drives the name + arrow position.
+  const headX = useTransform(scrollYProgress, (p) => {
+    const s = scaleAt(p);
+    const fxf = focusXAt(p) / 100;
+    const tx = clamp(0.5 - s * fxf, 1 - s, 0);
+    return `${clamp(s * fxf + tx, 0.18, 0.82) * 100}%`;
+  });
+
   useMotionValueEvent(scrollYProgress, "change", (p) => {
     setActive(p < P_INTRO ? -1 : Math.round(panT(p) * (N - 1)));
   });
@@ -107,6 +134,30 @@ function GroupReel() {
                 className="object-cover"
               />
             </motion.div>
+
+            {/* Name in the vacant space above the head, with a hand-drawn arrow */}
+            <motion.div
+              className="pointer-events-none absolute top-[4%] z-10 flex flex-col items-center text-center text-[#1c1712]"
+              style={{ left: headX, x: "-50%" }}
+            >
+              <AnimatePresence mode="wait">
+                {active >= 0 && (
+                  <motion.div
+                    key={active}
+                    initial={{ opacity: 0, y: -8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.32, ease: EASE }}
+                    className="flex flex-col items-center"
+                  >
+                    <span className="whitespace-nowrap font-display text-[clamp(0.95rem,1.9vw,1.65rem)] font-medium tracking-tight">
+                      {NAMES[active]}
+                    </span>
+                    <ArrowDoodle className="mt-1 h-[clamp(2.75rem,7vw,4.75rem)] w-auto" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
           </motion.div>
 
           <div className="mt-6 flex items-center justify-between font-mono text-2xs uppercase tracking-label text-ink-muted">
@@ -116,6 +167,25 @@ function GroupReel() {
         </div>
       </div>
     </div>
+  );
+}
+
+/** Hand-drawn squiggle arrow pointing down from the name to the head. */
+function ArrowDoodle({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 50 76"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M33 4C44 16 20 22 31 35c9 10-11 15-2 25" />
+      <path d="M29 65l-9-4M29 65l5-8" />
+    </svg>
   );
 }
 
