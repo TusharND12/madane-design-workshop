@@ -22,13 +22,13 @@ export default function StudioPage() {
     <>
       <PageZoom value={0.9} />
 
-      {/* Studio film — scroll-scrubbed, full-bleed */}
+      {/* Studio film - scroll-scrubbed, full-bleed */}
       <ScrollVideo src="/assets/video/studio-film.mp4" />
 
-      {/* One bold statement — a vertical film grows over it on scroll */}
+      {/* One bold statement - a vertical film grows over it on scroll */}
       <StatementReveal />
 
-      {/* The crew — scattered constellation */}
+      {/* The crew - scattered constellation */}
       <TeamShowcase />
 
       {/* Principles, words only */}
@@ -43,7 +43,7 @@ export default function StudioPage() {
         </div>
       </section>
 
-      {/* Trust wall — accreditations + marquee clients */}
+      {/* Trust wall - accreditations + marquee clients */}
       <section className="bg-black">
         <div className="shell-wide py-[clamp(4.5rem,13vh,8.5rem)]">
           <Reveal className="flex flex-wrap items-center gap-x-10 gap-y-4">

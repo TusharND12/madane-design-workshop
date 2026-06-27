@@ -6,7 +6,7 @@
 
 /* ------------------------------------------------------------------ */
 /*  Site-wide lowercase aesthetic (yodezeen style).                    */
-/*  Display-only — the underlying text content is untouched, so it's   */
+/*  Display-only - the underlying text content is untouched, so it's   */
 /*  fully reversible and stays correct for SEO / screen readers.       */
 /*  Placed after @tailwind utilities so it overrides the `uppercase`   */
 /*  and `capitalize` utility classes used throughout the site.         */

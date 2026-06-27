@@ -11,7 +11,7 @@ import { StandardsMarquee } from "@/components/news/StandardsMarquee";
 export const metadata: Metadata = {
   title: "News",
   description:
-    "Madane Design Workshop's environment & sustainability vision 2026–2030 — a dharma-driven commitment to bharat's built future: net-zero targets, a five-year roadmap and four strategic pillars.",
+    "Madane Design Workshop's environment & sustainability vision 2026-2030, a dharma-driven commitment to bharat's built future: net-zero targets, a five-year roadmap and four strategic pillars.",
   alternates: { canonical: "/news" },
 };
 
@@ -21,7 +21,7 @@ const STATS = [
   { v: "52+", l: "creative team" },
   { v: "50%", l: "MNC / Fortune 500" },
   { v: "65%", l: "repeat clients" },
-  { v: "₹51 Cr", l: "turnover FY24–25" },
+  { v: "₹51 Cr", l: "turnover FY24-25" },
 ];
 
 const STRATEGY = [
@@ -42,10 +42,10 @@ const TARGETS = [
 ];
 
 const PILLARS = [
-  { n: "Water conservation", d: "Every drop designed — audits, rainwater harvesting and net water-positive operations by 2030." },
-  { n: "Paperless systems", d: "Digital by default — BIM-first, under 500 sheets a month, cloud archives." },
-  { n: "Recycling & circular design", d: "Circularity at every scale — zero-landfill sites and a circular design standard." },
-  { n: "Carbon neutrality", d: "A net-zero future — renewable energy, embodied-carbon calcs and verified offsets." },
+  { n: "Water conservation", d: "Every drop designed: audits, rainwater harvesting and net water-positive operations by 2030." },
+  { n: "Paperless systems", d: "Digital by default: BIM-first, under 500 sheets a month, cloud archives." },
+  { n: "Recycling & circular design", d: "Circularity at every scale: zero-landfill sites and a circular design standard." },
+  { n: "Carbon neutrality", d: "A net-zero future: renewable energy, embodied-carbon calcs and verified offsets." },
 ];
 
 const STANDARDS = [
@@ -68,7 +68,7 @@ export default function NewsPage() {
         label="Sustainability · ESG"
         title="We design & build bharat, sustainably."
         lead="Every square foot we create serves not just our clients, but the land, the air, and the generations who will inhabit what we build."
-        meta="Vision & strategy · 2026–2030"
+        meta="Vision & strategy · 2026-2030"
       />
 
       {/* Why it matters */}
@@ -77,9 +77,9 @@ export default function NewsPage() {
           <SectionHeader
             index="01"
             label="Why it matters"
-            title="38–40% of global carbon comes from construction."
+            title="38-40% of global carbon comes from construction."
             align="between"
-            intro="As architects of 2M+ sq ft across 38+ Indian cities, our decisions carry measurable consequence. Guided by dharma — design as stewardship — we commit to purposeful, measurable action."
+            intro="As architects of 2M+ sq ft across 38+ Indian cities, our decisions carry measurable consequence. Guided by dharma, design as stewardship, we commit to purposeful, measurable action."
           />
           <div className="mt-12 grid grid-cols-2 gap-y-12 md:mt-14 md:grid-cols-3 md:gap-y-14">
             {STATS.map((s, i) => (
@@ -92,10 +92,10 @@ export default function NewsPage() {
         </div>
       </section>
 
-      {/* Five-year roadmap — pinned horizontal scroll */}
+      {/* Five-year roadmap - pinned horizontal scroll */}
       <RoadmapScroll items={STRATEGY} />
 
-      {/* Six hard targets — hover-reveal wall */}
+      {/* Six hard targets - hover-reveal wall */}
       <section className="bg-paper">
         <div className="shell-wide py-section">
           <SectionHeader index="03" label="Targets" title="Six hard targets by 2030." />
@@ -130,12 +130,12 @@ export default function NewsPage() {
             ध्यानं कृत्वा सृजनशीलतायै
           </p>
           <p className="mt-5 font-mono text-2xs uppercase tracking-label text-ink-muted">
-            Dhyānaṁ Kṛtvā Sṛjanashīlatāyai — think to innovate
+            Dhyānaṁ Kṛtvā Sṛjanashīlatāyai · think to innovate
           </p>
         </div>
       </section>
 
-      {/* Standards & alignment — scrolling marquee */}
+      {/* Standards & alignment - scrolling marquee */}
       <section className="bg-stone/40">
         <div className="py-section">
           <div className="shell-wide">

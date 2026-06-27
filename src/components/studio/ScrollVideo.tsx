@@ -6,7 +6,7 @@ import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 
-// How tall the scroll track is — taller reads as a slower, more deliberate
+// How tall the scroll track is - taller reads as a slower, more deliberate
 // scrub. The video is pinned for the whole track and its playback is driven by
 // scroll position (yodezeen.com/about style), eased so it glides. A longer track
 // spreads the reveal over more scroll, so each frame gets finer control and the
@@ -30,7 +30,7 @@ export function ScrollVideo({ src }: { src: string }) {
   const rafId = useRef<number | null>(null);
 
   // Scroll progress through the section (0..1), used to drive the storytelling
-  // overlays — a kicker caption that fades through, and a hairline that fills.
+  // overlays - a kicker caption that fades through, and a hairline that fills.
   const progress = useMotionValue(0);
   const kickerOpacity = useTransform(progress, [0, 0.12, 0.68, 0.9], [0, 1, 1, 0]);
 
@@ -138,7 +138,7 @@ export function ScrollVideo({ src }: { src: string }) {
           aria-hidden="true"
         />
 
-        {/* Cinematic vignette — darkens the corners toward black so the frame
+        {/* Cinematic vignette - darkens the corners toward black so the frame
             reads graded. */}
         <div
           aria-hidden="true"
@@ -164,7 +164,7 @@ export function ScrollVideo({ src }: { src: string }) {
           style={{ background: "linear-gradient(to bottom, transparent, #000)" }}
         />
 
-        {/* Kicker caption — fades in over the film and out as you scroll past. */}
+        {/* Kicker caption - fades in over the film and out as you scroll past. */}
         <motion.div
           aria-hidden="true"
           style={{ opacity: kickerOpacity }}

@@ -46,7 +46,7 @@ const ROLES: Role[] = [
 ];
 
 const applyHref = (role: string) =>
-  `mailto:${CAREERS_EMAIL}?subject=${encodeURIComponent(`Application — ${role}`)}`;
+  `mailto:${CAREERS_EMAIL}?subject=${encodeURIComponent(`Application: ${role}`)}`;
 
 export function CareerRoles() {
   const [active, setActive] = useState<number | null>(null);

@@ -28,7 +28,7 @@ export function ProofStat() {
         </Reveal>
 
         <div ref={ref} className="relative mt-14 md:mt-20">
-          {/* faint Warli-art frieze rising along the baseline — the proof still
+          {/* faint Warli-art frieze rising along the baseline - the proof still
               stands on the architecture, now without a box */}
           <div
             aria-hidden="true"

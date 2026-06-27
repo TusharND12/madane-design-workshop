@@ -114,7 +114,7 @@ function Backdrop() {
   );
 }
 
-/* Centre overlay — the title, which fades out once the portraits are all up. */
+/* Centre overlay - the title, which fades out once the portraits are all up. */
 function CrewTitle({ opacity }: { opacity: MotionValue<number> }) {
   return (
     <div className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center">
@@ -181,7 +181,7 @@ function ScatterCard({
   const start = pos.delay * 0.45;
   const end = start + 0.3;
   // Cards on the left bow left, those on the right bow right; the further from
-  // centre, the wider the arc — so the field sweeps up on curves, not straight.
+  // centre, the wider the arc - so the field sweeps up on curves, not straight.
   const dir = pos.left < 50 ? -1 : 1;
   const arc = ARC * (0.45 + Math.abs(pos.left - 50) / 50) * dir;
 

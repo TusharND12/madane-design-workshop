@@ -22,7 +22,7 @@ const BACK_SRC = "/assets/video/living-daylight.mp4";
 // Three taglines that cross-fade over the fullscreen film as you keep scrolling.
 const TAGLINES = [
   "We design & build bharat & beyond.",
-  "Architecture, interiors & turnkey — end to end.",
+  "Architecture, interiors & turnkey, end to end.",
   "From first sketch to final key.",
 ];
 
@@ -30,7 +30,7 @@ const TAGLINES = [
  * The studio statement (yodezeen style), one continuous scroll-driven move:
  *   1. a sharp-edged rectangle window grows over the centred heading,
  *   2. the video inside flips in 3D to a second clip,
- *   3. the window opens out to a full-screen rectangle (a clip-path reveal — the
+ *   3. the window opens out to a full-screen rectangle (a clip-path reveal - the
  *      video keeps its scale, it is not zoomed),
  *   4. a closing line fades in over it.
  * Pinned, geometric progress (survives the route's `zoom`), spring-smoothed.
@@ -151,7 +151,7 @@ export function StatementReveal() {
           </motion.div>
         </motion.div>
 
-        {/* Taglines over the fullscreen film — cross-fade one to the next */}
+        {/* Taglines over the fullscreen film - cross-fade one to the next */}
         <div className="pointer-events-none absolute inset-0 z-20">
           <motion.div style={{ opacity: scrimOpacity }} className="absolute inset-0 bg-black/55" aria-hidden="true" />
           <motion.div style={{ opacity: endFade }} className="absolute inset-0 bg-black" aria-hidden="true" />

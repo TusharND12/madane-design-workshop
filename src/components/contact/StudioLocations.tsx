@@ -5,7 +5,7 @@ import { Bracket } from "@/components/primitives/Bracket";
 import { site } from "@/content/site";
 
 /**
- * Where we are — the studio's cities set in oversized type with a live local time
+ * Where we are - the studio's cities set in oversized type with a live local time
  * beside each, plus phone (P.), address (A.) and a maps link (yodezeen.com/contact
  * style). All three sit in IST; Mumbai is the studio, the others representatives.
  */
@@ -48,7 +48,7 @@ export function StudioLocations() {
                   {c.name}
                 </h2>
                 <div className="mt-2 flex shrink-0 flex-col items-end gap-1 text-right md:mt-5">
-                  <span className="font-mono text-2xs uppercase tracking-label tabular-nums text-ink">{time ? `${time}` : "—"}</span>
+                  <span className="font-mono text-2xs uppercase tracking-label tabular-nums text-ink">{time ? `${time}` : "·"}</span>
                   <span className="font-mono text-2xs uppercase tracking-label text-ink-muted">{c.role}</span>
                 </div>
               </div>

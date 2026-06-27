@@ -56,7 +56,7 @@ export function Header() {
 
   const activeSub = megaMenu ? SUBMENUS[megaMenu] : undefined;
 
-  // The image shown behind the mega menu — none by default, then follows
+  // The image shown behind the mega menu - none by default, then follows
   // whichever sub-link is hovered. Reset whenever the menu opens/closes.
   const [hoverImg, setHoverImg] = useState<string | null>(null);
   useEffect(() => {
@@ -77,7 +77,7 @@ export function Header() {
       });
       setInvert(over);
 
-      // Hide on scroll down, reveal on scroll up — on every page. Always shown
+      // Hide on scroll down, reveal on scroll up - on every page. Always shown
       // near the very top; small deadzone so tiny jitters don't toggle it.
       const last = lastYRef.current;
       let hide: boolean;
@@ -93,7 +93,7 @@ export function Header() {
         // Keep the header hidden while the Hero fills the viewport so it opens
         // clean. The moment the Hero scrolls away (reaching the next section),
         // reveal the header for the first time; from there the direction logic
-        // governs — it tucks away on scroll down and returns on scroll up.
+        // governs - it tucks away on scroll down and returns on scroll up.
         const landing = document.querySelector<HTMLElement>("[data-invert-zone]");
         const bottom = landing?.getBoundingClientRect().bottom ?? 0;
         const overHero = bottom > 120;
@@ -178,7 +178,7 @@ export function Header() {
           {/* Mobile spacer to balance the menu button so the logo stays centred */}
           <div className="w-8 lg:hidden" aria-hidden="true" />
 
-          {/* Centre logo — absolutely centred so side widths never shift it */}
+          {/* Centre logo - absolutely centred so side widths never shift it */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
             <Logo subdued={!light} />
           </div>

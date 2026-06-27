@@ -7,8 +7,8 @@ import { Bracket } from "@/components/primitives/Bracket";
 
 /**
  * Process as a build: on desktop the stage is pinned and scroll-scrubbed, and a
- * 3D double-storey house assembles part-by-part — foundation, ground storey,
- * upper storey, gable roof, then door/windows — one part per process step, while
+ * 3D double-storey house assembles part-by-part - foundation, ground storey,
+ * upper storey, gable roof, then door/windows - one part per process step, while
  * the whole thing turns a full 360° (PRD §8.6). The step list brightens in step
  * with the part being built; the detail grid then fades in below. Mobile falls
  * back to a vertical icon spine. All motion is gated by the global reduced-motion
@@ -17,7 +17,7 @@ import { Bracket } from "@/components/primitives/Bracket";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 const INK = "236, 236, 230"; // --ink rgb
-const WARM = "226, 190, 132"; // soft brass — lit windows at handover
+const WARM = "226, 190, 132"; // soft brass - lit windows at handover
 
 // House geometry (px, model space; +y is down). The whole thing is roughly
 // centred on the origin so it spins around its own vertical axis.
@@ -40,14 +40,14 @@ function StepIcon({ i }: { i: number }) {
     strokeLinejoin: "round" as const,
   };
   switch (i) {
-    case 0: // Discovery — magnifier
+    case 0: // Discovery - magnifier
       return (
         <svg {...common} aria-hidden="true">
           <circle cx="11" cy="11" r="6.5" />
           <line x1="20.5" y1="20.5" x2="16" y2="16" />
         </svg>
       );
-    case 1: // Concept — lightbulb
+    case 1: // Concept - lightbulb
       return (
         <svg {...common} aria-hidden="true">
           <path d="M9 18h6" />
@@ -55,21 +55,21 @@ function StepIcon({ i }: { i: number }) {
           <path d="M12 3a6 6 0 0 0-3.8 10.6c.6.5 1 1.3 1 2.1v.3h5.6v-.3c0-.8.4-1.6 1-2.1A6 6 0 0 0 12 3Z" />
         </svg>
       );
-    case 2: // Design Development — layers
+    case 2: // Design Development - layers
       return (
         <svg {...common} aria-hidden="true">
           <path d="M12 3 3 8l9 5 9-5-9-5Z" />
           <path d="M3 13l9 5 9-5" />
         </svg>
       );
-    case 3: // Execution — gear
+    case 3: // Execution - gear
       return (
         <svg {...common} aria-hidden="true">
           <circle cx="12" cy="12" r="3.2" />
           <path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.1 5.1l2.1 2.1M16.8 16.8l2.1 2.1M18.9 5.1l-2.1 2.1M7.2 16.8l-2.1 2.1" />
         </svg>
       );
-    default: // Handover — check
+    default: // Handover - check
       return (
         <svg {...common} aria-hidden="true">
           <path d="M5 12.5l4.5 4.5L19 7.5" />
@@ -174,7 +174,7 @@ function roofFaces() {
   ];
 }
 
-/** Door, windows and chimney — the finishing details on the front elevation. */
+/** Door, windows and chimney - the finishing details on the front elevation. */
 function detailFaces() {
   const zf = HD / 2 + 0.6; // sit just proud of the front wall
   return [
@@ -187,7 +187,7 @@ function detailFaces() {
   ];
 }
 
-/** One construction stage — its parts fade in and settle as the scrub passes. */
+/** One construction stage - its parts fade in and settle as the scrub passes. */
 function Part({ progress, from, to, rise, children }: { progress: MotionValue<number>; from: number; to: number; rise: number; children: React.ReactNode }) {
   const reveal = useTransform(progress, [from, to], [0, 1]);
   const opacity = useTransform(progress, [from, from + 0.05], [0, 1]);
@@ -244,7 +244,7 @@ function House({ progress }: { progress: MotionValue<number> }) {
         <Part progress={progress} from={0.24} to={0.4} rise={46}>
           {boxFaces(HW, HD, 66, 0, -9, 0, "upper")}
         </Part>
-        {/* 04 roof — lowered into place from above */}
+        {/* 04 roof - lowered into place from above */}
         <Part progress={progress} from={0.36} to={0.52} rise={-32}>
           {roofFaces()}
         </Part>
@@ -281,7 +281,7 @@ function StepRow({ draw, step, i }: { draw: MotionValue<number>; step: ProcessSt
 
 export function ProcessTimeline({ steps }: { steps: ProcessStep[] }) {
   const stageRef = useRef<HTMLDivElement>(null);
-  // 0 at the moment the stage pins, 1 when it releases — drives the build + spin.
+  // 0 at the moment the stage pins, 1 when it releases - drives the build + spin.
   const { scrollYProgress } = useScroll({ target: stageRef, offset: ["start start", "end end"] });
   const draw = useTransform(scrollYProgress, [0, 0.96], [0, 1]);
 
@@ -291,12 +291,12 @@ export function ProcessTimeline({ steps }: { steps: ProcessStep[] }) {
         <div className="max-w-2xl">
           <Bracket>The sequence</Bracket>
           <p className="mt-6 max-w-xl font-display text-2xl leading-[1.25] tracking-tight text-ink md:text-3xl">
-            Five steps, built like a house — it rises from foundation to roof and turns a full circle as the work comes together.
+            Five steps, built like a house, it rises from foundation to roof and turns a full circle as the work comes together.
           </p>
         </div>
       </div>
 
-      {/* Desktop — pinned, scroll-scrubbed 3D house build */}
+      {/* Desktop - pinned, scroll-scrubbed 3D house build */}
       <div ref={stageRef} data-build-stage className="relative hidden h-[360vh] md:block">
         <div className="sticky top-[var(--header-h)] flex h-[calc(100svh-var(--header-h))] items-center">
           <div className="shell-wide w-full">
@@ -317,7 +317,7 @@ export function ProcessTimeline({ steps }: { steps: ProcessStep[] }) {
         </div>
       </div>
 
-      {/* Mobile — vertical icon spine */}
+      {/* Mobile - vertical icon spine */}
       <div className="shell-wide pb-20 md:hidden">
         <ol className="relative mt-14">
           <span className="absolute bottom-6 left-7 top-6 w-px border-l border-dashed border-ink-muted/40" aria-hidden="true" />

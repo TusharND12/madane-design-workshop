@@ -10,7 +10,7 @@ import { EASE } from "@/lib/motion";
 import { useProjectZoom, zoomClick } from "./ProjectZoom";
 
 // A varied aspect cycle gives the grid a calm masonry rhythm without borders or
-// chrome — images do all the talking (yodezeen.com/projects style).
+// chrome - images do all the talking (yodezeen.com/projects style).
 const ASPECTS = ["4 / 3", "3 / 4", "1 / 1", "4 / 3", "3 / 4", "4 / 3", "1 / 1", "3 / 4"];
 
 // Native <option>s can't take Tailwind classes; style them to the dark theme so
@@ -91,7 +91,7 @@ export function ProjectsArchive({
 
   return (
     <div className="w-full px-3 pb-section">
-      {/* Minimal filter — discipline tabs + sector/city dropdowns, one line */}
+      {/* Minimal filter - discipline tabs + sector/city dropdowns, one line */}
       <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 font-mono text-2xs uppercase tracking-label">
         {tabs.map((t) => {
           const active = t === type;
@@ -205,7 +205,7 @@ function GalleryCard({
           priority={priority}
           className="object-cover transition-transform duration-[1.2s] ease-editorial group-hover:scale-[1.04]"
         />
-        {/* Name reveals on hover — no permanent chrome */}
+        {/* Name reveals on hover - no permanent chrome */}
         <div className="pointer-events-none absolute inset-0 flex items-end bg-gradient-to-t from-black/75 via-black/0 to-black/0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
           <div className="p-5">
             <h3 className="font-display text-lg leading-tight tracking-tight text-white md:text-xl">{project.name}</h3>

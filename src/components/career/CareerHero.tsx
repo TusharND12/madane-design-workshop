@@ -55,7 +55,7 @@ export function CareerHero() {
           </h1>
 
           <motion.p variants={wordReveal} className="mt-8 max-w-prose text-lead font-light text-ink/80">
-            We design and deliver architecture and interiors for Fortune 100 companies across India — and we are always glad to meet people who want to build with us.
+            We design and deliver architecture and interiors for Fortune 100 companies across India, and we are always glad to meet people who want to build with us.
           </motion.p>
         </motion.div>
       </motion.div>

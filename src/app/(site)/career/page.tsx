@@ -7,7 +7,7 @@ import { CareerRoles } from "@/components/career/CareerRoles";
 export const metadata: Metadata = {
   title: "Career",
   description:
-    "Build with Madane Design Workshop — open roles across architecture, interiors, project management, business development and more, based in Mumbai.",
+    "Build with Madane Design Workshop: open roles across architecture, interiors, project management, business development and more, based in Mumbai.",
   alternates: { canonical: "/career" },
 };
 
@@ -18,7 +18,7 @@ export default function CareerPage() {
     <>
       <CareerHero />
 
-      {/* Vacancies — centered roles */}
+      {/* Vacancies - centered roles */}
       <div className="bg-paper pb-section pt-[clamp(2rem,6vh,4rem)]">
         <Reveal className="shell-wide text-center">
           <h2 className="mx-auto max-w-[18ch] font-display text-[clamp(2rem,6vw,4.75rem)] font-medium uppercase leading-[0.95] tracking-tight">

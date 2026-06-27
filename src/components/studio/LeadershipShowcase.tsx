@@ -35,7 +35,7 @@ const TAIL = 0.08;
 
 /**
  * Leadership, the partners behind the practice. The section pins and scrolling
- * steps through the partners — the active card grows to a full portrait while the
+ * steps through the partners - the active card grows to a full portrait while the
  * name, role and bio swap alongside; after the last partner it releases. Desktop
  * shows the bio beside the card strip; phones stack a card strip over a compact
  * swapping bio. Both are scroll-driven.
@@ -122,7 +122,7 @@ function PinnedDesktop({ items, socials, header }: { items: readonly Leader[]; s
   );
 }
 
-/* Mobile, pinned, card strip over a compact swapping bio — scroll advances. */
+/* Mobile, pinned, card strip over a compact swapping bio - scroll advances. */
 function PinnedMobile({ items, socials, header }: { items: readonly Leader[]; socials: readonly Social[]; header?: React.ReactNode }) {
   const N = items.length;
   const { parentRef, active, navTo } = usePinScroll(N);
