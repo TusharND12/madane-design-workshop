@@ -73,6 +73,7 @@ export type Service = z.infer<typeof Service>;
 export const ProcessStep = z.object({
   index: z.string(),
   title: z.string(),
+  caption: z.string().optional(), // short label shown on the process journey nodes
   body: z.string(),
 });
 export type ProcessStep = z.infer<typeof ProcessStep>;
