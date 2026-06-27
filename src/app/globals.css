@@ -71,6 +71,20 @@
     color: var(--paper);
   }
 
+  /* Hide the native scrollbar — Lenis drives the scrolling, the bar is just
+     visual noise on this dark, editorial layout. Scrolling stays fully working. */
+  html,
+  body {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* old Edge/IE */
+  }
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none; /* WebKit/Blink */
+  }
+
   /* Slow drift for the decorative wave lines behind the device showcase */
   @keyframes wave-drift {
     0% { transform: translateX(0); }
