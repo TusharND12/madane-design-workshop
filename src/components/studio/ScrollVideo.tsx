@@ -122,6 +122,23 @@ export function ScrollVideo({ src }: { src: string }) {
           tabIndex={-1}
           aria-hidden="true"
         />
+
+        {/* Cinematic vignette — darkens the edges toward the paper tone so the
+            frame reads graded and the bottom edge melts into the section below. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(125% 115% at 50% 42%, transparent 55%, rgba(15,15,15,0.45) 82%, rgba(15,15,15,0.9) 100%)",
+          }}
+        />
+        {/* Extra fade on the very bottom to blend into the next section cleanly. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-[9%]"
+          style={{ background: "linear-gradient(to bottom, transparent, var(--paper))" }}
+        />
       </div>
     </section>
   );
