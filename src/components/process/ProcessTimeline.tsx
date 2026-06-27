@@ -298,7 +298,7 @@ export function ProcessTimeline({ steps }: { steps: ProcessStep[] }) {
 
       {/* Desktop — pinned, scroll-scrubbed 3D house build */}
       <div ref={stageRef} data-build-stage className="relative hidden h-[360vh] md:block">
-        <div className="sticky top-0 flex h-[100svh] items-center">
+        <div className="sticky top-[var(--header-h)] flex h-[calc(100svh-var(--header-h))] items-center">
           <div className="shell-wide w-full">
             <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
               {/* House */}
