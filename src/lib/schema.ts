@@ -23,10 +23,13 @@ export const Project = z.object({
   slug: z.string(),
   name: z.string(),
   type: ProjectType,
+  // Sector / typology used by the archive's Sector filter (e.g. "Villas",
+  // "Banking & Finance", "Corporate Offices", "Coworking", "Industrial").
+  category: z.string().default(""),
   client: z.string().optional(),
   location: z.string(),
   city: z.string(),
-  year: z.number(),
+  year: z.number().optional(),
   area: z.string(), // e.g. "12,000 sq.ft."
   status: z.string(), // Completed / In progress
   scope: z.array(z.string()),

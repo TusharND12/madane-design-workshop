@@ -15,10 +15,12 @@ export function ProjectsArchive({
   projects,
   types,
   locations,
+  categories,
 }: {
   projects: Project[];
   types: ProjectType[];
   locations: string[];
+  categories: string[];
 }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -26,24 +28,29 @@ export function ProjectsArchive({
 
   const initialType = (params.get("type") as ProjectType | null) ?? "All";
   const initialLoc = params.get("city") ?? "All";
+  const initialCat = params.get("sector") ?? "All";
 
   const [type, setType] = useState<ProjectType | "All">(
     types.includes(initialType as ProjectType) ? (initialType as ProjectType) : "All"
   );
   const [location, setLocation] = useState<string | "All">(locations.includes(initialLoc) ? initialLoc : "All");
+  const [category, setCategory] = useState<string | "All">(categories.includes(initialCat) ? initialCat : "All");
 
   useEffect(() => {
     const t = (params.get("type") as ProjectType | null) ?? "All";
     const c = params.get("city") ?? "All";
+    const s = params.get("sector") ?? "All";
     setType(types.includes(t as ProjectType) ? (t as ProjectType) : "All");
     setLocation(locations.includes(c) ? c : "All");
-  }, [params, types, locations]);
+    setCategory(categories.includes(s) ? s : "All");
+  }, [params, types, locations, categories]);
 
   const syncUrl = useCallback(
-    (nextType: ProjectType | "All", nextLoc: string | "All") => {
+    (nextType: ProjectType | "All", nextLoc: string | "All", nextCat: string | "All") => {
       const sp = new URLSearchParams();
       if (nextType !== "All") sp.set("type", nextType);
       if (nextLoc !== "All") sp.set("city", nextLoc);
+      if (nextCat !== "All") sp.set("sector", nextCat);
       const qs = sp.toString();
       router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
     },
@@ -52,13 +59,22 @@ export function ProjectsArchive({
 
   const counts = useMemo(() => {
     const c: Record<string, number> = {};
-    for (const t of types) c[t] = projects.filter((p) => p.type === t && (location === "All" || p.city === location)).length;
+    for (const t of types)
+      c[t] = projects.filter(
+        (p) => p.type === t && (location === "All" || p.city === location) && (category === "All" || p.category === category)
+      ).length;
     return c;
-  }, [projects, types, location]);
+  }, [projects, types, location, category]);
 
   const filtered = useMemo(
-    () => projects.filter((p) => (type === "All" || p.type === type) && (location === "All" || p.city === location)),
-    [projects, type, location]
+    () =>
+      projects.filter(
+        (p) =>
+          (type === "All" || p.type === type) &&
+          (location === "All" || p.city === location) &&
+          (category === "All" || p.category === category)
+      ),
+    [projects, type, location, category]
   );
 
   // After a filter changes, return to the top so the new results read from the
@@ -72,12 +88,17 @@ export function ProjectsArchive({
 
   function handleType(t: ProjectType | "All") {
     setType(t);
-    syncUrl(t, location);
+    syncUrl(t, location, category);
     scrollTop();
   }
   function handleLocation(l: string | "All") {
     setLocation(l);
-    syncUrl(type, l);
+    syncUrl(type, l, category);
+    scrollTop();
+  }
+  function handleCategory(c: string | "All") {
+    setCategory(c);
+    syncUrl(type, location, c);
     scrollTop();
   }
 
@@ -86,12 +107,15 @@ export function ProjectsArchive({
       <FilterBar
         types={types}
         locations={locations}
+        categories={categories}
         activeType={type}
         activeLocation={location}
+        activeCategory={category}
         counts={counts}
         onType={handleType}
         onLocation={handleLocation}
-        total={projects.filter((p) => location === "All" || p.city === location).length}
+        onCategory={handleCategory}
+        total={projects.filter((p) => (location === "All" || p.city === location) && (category === "All" || p.category === category)).length}
       />
 
       {/* Count line */}
@@ -101,12 +125,21 @@ export function ProjectsArchive({
         </span>
         <span>
           {type === "All" ? "All disciplines" : type}
+          {category !== "All" ? ` · ${category}` : ""}
           {location !== "All" ? ` · ${location}` : ""}
         </span>
       </div>
 
       {filtered.length === 0 ? (
-        <EmptyState onReset={() => { handleType("All"); handleLocation("All"); }} />
+        <EmptyState
+          onReset={() => {
+            setType("All");
+            setLocation("All");
+            setCategory("All");
+            syncUrl("All", "All", "All");
+            scrollTop();
+          }}
+        />
       ) : (
         <div className="relative mt-8 px-6 pb-14 pt-12 md:mt-10 md:px-12">
           {/* Line-art building shell, the cards read as floors inside it */}

@@ -11,12 +11,13 @@ export const projects: Project[] = [
     slug: "rudra-villa",
     name: "Rudra Villa",
     type: "Architecture",
+    category: "Villas",
     client: "Private residence",
-    location: "Alibag, Maharashtra",
-    city: "Alibag",
+    location: "Alibaug, Maharashtra",
+    city: "Alibaug",
     year: 2025,
-    area: "18,000 sq.ft.",
-    status: "Ongoing",
+    area: "8,000 sq.ft.",
+    status: "Under construction",
     scope: ["Architecture", "Interiors and landscape", "Design and execution"],
     services: ["Architecture", "Interior"],
     cover: "/assets/projects/rudra-villa/cover.jpg",
@@ -47,11 +48,12 @@ export const projects: Project[] = [
     slug: "sun-petrochemicals-pvt-ltd-corporate-office",
     name: "Sun Petrochemicals Pvt. Ltd., Corporate Office",
     type: "Interior",
+    category: "Corporate Offices",
     client: "Sun Petrochemicals Pvt. Ltd.",
-    location: "India",
-    city: "India",
+    location: "ATL Corporate Park, Mumbai",
+    city: "Mumbai",
     year: 2024,
-    area: "",
+    area: "12,000 sq.ft.",
     status: "completed",
     scope: ["Commercial interior fit-out", "Reception", "Lobby", "Cabins", "Meeting/boardrooms"],
     services: ["Interior", "Turnkey"],
@@ -81,11 +83,12 @@ export const projects: Project[] = [
     slug: "akasa-kolkata",
     name: "Akasa, Kolkata",
     type: "Interior",
-    client: "Akasa",
-    location: "Kolkata, West Bengal",
+    category: "Coworking",
+    client: "Akasa Business Center",
+    location: "Salt Lake City, Kolkata",
     city: "Kolkata",
     year: 2023,
-    area: "",
+    area: "15,000 sq.ft.",
     status: "Completed",
     scope: ["Commercial interior fit-out: reception", "Private cabins", "Meeting and conference rooms", "Open workstations", "Breakout cafeteria"],
     services: ["Interior", "Turnkey"],
@@ -114,6 +117,7 @@ export const projects: Project[] = [
     slug: "semac-consultants-pvt-ltd-office",
     name: "Semac Consultants Pvt. Ltd. Office",
     type: "Interior",
+    category: "Corporate Offices",
     client: "Semac Consultants Pvt. Ltd.",
     location: "India",
     city: "India",
@@ -148,6 +152,7 @@ export const projects: Project[] = [
     slug: "john-cockerill-office-aurum-parc-ghansoli",
     name: "John Cockerill Office, Aurum Parc Ghansoli",
     type: "Interior",
+    category: "Corporate Offices",
     client: "John Cockerill",
     location: "Aurum Parc, Ghansoli, Navi Mumbai",
     city: "Navi Mumbai",
@@ -183,12 +188,13 @@ export const projects: Project[] = [
     slug: "kushal-wallstreet",
     name: "Kushal Wallstreet",
     type: "Architecture",
-    client: "Kushal",
-    location: "Pune, India",
-    city: "India",
+    category: "Commercial",
+    client: "Kushal Landmark",
+    location: "Fergusson College Road, Pune",
+    city: "Pune",
     year: 2020,
-    area: "Gr + 10 structure",
-    status: "Under construction (2nd floor in progress)",
+    area: "1,50,000 sq.ft.",
+    status: "Completed",
     scope: ["Architecture and facade development"],
     services: ["Architecture"],
     cover: "/assets/projects/kushal-wallstreet/cover.jpg",
@@ -212,6 +218,7 @@ export const projects: Project[] = [
     slug: "lodha-1-office",
     name: "Lodha 1 Office",
     type: "Interior",
+    category: "Corporate Offices",
     client: "Lodha",
     location: "India",
     city: "India",
@@ -247,11 +254,12 @@ export const projects: Project[] = [
     slug: "raymond-office",
     name: "Raymond Office",
     type: "Interior",
-    client: "Raymond",
-    location: "India",
-    city: "India",
+    category: "Corporate Offices",
+    client: "Raymond Ltd.",
+    location: "Kolshet Road, Thane",
+    city: "Thane",
     year: 2018,
-    area: "",
+    area: "21,000 sq.ft.",
     status: "completed",
     scope: ["Corporate office interior fit-out: reception", "Boardrooms", "Meeting rooms and breakout lounge"],
     services: ["Interior", "Turnkey"],
@@ -275,9 +283,10 @@ export const projects: Project[] = [
     slug: "hero-electric-manufacturing-facility",
     name: "Hero Electric Manufacturing Facility",
     type: "Architecture",
+    category: "Industrial",
     client: "Hero Electric",
-    location: "Ludhiana, Punjab, India",
-    city: "India",
+    location: "Ludhiana, Punjab",
+    city: "Ludhiana",
     year: 2017,
     area: "Ground + 1 structure",
     status: "Under construction",
@@ -302,6 +311,7 @@ export const projects: Project[] = [
     slug: "ufo-moviez-cinema-complex",
     name: "UFO Moviez Cinema Complex",
     type: "Architecture",
+    category: "Commercial",
     client: "UFO Moviez / NOVA Cinemaz",
     location: "Gujarat, India",
     city: "India",
@@ -333,12 +343,13 @@ export const projects: Project[] = [
     slug: "advait-126-136",
     name: "Advait 126 + 136",
     type: "Architecture",
-    client: "Advait",
-    location: "Mumbai, India",
-    city: "India",
+    category: "Residential",
+    client: "Advait Builders + Tater Group",
+    location: "Kurla, Mumbai",
+    city: "Mumbai",
     year: 2024,
     area: "Ground + 17 storeys",
-    status: "Under construction (plinth in progress)",
+    status: "Under construction",
     scope: ["Architecture", "Landscape and interiors", "Architectural planning and detailing"],
     services: ["Architecture", "Interior"],
     cover: "/assets/projects/advait-126-136/cover.jpg",
@@ -360,6 +371,7 @@ export const projects: Project[] = [
     slug: "akasa-noida",
     name: "Akasa, Noida",
     type: "Interior",
+    category: "Coworking",
     client: "Pooja Fin Lease",
     location: "Noida, Uttar Pradesh",
     city: "Noida",
@@ -388,11 +400,12 @@ export const projects: Project[] = [
     slug: "arcelormittal-construction-office",
     name: "ArcelorMittal Construction Office",
     type: "Interior",
+    category: "Corporate Offices",
     client: "ArcelorMittal Construction",
-    location: "India",
-    city: "India",
+    location: "L&T Seawoods, Navi Mumbai",
+    city: "Navi Mumbai",
     year: 2022,
-    area: "",
+    area: "9,000 sq.ft.",
     status: "design / render stage",
     scope: ["Commercial interior design and fit-out: reception", "Open-plan workstations", "Private cabins", "Breakout/lounge"],
     services: ["Interior", "Turnkey"],
@@ -417,6 +430,7 @@ export const projects: Project[] = [
     slug: "ca-office-andheri-west",
     name: "CA Office, Andheri West",
     type: "Interior",
+    category: "Corporate Offices",
     client: "Chartered Accountancy Firm (name withheld, \"Company Logo\" placeholder shown)",
     location: "Andheri West, Mumbai",
     city: "Mumbai",
@@ -450,11 +464,12 @@ export const projects: Project[] = [
     slug: "ceat",
     name: "CEAT",
     type: "Architecture",
+    category: "Industrial",
     client: "CEAT",
-    location: "Ambernath, Mumbai",
-    city: "Mumbai",
+    location: "Ambarnath, Maharashtra",
+    city: "Ambarnath",
     year: 2020,
-    area: "Ground + 1 structure",
+    area: "50,000 sq.ft.",
     status: "Under construction",
     scope: ["Architecture"],
     services: ["Architecture"],
@@ -477,9 +492,10 @@ export const projects: Project[] = [
     slug: "eatigo-office",
     name: "eatigo Office",
     type: "Interior",
+    category: "Corporate Offices",
     client: "eatigo",
-    location: "India",
-    city: "India",
+    location: "Hubtown, Andheri, Mumbai",
+    city: "Mumbai",
     year: 2019,
     area: "",
     status: "Design / Concept (3D renders)",
@@ -512,6 +528,7 @@ export const projects: Project[] = [
     slug: "evos-sales-office",
     name: "Evos Sales Office",
     type: "Interior",
+    category: "Corporate Offices",
     client: "Evos",
     location: "India",
     city: "India",
@@ -540,11 +557,12 @@ export const projects: Project[] = [
     slug: "fedbank-financial-services-kanakia-wallstreet",
     name: "Fedbank Financial Services, Kanakia Wallstreet",
     type: "Interior",
+    category: "Banking & Finance",
     client: "Fedbank Financial Services Limited (Federal Bank group)",
-    location: "Kanakia Wallstreet, Andheri, Mumbai",
+    location: "Kanakia Wallstreet, Mumbai",
     city: "Mumbai",
     year: 2017,
-    area: "",
+    area: "30,000 sq.ft.",
     status: "Design / visualization stage",
     scope: ["Corporate office interior fit-out", "Reception", "Cabins", "Meeting rooms and gallery passage"],
     services: ["Interior", "Turnkey"],
@@ -570,9 +588,10 @@ export const projects: Project[] = [
     slug: "fox-mandal-the-capital",
     name: "Fox Mandal, The Capital",
     type: "Interior",
+    category: "Corporate Offices",
     client: "Fox Mandal Solicitors & Advocates",
-    location: "The Capital",
-    city: "The Capital",
+    location: "The Capital, BKC, Mumbai",
+    city: "Mumbai",
     year: 2025,
     area: "",
     status: "Design / visualization (3D renders)",
@@ -601,6 +620,7 @@ export const projects: Project[] = [
     slug: "indiana-business",
     name: "Indiana Business",
     type: "Interior",
+    category: "Corporate Offices",
     client: "Indiana Business",
     location: "India",
     city: "India",
@@ -627,12 +647,13 @@ export const projects: Project[] = [
     slug: "jagasara-duplex",
     name: "Jagasara Duplex",
     type: "Architecture",
+    category: "Villas",
     client: "Jagasara Duplex Row Houses",
-    location: "Odisha, India",
-    city: "India",
+    location: "Odisha",
+    city: "Odisha",
     year: 2023,
-    area: "5,000 sq.ft.",
-    status: "Ongoing",
+    area: "3,000 sq.ft.",
+    status: "Under construction",
     scope: ["Architecture", "Interiors and landscape", "Design and execution"],
     services: ["Architecture", "Interior"],
     cover: "/assets/projects/jagasara-duplex/cover.jpg",
@@ -656,6 +677,7 @@ export const projects: Project[] = [
     slug: "omkar-techinvention",
     name: "Omkar Techinvention",
     type: "Interior",
+    category: "Corporate Offices",
     client: "Omkar Techinvention",
     location: "India",
     city: "India",
@@ -682,8 +704,9 @@ export const projects: Project[] = [
     slug: "reynaers-aluminium-office-5th-floor-oberoi-garden",
     name: "Reynaers Aluminium Office, 5th Floor, Oberoi Garden",
     type: "Interior",
+    category: "Corporate Offices",
     client: "Reynaers Aluminium",
-    location: "Oberoi Garden, Mumbai",
+    location: "Oberoi Garden City, Mumbai",
     city: "Mumbai",
     year: 2021,
     area: "",
@@ -712,9 +735,10 @@ export const projects: Project[] = [
     slug: "reynaers-office",
     name: "Reynaers Office",
     type: "Interior",
+    category: "Corporate Offices",
     client: "Reynaers Aluminium",
-    location: "India",
-    city: "India",
+    location: "Boomerang, Chandivali, Mumbai",
+    city: "Mumbai",
     year: 2020,
     area: "",
     status: "Design / visualization stage",
@@ -746,7 +770,8 @@ export const projects: Project[] = [
     slug: "semac-office-l-and-t-seawoods",
     name: "SEMAC Office, L&T Seawoods",
     type: "Interior",
-    client: "SEMAC (at L&T Seawoods)",
+    category: "Corporate Offices",
+    client: "Semac Consultants Pvt. Ltd.",
     location: "L&T Seawoods Grand Central, Navi Mumbai",
     city: "Navi Mumbai",
     year: 2019,
@@ -776,9 +801,10 @@ export const projects: Project[] = [
     slug: "sus-residential-development",
     name: "Sus Residential Development",
     type: "Architecture",
+    category: "Residential",
     client: "Sus, Pune",
-    location: "Sus, Pune, India",
-    city: "India",
+    location: "Sus, Pune",
+    city: "Pune",
     year: 2018,
     area: "G+13 residential towers",
     status: "Design stage",
@@ -804,6 +830,7 @@ export const projects: Project[] = [
     slug: "swastik-group-residential-towers",
     name: "Swastik Group Residential Towers",
     type: "Architecture",
+    category: "Residential",
     client: "Swastik Group",
     location: "Mumbai, Maharashtra (Mulund / Pantnagar, along the Eastern Express Highway)",
     city: "Mumbai",
@@ -838,12 +865,13 @@ export const projects: Project[] = [
     slug: "tata-elxsi",
     name: "Tata Elxsi",
     type: "Architecture",
+    category: "Commercial",
     client: "Tata Elxsi",
-    location: "Bangalore, India",
-    city: "India",
+    location: "Bangalore, Karnataka",
+    city: "Bangalore",
     year: 2025,
     area: "18 floors",
-    status: "Design stage",
+    status: "Proposed",
     scope: ["Architectural planning and detailing"],
     services: ["Architecture"],
     cover: "/assets/projects/tata-elxsi/cover.jpg",
@@ -870,6 +898,7 @@ export const projects: Project[] = [
     slug: "ve-commercial-vehicles-volvo-eicher-office",
     name: "VE Commercial Vehicles (Volvo Eicher) Office",
     type: "Interior",
+    category: "Corporate Offices",
     client: "VE Commercial Vehicles (VECV)",
     location: "India",
     city: "India",
@@ -897,6 +926,7 @@ export const projects: Project[] = [
     slug: "vinay-savargi-c-a-office-andheri",
     name: "Vinay Savargi C.A. Office, Andheri",
     type: "Interior",
+    category: "Corporate Offices",
     client: "Vinay Savargi (Chartered Accountant)",
     location: "Andheri, Mumbai",
     city: "Mumbai",
@@ -925,6 +955,7 @@ export const projects: Project[] = [
     slug: "wonese-world-networking-services-office",
     name: "Wonese, World Networking Services Office",
     type: "Interior",
+    category: "Corporate Offices",
     client: "Wonese (World Networking Services)",
     location: "India",
     city: "India",
@@ -949,5 +980,1173 @@ export const projects: Project[] = [
     featured: false,
     order: 30,
     seo: { title: "Wonese, World Networking Services Office, Interior", description: "An industrial-modern office fit-out for an IT networking firm, blending exposed red services overhead with warm wood and a bold red-on-black brand identity" },
+  },
+  {
+    slug: "icici-bank",
+    name: "ICICI Bank",
+    type: "Interior",
+    category: "Banking & Finance",
+    client: "ICICI Bank Ltd.",
+    location: "Arihant Aura, Navi Mumbai",
+    city: "Navi Mumbai",
+    year: 2024,
+    area: "1,03,000 sq.ft.",
+    status: "Completed",
+    scope: ["Commercial interior fit-out across four floors", "Reception", "Open workstations", "Cabins", "Boardroom", "Breakout"],
+    services: ["Interior", "Turnkey"],
+    cover: "/assets/projects/icici-bank/cover.jpg",
+    coverAlt: "Reception with a backlit ICICI Bank logo on a stone-clad desk under a timber-batten ceiling, beside a perforated screen wall.",
+    narrative: {
+      brief: "A 1,03,000 sq.ft., four-floor ICICI Bank workplace at Arihant Aura, Navi Mumbai, IGBC Platinum rated, with a warm timber reception and bright, planted open-plan floors.",
+      site: "Banking workplace commission at Arihant Aura, Navi Mumbai. IGBC Platinum.",
+      response: "A 1,03,000 sq.ft. ICICI Bank workplace spread across four floors at Arihant Aura, Navi Mumbai, certified IGBC Platinum. A warm reception with a backlit ICICI Bank logo over a stone desk and timber-batten ceiling opens onto bright open-plan floors, where timber benching, green planter dividers and orange task chairs sit under linear lighting. The programme adds glass-partitioned cabins, a boardroom with red and blue acoustic panelling, and a planted breakout lounge.",
+    },
+    gallery: [
+      { src: "/assets/projects/icici-bank/g01.jpg", alt: "Open-plan workstation bay with orange task chairs, timber benching and a soft lounge corner under a slatted ceiling.", span: "full" },
+      { src: "/assets/projects/icici-bank/g02.jpg", alt: "Open office with timber-clad benching desks, green planter dividers and a central spine of pendant lighting.", span: "half" },
+      { src: "/assets/projects/icici-bank/g03.jpg", alt: "Glass-walled boardroom with a timber table, red and blue acoustic panelling and a wall-mounted display.", span: "half" },
+      { src: "/assets/projects/icici-bank/g04.jpg", alt: "Open workstation floor behind a glass partition, with patterned carpet and ribbon lighting.", span: "wide" },
+      { src: "/assets/projects/icici-bank/g05.jpg", alt: "Breakout lounge with low seating, a perforated feature wall and potted greenery under a circular light cove.", span: "half" },
+      { src: "/assets/projects/icici-bank/g06.jpg", alt: "Bright open-plan floor with white benching desks, orange chairs and full-height glazing.", span: "tall" },
+    ],
+    featured: false,
+    order: 31,
+    seo: { title: "ICICI Bank, Interior", description: "A 1,03,000 sq.ft., four-floor ICICI Bank workplace at Arihant Aura, Navi Mumbai, IGBC Platinum rated, with a warm timber reception and bright, planted open-plan floors." },
+  },
+  {
+    slug: "dcb-bank",
+    name: "DCB Bank",
+    type: "Interior",
+    category: "Banking & Finance",
+    client: "DCB Bank",
+    location: "Hubtown Solaris, Andheri East, Mumbai",
+    city: "Mumbai",
+    year: 2025,
+    area: "10,000 sq.ft.",
+    status: "Completed",
+    scope: ["Commercial interior fit-out", "Reception", "Open workstations", "Cabins", "Boardroom", "Breakout cafe"],
+    services: ["Interior", "Turnkey"],
+    cover: "/assets/projects/dcb-bank/cover.jpg",
+    coverAlt: "Reception with the blue DCB Bank logo wall, a navy sofa and a marble-topped desk under recessed lighting.",
+    narrative: {
+      brief: "A 10,000 sq.ft. DCB Bank office at Hubtown Solaris, Andheri East, completed in 2025, with a crisp blue-and-white identity from reception through to the workstation floors.",
+      site: "Banking workplace commission at Hubtown Solaris, Andheri East, Mumbai. Completed 2025.",
+      response: "A 10,000 sq.ft. DCB Bank office at Hubtown Solaris, Andheri East, completed in 2025. The blue-and-white brand identity runs from a reception with the DCB Bank logo wall and a navy sofa through to open-plan floors with white benching, blue task chairs and patterned blue carpet. Glazed cabins, a boardroom and DCB-branded meeting rooms are balanced by a warm-toned breakout cafe with an arched feature wall.",
+    },
+    gallery: [
+      { src: "/assets/projects/dcb-bank/g01.jpg", alt: "Boardroom and open workstations behind glass, with blue accents and a slatted ceiling.", span: "full" },
+      { src: "/assets/projects/dcb-bank/g02.jpg", alt: "Compact meeting room with a dark table, leather chairs and the DCB Bank logo on a blue panel.", span: "half" },
+      { src: "/assets/projects/dcb-bank/g03.jpg", alt: "Open-plan floor with white benching desks, blue task chairs and patterned blue carpet.", span: "half" },
+      { src: "/assets/projects/dcb-bank/g04.jpg", alt: "Warm breakout cafe with an arched orange feature wall, communal tables and bistro seating.", span: "wide" },
+      { src: "/assets/projects/dcb-bank/g05.jpg", alt: "Private cabins along a glazed corridor with blue carpet and timber-trimmed partitions.", span: "half" },
+      { src: "/assets/projects/dcb-bank/g06.jpg", alt: "Meeting room with a marble table, dark chairs and a blue acoustic-panel wall.", span: "tall" },
+    ],
+    featured: false,
+    order: 32,
+    seo: { title: "DCB Bank, Interior", description: "A 10,000 sq.ft. DCB Bank office at Hubtown Solaris, Andheri East, completed in 2025, with a crisp blue-and-white identity from reception through to the workstation floors." },
+  },
+  {
+    slug: "shriram-wealth",
+    name: "Shriram Wealth",
+    type: "Interior",
+    category: "Banking & Finance",
+    client: "Shriram Wealth",
+    location: "The Capital, BKC, Mumbai",
+    city: "Mumbai",
+    year: 2024,
+    area: "",
+    status: "Completed",
+    scope: ["Commercial interior fit-out", "Reception", "Cabins", "Boardroom", "Open workstations", "Breakout"],
+    services: ["Interior", "Turnkey"],
+    cover: "/assets/projects/shriram-wealth/cover.jpg",
+    coverAlt: "Reception with backlit Shriram Wealth signage on a stone-clad desk, warm timber ceiling and potted greenery.",
+    narrative: {
+      brief: "An IGBC Gold rated Shriram Wealth office at The Capital, BKC, with a warm, premium palette of timber, stone and greenery from the branded reception to the boardroom.",
+      site: "Wealth-management workplace commission at The Capital, BKC, Mumbai. IGBC Gold.",
+      response: "An IGBC Gold rated workplace for Shriram Wealth at The Capital, BKC. A reception with backlit Shriram signage over a stone desk and a warm timber ceiling sets a premium tone carried through glass meeting rooms, open workstations with green planter dividers, a long boardroom and an arched, warm-toned breakout cafe. Timber, stone and greenery run throughout.",
+    },
+    gallery: [
+      { src: "/assets/projects/shriram-wealth/g01.jpg", alt: "Long boardroom with a white table, leather chairs and a timber-slat ceiling under linear lighting.", span: "full" },
+      { src: "/assets/projects/shriram-wealth/g02.jpg", alt: "Glass-walled meeting room with a compact table, mesh chairs and planting along the corridor.", span: "half" },
+      { src: "/assets/projects/shriram-wealth/g03.jpg", alt: "Open workstations with timber benching, green planter dividers and warm pendant lighting.", span: "half" },
+      { src: "/assets/projects/shriram-wealth/g04.jpg", alt: "Breakout cafe with an arched terracotta-toned alcove, communal table and soft lighting.", span: "wide" },
+      { src: "/assets/projects/shriram-wealth/g05.jpg", alt: "Glazed cabin and meeting room with warm wood detailing off the main circulation.", span: "half" },
+      { src: "/assets/projects/shriram-wealth/g06.jpg", alt: "Private cabin finished in warm timber with a city-facing window.", span: "tall" },
+    ],
+    featured: false,
+    order: 33,
+    seo: { title: "Shriram Wealth, Interior", description: "An IGBC Gold rated Shriram Wealth office at The Capital, BKC, with a warm, premium palette of timber, stone and greenery from the branded reception to the boardroom." },
+  },
+  {
+    slug: "moneyboxx",
+    name: "Moneyboxx Finance",
+    type: "Interior",
+    category: "Banking & Finance",
+    client: "Moneyboxx Finance Ltd.",
+    location: "Kanakia Wall Street, Andheri East, Mumbai",
+    city: "Mumbai",
+    year: 2024,
+    area: "",
+    status: "Completed",
+    scope: ["Commercial interior fit-out", "Reception", "Lounge", "Open workstations", "Cabins", "Boardroom", "Cafeteria"],
+    services: ["Interior", "Turnkey"],
+    cover: "/assets/projects/moneyboxx/cover.jpg",
+    coverAlt: "Breakout lounge with a round sofa, warm timber floor and a bold framed artwork beside the open office.",
+    narrative: {
+      brief: "A bright, colourful NBFC head office for Moneyboxx Finance at Kanakia Wall Street, Mumbai, pairing exposed-ceiling open floors with a vivid, art-led breakout lounge.",
+      site: "NBFC head-office commission at Kanakia Wall Street, Mumbai.",
+      response: "A Mumbai head office for NBFC Moneyboxx Finance at Kanakia Wall Street. Glass-partitioned meeting cabins open onto a vivid breakout lounge with a round sofa, warm timber floor and bold wall art. Open-plan workstations sit under an exposed services ceiling, balanced by a boardroom, warm private cabins and a glazed cafeteria with greenery.",
+    },
+    gallery: [
+      { src: "/assets/projects/moneyboxx/g01.jpg", alt: "Glass-partitioned meeting cabins with dark frames and a display screen off the open floor.", span: "full" },
+      { src: "/assets/projects/moneyboxx/g02.jpg", alt: "Open-plan workstations under an exposed services ceiling, with warm lounge seating along the windows.", span: "half" },
+      { src: "/assets/projects/moneyboxx/g03.jpg", alt: "Boardroom with a long table, leather chairs and planting behind a glazed partition.", span: "half" },
+      { src: "/assets/projects/moneyboxx/g04.jpg", alt: "Workstation bay with white benching, mesh chairs and a warm timber accent wall.", span: "wide" },
+      { src: "/assets/projects/moneyboxx/g05.jpg", alt: "Private cabins along a glazed corridor with patterned carpet and warm lighting.", span: "half" },
+      { src: "/assets/projects/moneyboxx/g06.jpg", alt: "Cafeteria with communal tables, bistro chairs and full-height glazing to the city.", span: "tall" },
+    ],
+    featured: false,
+    order: 34,
+    seo: { title: "Moneyboxx Finance, Interior", description: "A bright, colourful NBFC head office for Moneyboxx Finance at Kanakia Wall Street, Mumbai, pairing exposed-ceiling open floors with a vivid, art-led breakout lounge." },
+  },
+  {
+    slug: "policy-bazaar",
+    name: "Policy Bazaar",
+    type: "Interior",
+    category: "Banking & Finance",
+    client: "Policy Bazaar",
+    location: "Infinity Tower, Malad East, Mumbai",
+    city: "Mumbai",
+    year: 2024,
+    area: "50,000 sq.ft.",
+    status: "Completed",
+    scope: ["Commercial interior fit-out", "Reception", "Open workstations"],
+    services: ["Interior", "Turnkey"],
+    cover: "/assets/projects/policy-bazaar/cover.jpg",
+    coverAlt: "Reception lounge with a living green wall, the Policy Bazaar logo and warm leather seating under a slatted ceiling.",
+    narrative: {
+      brief: "A 50,000 sq.ft. carpet-area workplace for Policy Bazaar at Infinity Tower, Malad East, with a green-walled reception lounge and bright, art-accented open floors.",
+      site: "Insurance and fintech workplace commission at Infinity Tower, Malad East, Mumbai.",
+      response: "A 50,000 sq.ft. carpet-area workplace for Policy Bazaar at Infinity Tower, Malad East. A reception lounge with a living green wall, the Policy Bazaar logo and warm leather seating gives way to expansive open-plan floors, where timber planter dividers and a bold geometric mural line the circulation.",
+    },
+    gallery: [
+      { src: "/assets/projects/policy-bazaar/g01.jpg", alt: "Expansive open-plan workstation floor with timber planter dividers, blue task chairs and a geometric mural along the corridor.", span: "full" },
+    ],
+    featured: false,
+    order: 35,
+    seo: { title: "Policy Bazaar, Interior", description: "A 50,000 sq.ft. carpet-area workplace for Policy Bazaar at Infinity Tower, Malad East, with a green-walled reception lounge and bright, art-accented open floors." },
+  },
+  {
+    "slug": "aadiarpan-nx-residences",
+    "name": "Aadiarpan & Nx Residences",
+    "type": "Architecture",
+    "category": "Residential",
+    "client": "Aadishikhar Developers",
+    "location": "Sion, Mumbai",
+    "city": "Mumbai",
+    "area": "",
+    "status": "Under construction",
+    "scope": [
+      "Architecture",
+      "Luxury residential boutique apartments"
+    ],
+    "services": [
+      "Architecture"
+    ],
+    "cover": "/assets/projects/aadiarpan-nx-residences/cover.jpg",
+    "coverAlt": "Design render of a slim luxury apartment tower at Sion wrapped in vertical greenery, with stacked terraces and balconies.",
+    "narrative": {
+      "brief": "A luxury boutique residential development at Sion, Mumbai, with terraces and balconies layered across a slim tower wrapped in vertical greenery.",
+      "site": "Sion, Mumbai, Under construction.",
+      "response": "Aadiarpan & Nx is a luxury boutique residential development for Aadishikhar Developers at Sion, Mumbai. The scheme is a slim apartment tower with terraces and balconies and planted landscaping at its base, shown both as a design render and as on-site construction photographs of the rising structure. The project is currently at construction stage."
+    },
+    "gallery": [
+      {
+        "src": "/assets/projects/aadiarpan-nx-residences/g01.jpg",
+        "alt": "Construction-stage photograph of the residential tower wrapped in green safety netting and scaffolding.",
+        "span": "full"
+      },
+      {
+        "src": "/assets/projects/aadiarpan-nx-residences/g02.jpg",
+        "alt": "On-site photo of the apartment tower under construction, its frame clad in green protective netting.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/aadiarpan-nx-residences/g03.jpg",
+        "alt": "Low-angle construction photo of the slim residential tower sheathed in green safety netting against a clear sky.",
+        "span": "half"
+      }
+    ],
+    "featured": false,
+    "order": 36,
+    "seo": {
+      "title": "Aadiarpan & Nx Residences, Architecture",
+      "description": "A luxury boutique residential development at Sion, Mumbai, with terraces and balconies layered across a slim tower wrapped in vertical greenery."
+    }
+  },
+  {
+    "slug": "carter-road",
+    "name": "Carter Road Project",
+    "type": "Architecture",
+    "category": "Residential",
+    "location": "Carter Road, Bandra West, Mumbai",
+    "city": "Mumbai",
+    "area": "",
+    "status": "",
+    "scope": [
+      "Architecture",
+      "Sea-facing residential development"
+    ],
+    "services": [
+      "Architecture"
+    ],
+    "cover": "/assets/projects/carter-road/cover.jpg",
+    "coverAlt": "Dusk render of a sea-facing residential tower on Carter Road with stacked, deep-curved balconies.",
+    "narrative": {
+      "brief": "A sea-facing, ultra-luxury bespoke residential development on Carter Road, Bandra West, with curved balconies framing views across the Arabian Sea.",
+      "site": "Carter Road, Bandra West, Mumbai.",
+      "response": "The Carter Road project is a sea-facing, ultra-luxury bespoke residential development on Carter Road, Bandra West, Mumbai, planned over two basement levels. Renders show a sculpted apartment tower with deep curved balconies and planted terraces, set above a landscaped pool deck with sweeping views out to the sea at sunset."
+    },
+    "gallery": [
+      {
+        "src": "/assets/projects/carter-road/g01.jpg",
+        "alt": "Dusk render close-up of the apartment building's stacked curved balconies.",
+        "span": "full"
+      },
+      {
+        "src": "/assets/projects/carter-road/g02.jpg",
+        "alt": "Daytime render of the residential facade with planted, glass-railed balconies.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/carter-road/g03.jpg",
+        "alt": "Daytime full-elevation render of the slender white residential tower.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/carter-road/g04.jpg",
+        "alt": "Dusk render of the residential tower rising above its podium base.",
+        "span": "wide"
+      }
+    ],
+    "featured": false,
+    "order": 37,
+    "seo": {
+      "title": "Carter Road Project, Architecture",
+      "description": "A sea-facing, ultra-luxury bespoke residential development on Carter Road, Bandra West, with curved balconies framing views across the Arabian Sea."
+    }
+  },
+  {
+    "slug": "palatial-heights",
+    "name": "Palatial Heights",
+    "type": "Architecture",
+    "category": "Residential",
+    "client": "Srujan",
+    "location": "Bandstand, Mumbai",
+    "city": "Mumbai",
+    "area": "",
+    "status": "Concept and schematic",
+    "scope": [
+      "Architecture",
+      "Sea-shore luxury residential apartments"
+    ],
+    "services": [
+      "Architecture"
+    ],
+    "cover": "/assets/projects/palatial-heights/cover.jpg",
+    "coverAlt": "Dusk render of a slim sea-shore residential tower at Bandstand with an illuminated bronze-toned crown.",
+    "narrative": {
+      "brief": "A sea-shore luxury residential tower at Bandstand, Mumbai, designed so that 75% of rooms open to terraces with extended views over the sea.",
+      "site": "Bandstand, Mumbai, Concept and schematic.",
+      "response": "Palatial Heights is a sea-shore luxury boutique residential project for Srujan at Bandstand, Mumbai, at the concept and schematic stage. The brief targets extended sea views from terraces in 75% of rooms. Renders present a slim residential tower with an illuminated bronze-toned crown and podium, shown at dusk and in full daytime elevation."
+    },
+    "gallery": [
+      {
+        "src": "/assets/projects/palatial-heights/g01.jpg",
+        "alt": "Dusk render of the slim sea-shore residential tower.",
+        "span": "full"
+      },
+      {
+        "src": "/assets/projects/palatial-heights/g02.jpg",
+        "alt": "Daytime full-height render of the white residential tower against the sky.",
+        "span": "half"
+      }
+    ],
+    "featured": false,
+    "order": 38,
+    "seo": {
+      "title": "Palatial Heights, Architecture",
+      "description": "A sea-shore luxury residential tower at Bandstand, Mumbai, designed so that 75% of rooms open to terraces with extended views over the sea."
+    }
+  },
+  {
+    "slug": "lumax",
+    "name": "Lumax",
+    "type": "Architecture",
+    "category": "Industrial",
+    "client": "Lumax",
+    "location": "Gurgaon, Haryana",
+    "city": "Gurgaon",
+    "area": "",
+    "status": "Under construction",
+    "scope": [
+      "Architecture",
+      "B+G+2 structure with offices",
+      "In collaboration with SEMAC Consultants Pvt. Ltd."
+    ],
+    "services": [
+      "Architecture"
+    ],
+    "cover": "/assets/projects/lumax/cover.jpg",
+    "coverAlt": "Fitted-out reception carrying the red Lumax branding in the new Gurgaon office building.",
+    "narrative": {
+      "brief": "A B+G+2 office and facility building for auto-component maker Lumax in Gurgaon, delivered in collaboration with SEMAC Consultants.",
+      "site": "Gurgaon, Haryana, Under construction.",
+      "response": "Lumax is a basement-plus-ground-plus-two-storey building with offices for the auto-component manufacturer Lumax in Gurgaon, Haryana, delivered in collaboration with SEMAC Consultants Pvt. Ltd. and currently under construction. Documentation pairs a fitted-out reception carrying the red Lumax branding with on-site photographs of the open office floors during construction and fit-out."
+    },
+    "gallery": [
+      {
+        "src": "/assets/projects/lumax/g01.jpg",
+        "alt": "Office floor under construction with exposed-services ceiling, scaffolding and workers.",
+        "span": "full"
+      },
+      {
+        "src": "/assets/projects/lumax/g02.jpg",
+        "alt": "Empty fitted-out office floor with grey flooring and regularly spaced structural columns.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/lumax/g03.jpg",
+        "alt": "Open office floor awaiting fit-out, lined with bare structural columns.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/lumax/g04.jpg",
+        "alt": "Interior under construction showing structural columns and overhead ceiling services.",
+        "span": "wide"
+      }
+    ],
+    "featured": false,
+    "order": 39,
+    "seo": {
+      "title": "Lumax, Architecture",
+      "description": "A B+G+2 office and facility building for auto-component maker Lumax in Gurgaon, delivered in collaboration with SEMAC Consultants."
+    }
+  },
+  {
+    "slug": "new-tulshi-baug",
+    "name": "New Tulshi Baug",
+    "type": "Architecture",
+    "category": "Commercial",
+    "client": "Motoshree Estates",
+    "location": "Tulsi Baug, Pune",
+    "city": "Pune",
+    "area": "",
+    "status": "Working stage",
+    "scope": [
+      "Architecture",
+      "Luxury boutique showrooms and commercial spaces",
+      "Facade development"
+    ],
+    "services": [
+      "Architecture"
+    ],
+    "cover": "/assets/projects/new-tulshi-baug/cover.jpg",
+    "coverAlt": "Dusk render of the New Tulshi Baug showroom building with its illuminated, lace-like perforated facade.",
+    "narrative": {
+      "brief": "A luxury boutique-showroom and commercial building at Tulsi Baug, Pune, wrapped in an intricate white filigree-patterned facade.",
+      "site": "Tulsi Baug, Pune, Working stage.",
+      "response": "New Tulshi Baug is a luxury boutique-showroom and commercial development for Motoshree Estates at Tulsi Baug, Pune, at working stage. The building's signature is an ornate, lace-like perforated facade screen below regularly fenestrated upper floors, with ground-level retail frontages and brand signage, shown illuminated at dusk."
+    },
+    "gallery": [
+      {
+        "src": "/assets/projects/new-tulshi-baug/g01.jpg",
+        "alt": "Daytime render of the boutique-showroom building with its perforated patterned facade and ground-floor retail frontage.",
+        "span": "full"
+      }
+    ],
+    "featured": false,
+    "order": 40,
+    "seo": {
+      "title": "New Tulshi Baug, Architecture",
+      "description": "A luxury boutique-showroom and commercial building at Tulsi Baug, Pune, wrapped in an intricate white filigree-patterned facade."
+    }
+  },
+  {
+    "slug": "juna-deesa-institute",
+    "name": "Juna Deesa Institute",
+    "type": "Architecture",
+    "category": "Institutional",
+    "location": "Juna Deesa, Gujarat",
+    "city": "Deesa",
+    "area": "340,000 sq.ft.",
+    "status": "Design and under construction",
+    "scope": [
+      "Architecture",
+      "Gr+4 institute development"
+    ],
+    "services": [
+      "Architecture"
+    ],
+    "cover": "/assets/projects/juna-deesa-institute/cover.jpg",
+    "coverAlt": "Render of the Juna Deesa institute's long, low red-brick academic block fronted by landscaping.",
+    "narrative": {
+      "brief": "A 340,000 sq.ft. Gr+4 institutional campus at Juna Deesa, Gujarat, organised behind a long horizontal red-brick facade.",
+      "site": "Juna Deesa, Gujarat, Design and under construction.",
+      "response": "Juna Deesa Institute is a 340,000 sq.ft., ground-plus-four institutional development at Juna Deesa, Gujarat, in design and under construction. Renders show a long, low red-brick academic block with strongly horizontal massing fronted by landscaping and approach roads, alongside an adjacent large hall covered by a white tensile/space-frame roof."
+    },
+    "gallery": [
+      {
+        "src": "/assets/projects/juna-deesa-institute/g01.jpg",
+        "alt": "Render of the institute campus showing the red-brick academic block beside a large white space-frame-roofed hall.",
+        "span": "full"
+      }
+    ],
+    "featured": false,
+    "order": 42,
+    "seo": {
+      "title": "Juna Deesa Institute, Architecture",
+      "description": "A 340,000 sq.ft. Gr+4 institutional campus at Juna Deesa, Gujarat, organised behind a long horizontal red-brick facade."
+    }
+  },
+  {
+    "slug": "ravindra-natya-mandir",
+    "name": "Ravindra Natya Mandir",
+    "type": "Architecture",
+    "category": "Institutional",
+    "client": "Eminent Developers / PWD",
+    "location": "Prabhadevi, Mumbai",
+    "city": "Mumbai",
+    "area": "",
+    "status": "Concept and schematic",
+    "scope": [
+      "External facade development",
+      "Auditorium design"
+    ],
+    "services": [
+      "Architecture"
+    ],
+    "cover": "/assets/projects/ravindra-natya-mandir/cover.jpg",
+    "coverAlt": "Render of the Ravindra Natya Mandir's traditional Maharashtrian-style facade and arrival plaza at Prabhadevi.",
+    "narrative": {
+      "brief": "External facade and auditorium redesign of the renowned Marathi-theatre venue Ravindra Natya Mandir at Prabhadevi, Mumbai.",
+      "site": "Prabhadevi, Mumbai, Concept and schematic.",
+      "response": "Ravindra Natya Mandir is the external facade development and auditorium design for the renowned Marathi-play venue at Prabhadevi, Mumbai, for Eminent Developers with the PWD, at concept and schematic stage. Renders present a traditional Maharashtrian-style facade carrying the venue's name in Devanagari, an arrival plaza, and a richly decorated auditorium with red seating, ornate side walls and a sculpted domed ceiling above a central stage."
+    },
+    "gallery": [
+      {
+        "src": "/assets/projects/ravindra-natya-mandir/g01.jpg",
+        "alt": "Render of the auditorium stage with red drapes and seating beneath an ornate circular domed ceiling, a deity sculpture at centre stage.",
+        "span": "full"
+      },
+      {
+        "src": "/assets/projects/ravindra-natya-mandir/g02.jpg",
+        "alt": "Wide render of the auditorium interior with rows of red seats and richly decorated side walls.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/ravindra-natya-mandir/g03.jpg",
+        "alt": "Render looking up at the auditorium's ornate radial, fan-patterned ceiling.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/ravindra-natya-mandir/g04.jpg",
+        "alt": "Render of the arrival plaza and forecourt steps before the temple-style facade.",
+        "span": "wide"
+      },
+      {
+        "src": "/assets/projects/ravindra-natya-mandir/g05.jpg",
+        "alt": "Render of the columned entrance portico with traditional Maharashtrian detailing.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/ravindra-natya-mandir/g06.jpg",
+        "alt": "Portrait render of the ornate traditional-style entrance facade with arched openings.",
+        "span": "tall"
+      }
+    ],
+    "featured": false,
+    "order": 43,
+    "seo": {
+      "title": "Ravindra Natya Mandir, Architecture",
+      "description": "External facade and auditorium redesign of the renowned Marathi-theatre venue Ravindra Natya Mandir at Prabhadevi, Mumbai."
+    }
+  },
+  {
+    "slug": "highmount",
+    "name": "Highmount",
+    "type": "Architecture",
+    "category": "Residential",
+    "location": "Mumbai",
+    "city": "Mumbai",
+    "area": "",
+    "status": "Working stage",
+    "scope": [
+      "Architecture",
+      "Interiors",
+      "Residential apartments"
+    ],
+    "services": [
+      "Architecture"
+    ],
+    "cover": "/assets/projects/highmount/cover.jpg",
+    "coverAlt": "Dusk render of the slim Highmount residential tower in Mumbai, dramatically illuminated.",
+    "narrative": {
+      "brief": "A residential apartment tower in Mumbai with terraces and balconies, paired with richly classical interior schemes.",
+      "site": "Mumbai, Working stage.",
+      "response": "Highmount is a residential apartment project in Mumbai, at working stage, offering apartments with terraces and balconies. Renders show a slim tower presented both in daylight and dramatically illuminated at dusk, alongside classically appointed interiors with arched niches, ornate wall art, marble floors, drapery and traditional furniture across living, dining and bedroom spaces."
+    },
+    "gallery": [
+      {
+        "src": "/assets/projects/highmount/g01.jpg",
+        "alt": "Daytime render of the slim residential tower in full elevation.",
+        "span": "full"
+      },
+      {
+        "src": "/assets/projects/highmount/g02.jpg",
+        "alt": "Interior render of a living room with an arched niche, marble floor, drapery and classical furniture.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/highmount/g03.jpg",
+        "alt": "Interior render of a living room with ornate floral wall art, sofas and a ceiling fan.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/highmount/g04.jpg",
+        "alt": "Interior render of a dining and living area with marble flooring and classical furnishings.",
+        "span": "wide"
+      },
+      {
+        "src": "/assets/projects/highmount/g05.jpg",
+        "alt": "Bedroom render with classical furniture, marble floor and a ceiling fan.",
+        "span": "half"
+      }
+    ],
+    "featured": false,
+    "order": 45,
+    "seo": {
+      "title": "Highmount, Architecture",
+      "description": "A residential apartment tower in Mumbai with terraces and balconies, paired with richly classical interior schemes."
+    }
+  },
+  {
+    "slug": "c8-villa",
+    "name": "C8 Villa",
+    "type": "Architecture",
+    "category": "Villas",
+    "location": "Mumbai, Maharashtra",
+    "city": "Mumbai",
+    "area": "",
+    "status": "Completed",
+    "scope": [
+      "Architecture",
+      "Interiors"
+    ],
+    "services": [
+      "Architecture"
+    ],
+    "cover": "/assets/projects/c8-villa/cover.jpg",
+    "coverAlt": "Warm, timber-clad living room of C8 Villa with a large sectional sofa under a timber ceiling.",
+    "narrative": {
+      "brief": "A completed residential villa in Mumbai with warm, timber-clad interiors, sculptural lighting and a modern kitchen.",
+      "site": "Mumbai, Maharashtra, Completed.",
+      "response": "C8 Villa is a completed residential villa project in Mumbai, Maharashtra. Photographs show richly warm, timber-panelled interiors: a spacious living room with a large sectional sofa and timber-clad ceiling, lounge nooks with curved and tub seating beneath sculptural pendants, a wood-panelled dining area, and a modern kitchen with an island and stainless appliances under night-time windows."
+    },
+    "gallery": [
+      {
+        "src": "/assets/projects/c8-villa/g01.jpg",
+        "alt": "Warm timber-panelled lounge with a curved sofa beneath a sculptural pendant light.",
+        "span": "full"
+      },
+      {
+        "src": "/assets/projects/c8-villa/g02.jpg",
+        "alt": "Cosy seating nook with round tub chairs, wood panelling and a chandelier.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/c8-villa/g03.jpg",
+        "alt": "Lounge with a textured stone feature wall, framed art and upholstered sofas.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/c8-villa/g04.jpg",
+        "alt": "Dining area with wood-panelled walls, a dining table and framed artwork.",
+        "span": "wide"
+      },
+      {
+        "src": "/assets/projects/c8-villa/g05.jpg",
+        "alt": "Modern kitchen with a central island, stainless-steel fridge, dark cabinetry and night windows.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/c8-villa/g06.jpg",
+        "alt": "Living area with a sofa set against a warm wood-panelled wall.",
+        "span": "tall"
+      }
+    ],
+    "featured": false,
+    "order": 46,
+    "seo": {
+      "title": "C8 Villa, Architecture",
+      "description": "A completed residential villa in Mumbai with warm, timber-clad interiors, sculptural lighting and a modern kitchen."
+    }
+  },
+  {
+    "slug": "women-welfare-centre",
+    "name": "Women Welfare Centre",
+    "type": "Architecture",
+    "category": "Institutional",
+    "client": "Malkapur Nagar Panchayat",
+    "location": "Malkapur, Maharashtra",
+    "city": "Malkapur",
+    "area": "",
+    "status": "Completed",
+    "scope": [
+      "Architecture",
+      "Community development",
+      "Low-maintenance design"
+    ],
+    "services": [
+      "Architecture"
+    ],
+    "cover": "/assets/projects/women-welfare-centre/cover.jpg",
+    "coverAlt": "The completed red-brick Women Welfare Centre at Malkapur with colonnaded verandahs around a planted courtyard.",
+    "narrative": {
+      "brief": "A completed, low-maintenance welfare centre for rural women's empowerment at Malkapur, built in load-bearing red brick around a planted courtyard.",
+      "site": "Malkapur, Maharashtra, Completed.",
+      "response": "The Women Welfare Centre is a completed community building for rural women's empowerment at Malkapur, Maharashtra, for the Malkapur Nagar Panchayat, designed for reduced maintenance. Photographs show a single-storey red-brick complex with colonnaded verandahs, red-oxide floors and a landscaped internal courtyard of flowering beds, set against the surrounding hills."
+    },
+    "gallery": [
+      {
+        "src": "/assets/projects/women-welfare-centre/g01.jpg",
+        "alt": "Covered verandah walkway lined with red-brick columns over a red-oxide floor.",
+        "span": "full"
+      },
+      {
+        "src": "/assets/projects/women-welfare-centre/g02.jpg",
+        "alt": "Exterior view of the red-brick community building set against a backdrop of hills.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/women-welfare-centre/g03.jpg",
+        "alt": "Landscaped internal courtyard framed by red-brick walls and flowering garden beds.",
+        "span": "half"
+      }
+    ],
+    "featured": false,
+    "order": 47,
+    "seo": {
+      "title": "Women Welfare Centre, Architecture",
+      "description": "A completed, low-maintenance welfare centre for rural women's empowerment at Malkapur, built in load-bearing red brick around a planted courtyard."
+    }
+  },
+  {
+    "slug": "vithaldeo-library",
+    "name": "Vithaldeo Library",
+    "type": "Architecture",
+    "category": "Institutional",
+    "client": "Malkapur Nagar Panchayat",
+    "location": "Malkapur, Maharashtra",
+    "city": "Malkapur",
+    "area": "",
+    "status": "Completed",
+    "scope": [
+      "Architecture",
+      "Gr+1 community library"
+    ],
+    "services": [
+      "Architecture"
+    ],
+    "cover": "/assets/projects/vithaldeo-library/cover.jpg",
+    "coverAlt": "Night view of the white Vithaldeo Library facade punctuated by brightly coloured projecting window boxes.",
+    "narrative": {
+      "brief": "A completed ground-plus-one community library at Malkapur, its white facade animated by brightly coloured projecting window boxes.",
+      "site": "Malkapur, Maharashtra, Completed.",
+      "response": "Vithaldeo Library is a completed ground-plus-one community library at Malkapur, Maharashtra, for the Malkapur Nagar Panchayat. Photographs show a crisp white-massed building whose illuminated facade is punctuated by colourful projecting window boxes at night, with a fully glazed reading-room entrance opening to the landscaped grounds."
+    },
+    "gallery": [
+      {
+        "src": "/assets/projects/vithaldeo-library/g01.jpg",
+        "alt": "Glazed reading-room entrance with full-height glass doors and an orange curtain, a tree visible beyond.",
+        "span": "full"
+      }
+    ],
+    "featured": false,
+    "order": 48,
+    "seo": {
+      "title": "Vithaldeo Library, Architecture",
+      "description": "A completed ground-plus-one community library at Malkapur, its white facade animated by brightly coloured projecting window boxes."
+    }
+  },
+  {
+    "slug": "seclore",
+    "name": "Seclore",
+    "type": "Interior",
+    "category": "Corporate Offices",
+    "client": "Seclore",
+    "location": "R Square, Andheri East, Mumbai",
+    "city": "Mumbai",
+    "year": 2025,
+    "area": "20,000 sq.ft.",
+    "status": "Completed",
+    "scope": [
+      "Commercial interior design",
+      "Design and build"
+    ],
+    "services": [
+      "Interior",
+      "Turnkey"
+    ],
+    "cover": "/assets/projects/seclore/cover.jpg",
+    "coverAlt": "Curved backlit reception of the Seclore office under a warm wood-slat ceiling.",
+    "narrative": {
+      "brief": "A 20,000 sq.ft. design-and-build software office in Andheri East where warm wood-slat ceilings, biophilic workstations and a backlit reception set a calm, trust-driven tone.",
+      "site": "R Square, Andheri East, Mumbai, Completed.",
+      "response": "Completed in 2025 at R Square, the Seclore office pairs a curved backlit reception with glass-walled meeting rooms and sofa lounges. Exposed services run over planter-lined open workstations, while collaborative pods, a city-view banquette lounge and a branded cafeteria with arched niches round out the floor."
+    },
+    "gallery": [
+      {
+        "src": "/assets/projects/seclore/g01.jpg",
+        "alt": "Reception waiting lounge with a beige sofa, purple bench and glass-walled meeting rooms under a wood-slat ceiling.",
+        "span": "full"
+      },
+      {
+        "src": "/assets/projects/seclore/g02.jpg",
+        "alt": "Open-plan workstation area with greenery-filled planter dividers and red exposed services running across the ceiling.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/seclore/g03.jpg",
+        "alt": "Boardroom with mesh task chairs, a wall-mounted screen on a burnt-orange accent wall and display shelving.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/seclore/g04.jpg",
+        "alt": "Curved lounge with banquette seating, a circular recessed ceiling light feature and floor-to-ceiling city views.",
+        "span": "wide"
+      },
+      {
+        "src": "/assets/projects/seclore/g05.jpg",
+        "alt": "Cafeteria with booth seating, arched niches, biophilic walls and a backlit sign.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/seclore/g06.jpg",
+        "alt": "Breakout zone with a glass meeting pod, yellow tub chairs and a red disc pendant light.",
+        "span": "tall"
+      }
+    ],
+    "featured": false,
+    "order": 49,
+    "seo": {
+      "title": "Seclore, Interior",
+      "description": "A 20,000 sq.ft. design-and-build software office in Andheri East where warm wood-slat ceilings, biophilic workstations and a backlit reception set a calm, trust-driven tone."
+    }
+  },
+  {
+    "slug": "planetcast-media",
+    "name": "Planetcast Media",
+    "type": "Interior",
+    "category": "Corporate Offices",
+    "client": "Planetcast Media",
+    "location": "Raheja Interface, Malad East, Mumbai",
+    "city": "Mumbai",
+    "year": 2024,
+    "area": "",
+    "status": "Completed",
+    "scope": [
+      "Commercial interior design",
+      "Office fit-out"
+    ],
+    "services": [
+      "Interior",
+      "Turnkey"
+    ],
+    "cover": "/assets/projects/planetcast-media/cover.jpg",
+    "coverAlt": "Green, campus-like breakout space at the Planetcast Media office in Malad with tiered seating and greenery.",
+    "narrative": {
+      "brief": "A media company's Malad office that turns the workplace into a green, playful campus of tiered seating, biophilic breakouts and a graphic cafeteria.",
+      "site": "Raheja Interface, Malad East, Mumbai, Completed.",
+      "response": "Completed in 2024 at Raheja Interface, the Planetcast Media office centres on a tiered wooden amphitheatre with artificial-grass landscaping for town-halls. Open workstations wrap a central tree, while colourful modular lounges, leaf-graphic breakout nooks and a checkerboard-floor cafeteria with a bold mural bring energy. Glass meeting rooms screened by metal-mesh curtains complete the fit-out."
+    },
+    "gallery": [
+      {
+        "src": "/assets/projects/planetcast-media/g01.jpg",
+        "alt": "Tiered wooden amphitheatre seating with artificial-grass landscaping, poufs and an organic ring pendant light.",
+        "span": "full"
+      },
+      {
+        "src": "/assets/projects/planetcast-media/g02.jpg",
+        "alt": "Open-plan workstations clustered around a central tree planter with yellow chairs and city views.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/planetcast-media/g03.jpg",
+        "alt": "Lounge with a colourful green, red and orange modular sofa, poufs, planters and floor-to-ceiling windows.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/planetcast-media/g04.jpg",
+        "alt": "Cafeteria with a black-and-white checkerboard floor, round tables, hanging plants and a colourful geometric mural.",
+        "span": "wide"
+      },
+      {
+        "src": "/assets/projects/planetcast-media/g05.jpg",
+        "alt": "Breakout nook with a banana-leaf graphic wall, woven poufs and soft fabric acoustic panels.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/planetcast-media/g06.jpg",
+        "alt": "Glass-partitioned meeting rooms screened by a metal-mesh chain curtain under warm lighting.",
+        "span": "tall"
+      }
+    ],
+    "featured": false,
+    "order": 50,
+    "seo": {
+      "title": "Planetcast Media, Interior",
+      "description": "A media company's Malad office that turns the workplace into a green, playful campus of tiered seating, biophilic breakouts and a graphic cafeteria."
+    }
+  },
+  {
+    "slug": "tata-digital",
+    "name": "Tata Digital",
+    "type": "Interior",
+    "category": "Corporate Offices",
+    "client": "Tata Digital",
+    "location": "One International Centre, Dadar, Mumbai",
+    "city": "Mumbai",
+    "area": "",
+    "status": "Proposal",
+    "scope": [
+      "Commercial interior design"
+    ],
+    "services": [
+      "Interior",
+      "Turnkey"
+    ],
+    "cover": "/assets/projects/tata-digital/cover.jpg",
+    "coverAlt": "Grand circular reception under a star-lit dome with a backlit Tata Digital brand wall.",
+    "narrative": {
+      "brief": "A proposed Dadar headquarters whose domed, star-lit circular reception signals corporate gravitas balanced with biophilic, colourful collaboration spaces.",
+      "site": "One International Centre, Dadar, Mumbai, Proposal.",
+      "response": "Proposed for One International Centre, the Tata Digital scheme opens with a grand circular reception under a star-lit dome and a backlit brand wall. Renders show planter-divided workstations, a long boardroom with an abstract mural and a branded executive lounge. Playful breakout zones with curved banquettes and landscape murals plus a checkerboard cafeteria with red cabinetry add warmth."
+    },
+    "gallery": [
+      {
+        "src": "/assets/projects/tata-digital/g01.jpg",
+        "alt": "Executive lounge with a white sofa and orange chairs beside a backlit Tata Digital branded wall under a curved black ceiling.",
+        "span": "full"
+      },
+      {
+        "src": "/assets/projects/tata-digital/g02.jpg",
+        "alt": "Open-plan workstations with greenery planter dividers beneath a faceted triangular ceiling.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/tata-digital/g03.jpg",
+        "alt": "Long boardroom with leather chairs, an abstract artwork wall and panoramic city views.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/tata-digital/g04.jpg",
+        "alt": "Breakout lounge around a central column with a ring pendant, yellow curved banquette, blue armchairs and a purple landscape mural.",
+        "span": "wide"
+      },
+      {
+        "src": "/assets/projects/tata-digital/g05.jpg",
+        "alt": "Pantry and cafeteria with a checkerboard floor, red cabinetry, communal tables and overhead hanging plants.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/tata-digital/g06.jpg",
+        "alt": "Meeting room with a branded Tata Digital wall, blue acoustic panels and a stepped geometric ceiling.",
+        "span": "tall"
+      }
+    ],
+    "featured": false,
+    "order": 51,
+    "seo": {
+      "title": "Tata Digital, Interior",
+      "description": "A proposed Dadar headquarters whose domed, star-lit circular reception signals corporate gravitas balanced with biophilic, colourful collaboration spaces."
+    }
+  },
+  {
+    "slug": "rush-co-works",
+    "name": "Rush Co-Works",
+    "type": "Interior",
+    "category": "Coworking",
+    "client": "Rush Co-Works",
+    "location": "Plutonium, Turbhe, Navi Mumbai",
+    "city": "Navi Mumbai",
+    "area": "",
+    "status": "Working stage",
+    "scope": [
+      "Commercial interior design",
+      "Coworking space"
+    ],
+    "services": [
+      "Interior",
+      "Turnkey"
+    ],
+    "cover": "/assets/projects/rush-co-works/cover.jpg",
+    "coverAlt": "Hospitality-led co-working space at Rush Co-Works, Turbhe, with a cafe counter and communal seating.",
+    "narrative": {
+      "brief": "A Turbhe co-working club built around hospitality and play, with cafes, communal dining and a games arcade rather than rows of desks.",
+      "site": "Plutonium, Turbhe, Navi Mumbai, Working stage.",
+      "response": "At Plutonium, Turbhe, the Rush Co-Works scheme (working stage) leans into community amenities: a cafe counter, encaustic-tiled bars and a large communal dining hall under exposed industrial ceilings. A food-court-style seating zone and a recreation arcade with table tennis, foosball and gaming screens are anchored by a stone cafeteria feature wall."
+    },
+    "gallery": [
+      {
+        "src": "/assets/projects/rush-co-works/g01.jpg",
+        "alt": "Communal dining hall with long shared tables, banquette seating and exposed industrial ceiling services.",
+        "span": "full"
+      },
+      {
+        "src": "/assets/projects/rush-co-works/g02.jpg",
+        "alt": "Cafe counter with a coffee-bar sign on an arched wood-slat backdrop and a row of bar stools.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/rush-co-works/g03.jpg",
+        "alt": "Games and recreation zone with table tennis, foosball, gaming screens and colourful patterned flooring.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/rush-co-works/g04.jpg",
+        "alt": "Recreation lounge with a foosball table, casual seating and a wall of storage lockers.",
+        "span": "wide"
+      },
+      {
+        "src": "/assets/projects/rush-co-works/g05.jpg",
+        "alt": "Food-court style seating hall with red columns, high communal tables and an exposed red ceiling grid.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/rush-co-works/g06.jpg",
+        "alt": "Stone-textured cafeteria feature wall beside a vertical garden under round pendant lights.",
+        "span": "tall"
+      }
+    ],
+    "featured": false,
+    "order": 52,
+    "seo": {
+      "title": "Rush Co-Works, Interior",
+      "description": "A Turbhe co-working club built around hospitality and play, with cafes, communal dining and a games arcade rather than rows of desks."
+    }
+  },
+  {
+    "slug": "odyssey-logistics",
+    "name": "Odyssey Logistics",
+    "type": "Interior",
+    "category": "Logistics",
+    "client": "Odyssey Logistics",
+    "location": "Gundecha Onclave, Mumbai",
+    "city": "Mumbai",
+    "area": "10,000 sq.ft.",
+    "status": "",
+    "scope": [
+      "Commercial interior design",
+      "Office fit-out"
+    ],
+    "services": [
+      "Interior",
+      "Turnkey"
+    ],
+    "cover": "/assets/projects/odyssey-logistics/cover.jpg",
+    "coverAlt": "Calm reception lounge of the Odyssey Logistics office under a wood-slat ceiling with marble flooring.",
+    "narrative": {
+      "brief": "A compact 10,000 sq.ft. logistics head office in Gundecha Onclave dressed in warm wood, marble and brass for a refined, residential-feeling workplace.",
+      "site": "Gundecha Onclave, Mumbai.",
+      "response": "The Odyssey Logistics office opens with a calm reception lounge under a wood-slat ceiling, with marble flooring, beige seating and planters. A black-stone reception desk with brass and fluted-glass accents, a herringbone-floored lounge and a private cabin with a gold-mesh screen and a small shrine niche give the 10,000 sq.ft. workplace a boutique, hospitality-led character."
+    },
+    "gallery": [
+      {
+        "src": "/assets/projects/odyssey-logistics/g01.jpg",
+        "alt": "Reception desk in black stone with brass detailing, fluted-glass partitions and a ring pendant light.",
+        "span": "full"
+      },
+      {
+        "src": "/assets/projects/odyssey-logistics/g02.jpg",
+        "alt": "Lounge with a curved beige sofa, fluted-glass partition, dark display shelving and a herringbone wood floor.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/odyssey-logistics/g03.jpg",
+        "alt": "Private cabin with a gold-mesh partition, dark marble desk and an arched niche holding a small shrine.",
+        "span": "half"
+      }
+    ],
+    "featured": false,
+    "order": 53,
+    "seo": {
+      "title": "Odyssey Logistics, Interior",
+      "description": "A compact 10,000 sq.ft. logistics head office in Gundecha Onclave dressed in warm wood, marble and brass for a refined, residential-feeling workplace."
+    }
+  },
+  {
+    "slug": "sgl",
+    "name": "Solitaire Geological Laboratory (SGL)",
+    "type": "Interior",
+    "category": "Corporate Offices",
+    "client": "Solitaire Geological Laboratory (SGL)",
+    "location": "Capital, BKC, Mumbai",
+    "city": "Mumbai",
+    "area": "3,500 sq.ft.",
+    "status": "",
+    "scope": [
+      "Commercial interior design",
+      "Office fit-out"
+    ],
+    "services": [
+      "Interior",
+      "Turnkey"
+    ],
+    "cover": "/assets/projects/sgl/cover.jpg",
+    "coverAlt": "Marble reception of the Solitaire Geological Laboratory office with a monolithic stone desk against a black feature wall.",
+    "narrative": {
+      "brief": "A 3,500 sq.ft. office for a geological laboratory at Capital, BKC, fittingly clad in dramatic stone with patterned marble floors and a sculptural black feature wall.",
+      "site": "Capital, BKC, Mumbai.",
+      "response": "At Capital, BKC, the Solitaire Geological Laboratory office makes stone the hero: swirling grey-marble flooring, a monolithic marble reception desk and a glossy black curved feature wall. Glass-walled boardrooms with dark marble tables sit over light wood floors, alongside a bench-seating lounge and open workstations, creating a sober, premium corporate identity."
+    },
+    "gallery": [
+      {
+        "src": "/assets/projects/sgl/g01.jpg",
+        "alt": "Reception desk in patterned grey marble with an engraved logo, set against a black feature wall with framed stone art.",
+        "span": "full"
+      },
+      {
+        "src": "/assets/projects/sgl/g02.jpg",
+        "alt": "Waiting lounge with bench seating, a black marble podium and glass-fronted offices over marble flooring.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/sgl/g03.jpg",
+        "alt": "Boardroom with a dark marble table and mesh chairs enclosed in glass walls over a light wood floor.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/sgl/g04.jpg",
+        "alt": "Glossy black curved enclosed cabin with glass doors set on dark blue-black marble flooring.",
+        "span": "wide"
+      },
+      {
+        "src": "/assets/projects/sgl/g05.jpg",
+        "alt": "Conference room with a dark marble table, leather chairs and glass partitions in a dim evening setting.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/sgl/g06.jpg",
+        "alt": "Open-plan workstations with glass partitions in low evening lighting.",
+        "span": "tall"
+      }
+    ],
+    "featured": false,
+    "order": 54,
+    "seo": {
+      "title": "Solitaire Geological Laboratory (SGL), Interior",
+      "description": "A 3,500 sq.ft. office for a geological laboratory at Capital, BKC, fittingly clad in dramatic stone with patterned marble floors and a sculptural black feature wall."
+    }
+  },
+  {
+    "slug": "talegaon-project",
+    "name": "Talegaon Project",
+    "type": "Architecture",
+    "category": "Commercial",
+    "location": "Talegaon, Pune",
+    "city": "Pune",
+    "area": "",
+    "status": "",
+    "scope": [
+      "Architecture",
+      "Mixed-use hotel and automobile showroom"
+    ],
+    "services": [
+      "Architecture"
+    ],
+    "cover": "/assets/projects/talegaon-project/cover.jpg",
+    "coverAlt": "Render of the Talegaon mixed-use hotel and showroom, a sculptural composition of angular, cantilevered volumes.",
+    "narrative": {
+      "brief": "A monumental mixed-use showcase pairing a hotel with an automobile showroom at Talegaon, Pune, over two basements and four floors.",
+      "site": "Talegaon, Pune.",
+      "response": "The Talegaon project is a monumental mixed-use development at Talegaon, Pune, combining a showcase hotel with an automobile showroom across two basement levels and four floors. Renders show a sculptural composition of angular, cantilevered volumes and a glazed showroom hall under a sweeping canopy, set within landscaped grounds with a central water channel and parking."
+    },
+    "gallery": [
+      {
+        "src": "/assets/projects/talegaon-project/g01.jpg",
+        "alt": "Render of the building's sweeping cantilevered dark roof projecting over a glazed frontage.",
+        "span": "full"
+      },
+      {
+        "src": "/assets/projects/talegaon-project/g02.jpg",
+        "alt": "Render of the angular, cantilevered showroom-and-hotel volume.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/talegaon-project/g03.jpg",
+        "alt": "Aerial render of the wedge-shaped showroom building with patterned cladding and a sloping green roof.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/talegaon-project/g04.jpg",
+        "alt": "Render of the glazed automobile showroom hall beneath a white space-frame canopy.",
+        "span": "wide"
+      }
+    ],
+    "featured": false,
+    "order": 41,
+    "seo": {
+      "title": "Talegaon Project, Architecture",
+      "description": "A monumental mixed-use showcase pairing a hotel with an automobile showroom at Talegaon, Pune, over two basements and four floors."
+    }
+  },
+  {
+    "slug": "eminent-realtors-excise-bhavan",
+    "name": "Eminent Realtors Excise Bhavan",
+    "type": "Architecture",
+    "category": "Institutional",
+    "client": "Eminent Developers",
+    "location": "Fort, Mumbai",
+    "city": "Mumbai",
+    "area": "",
+    "status": "",
+    "scope": [
+      "Architecture",
+      "Interiors"
+    ],
+    "services": [
+      "Architecture"
+    ],
+    "cover": "/assets/projects/eminent-realtors-excise-bhavan/cover.jpg",
+    "coverAlt": "Street-level view of the multi-storey Excise Bhavan government building at Fort, Mumbai.",
+    "narrative": {
+      "brief": "The Excise Bhavan government building at Fort, Mumbai, with refreshed offices and excise-themed staff spaces for Eminent Developers.",
+      "site": "Fort, Mumbai.",
+      "response": "Excise Bhavan at Fort, Mumbai, is a government office building project for Eminent Developers. Documentation pairs a street-level view of the multi-storey building with interior views of its offices, including a staff lounge with a backlit graphic wall fitting the state-excise function, timber-panelled executive cabins and a wood-clad boardroom."
+    },
+    "gallery": [
+      {
+        "src": "/assets/projects/eminent-realtors-excise-bhavan/g01.jpg",
+        "alt": "Staff lounge with a backlit graphic feature wall, wall-mounted TV, accent chair, sofa and exposed-brick niche.",
+        "span": "full"
+      },
+      {
+        "src": "/assets/projects/eminent-realtors-excise-bhavan/g02.jpg",
+        "alt": "Executive cabin with timber-panelled walls, a sofa and a desk over marble flooring.",
+        "span": "half"
+      },
+      {
+        "src": "/assets/projects/eminent-realtors-excise-bhavan/g03.jpg",
+        "alt": "Boardroom with a long conference table, upholstered chairs, wood panelling and a wall-mounted screen.",
+        "span": "half"
+      }
+    ],
+    "featured": false,
+    "order": 44,
+    "seo": {
+      "title": "Eminent Realtors Excise Bhavan, Architecture",
+      "description": "The Excise Bhavan government building at Fort, Mumbai, with refreshed offices and excise-themed staff spaces for Eminent Developers."
+    }
   },
 ];

@@ -18,7 +18,7 @@ export function Cover({ project }: { project: Project }) {
   const meta = [
     { label: "Discipline", value: project.type },
     { label: "Location", value: project.location },
-    { label: "Year", value: String(project.year) },
+    { label: "Year", value: project.year ? String(project.year) : "" },
     { label: "Area", value: project.area },
   ].filter((m) => m.value !== "" && m.value !== null && m.value !== undefined);
 

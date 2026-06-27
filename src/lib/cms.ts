@@ -56,6 +56,19 @@ export function getLocations(): string[] {
   return Array.from(new Set(getProjects().map((p) => p.city))).sort();
 }
 
+// Preferred display order for the archive's Sector filter; anything unlisted
+// falls to the end alphabetically.
+const CATEGORY_ORDER = ["Villas", "Residential", "Corporate Offices", "Coworking", "Banking & Finance", "Commercial", "Industrial", "Logistics", "Institutional"];
+
+export function getCategories(): string[] {
+  const present = Array.from(new Set(getProjects().map((p) => p.category).filter(Boolean)));
+  return present.sort((a, b) => {
+    const ia = CATEGORY_ORDER.indexOf(a);
+    const ib = CATEGORY_ORDER.indexOf(b);
+    return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib) || a.localeCompare(b);
+  });
+}
+
 export function getServices() {
   return services;
 }
