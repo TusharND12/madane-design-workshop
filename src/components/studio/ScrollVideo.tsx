@@ -8,8 +8,10 @@ const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v
 
 // How tall the scroll track is — taller reads as a slower, more deliberate
 // scrub. The video is pinned for the whole track and its playback is driven by
-// scroll position (yodezeen.com/about style), eased so it glides.
-const TRACK_VH = 125;
+// scroll position (yodezeen.com/about style), eased so it glides. A longer track
+// spreads the reveal over more scroll, so each frame gets finer control and the
+// scrub reads smoother.
+const TRACK_VH = 230;
 
 /**
  * A cinematic interlude: a full-bleed video whose playback is scrubbed by scroll
@@ -71,7 +73,7 @@ export function ScrollVideo({ src }: { src: string }) {
     // is frame-rate independent (exponential smoothing on elapsed time), so the
     // motion stays steady at 60Hz, 120Hz or under load. With the all-intra
     // encode every frame is a keyframe, so each seek is cheap.
-    const SMOOTH = 6.5; // higher = snappier, lower = silkier/more trailing
+    const SMOOTH = 5.5; // higher = snappier, lower = silkier/more trailing
     let last = performance.now();
     const tick = (now: number) => {
       const dt = Math.min(0.05, (now - last) / 1000);
