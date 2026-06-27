@@ -20,6 +20,7 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const lastYRef = useRef(0);
   const hiddenRef = useRef(isHome);
+  const wasOverHeroRef = useRef(isHome);
 
   useEffect(() => {
     let ticking = false;
@@ -48,10 +49,16 @@ export function Header() {
       // Page-specific overrides that force the header hidden regardless of
       // scroll direction:
       if (isHome) {
-        // Keep it hidden while the Hero still fills the top of the viewport.
+        // Keep the header hidden while the Hero fills the viewport so it opens
+        // clean. The moment the Hero scrolls away (reaching the next section),
+        // reveal the header for the first time; from there the direction logic
+        // governs — it tucks away on scroll down and returns on scroll up.
         const landing = document.querySelector<HTMLElement>("[data-invert-zone]");
         const bottom = landing?.getBoundingClientRect().bottom ?? 0;
-        if (bottom > 120) hide = true;
+        const overHero = bottom > 120;
+        if (overHero) hide = true;
+        else if (wasOverHeroRef.current) hide = false;
+        wasOverHeroRef.current = overHero;
       } else {
         // On the projects archive, stay hidden once the sticky filter bar
         // reaches the top, so the two bars never stack.
@@ -82,17 +89,6 @@ export function Header() {
 
   return (
     <>
-      {/* Top fade, content dissolves as it scrolls up into the header band and
-          returns to full opacity once it passes below. Hidden with the header. */}
-      <motion.div
-        aria-hidden="true"
-        initial={false}
-        animate={{ opacity: hidden ? 0 : 1 }}
-        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-        className="pointer-events-none fixed inset-x-0 top-0 z-40 h-[6.75rem]"
-        style={{ background: "linear-gradient(to bottom, var(--paper) 0%, var(--paper) 34%, transparent 100%)" }}
-      />
-
       <motion.header
         initial={false}
         animate={{ y: hidden ? -120 : 0, opacity: hidden ? 0 : 1 }}

@@ -1,5 +1,4 @@
 import { Hero } from "@/components/home/Hero";
-import { ProofStat } from "@/components/home/ProofStat";
 import { ArchitectureSketch } from "@/components/home/ArchitectureSketch";
 import { getProjectsByType } from "@/lib/cms";
 import { EditorialQuote } from "@/components/home/EditorialQuote";
@@ -16,7 +15,6 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <ProofStat />
       <ArchitectureSketch projects={architecture} />
       <EditorialQuote />
       <ValuesFlower />

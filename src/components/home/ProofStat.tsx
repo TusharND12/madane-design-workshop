@@ -5,7 +5,6 @@ import { useInView } from "framer-motion";
 import { studio } from "@/content/studio";
 import { Bracket } from "@/components/primitives/Bracket";
 import { Reveal } from "@/components/primitives/Reveal";
-import { cn } from "@/lib/cn";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 /**
@@ -28,43 +27,36 @@ export function ProofStat() {
           </span>
         </Reveal>
 
-        <Reveal delay={0.08} className="relative mt-12 overflow-hidden rounded-card border border-hairline bg-mount md:mt-16">
-          {/* faint Warli-art scene rising from the base */}
+        <div ref={ref} className="relative mt-14 md:mt-20">
+          {/* faint Warli-art frieze rising along the baseline — the proof still
+              stands on the architecture, now without a box */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[86%] text-ink"
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-44 text-ink"
             style={{
-              maskImage: "linear-gradient(to top, #000 48%, transparent)",
-              WebkitMaskImage: "linear-gradient(to top, #000 48%, transparent)",
+              maskImage: "linear-gradient(to top, #000 38%, transparent)",
+              WebkitMaskImage: "linear-gradient(to top, #000 38%, transparent)",
             }}
           >
-            <WarliScene className="absolute inset-0 h-full w-full opacity-[0.16]" />
+            <WarliScene className="absolute inset-0 h-full w-full opacity-[0.12]" />
           </div>
 
-          {/* the four figures */}
-          <div ref={ref} className="relative z-10 grid grid-cols-2 md:grid-cols-4">
+          {/* the four figures, boxless */}
+          <div className="relative z-10 grid grid-cols-2 gap-x-8 gap-y-14 pb-[clamp(5rem,15vh,9rem)] md:grid-cols-4 md:gap-x-12">
             {studio.stats.map((s, i) => (
-              <div
-                key={s.label}
-                className={cn(
-                  "group relative flex flex-col gap-4 px-6 pt-9 pb-[clamp(6.5rem,18vh,12rem)] md:px-9 md:pt-11",
-                  i % 2 === 1 && "border-l border-hairline",
-                  i >= 2 && "border-t border-hairline md:border-t-0",
-                  i !== 0 && "md:border-l md:border-hairline",
-                )}
-              >
+              <Reveal as="div" key={s.label} delay={(i % 4) * 0.08} className="group flex flex-col gap-4">
                 <span className="font-mono text-2xs tracking-label text-ink-muted">{String(i + 1).padStart(2, "0")}</span>
                 <Stat
                   value={s.value}
                   play={inView}
-                  className="font-display text-[clamp(3.25rem,7vw,5.5rem)] leading-[0.82] tracking-tighter tabular-nums"
+                  className="font-display text-[clamp(3.5rem,8vw,7rem)] leading-[0.82] tracking-tighter tabular-nums"
                 />
                 <span className="block h-px w-8 bg-ink/25 transition-all duration-500 ease-editorial group-hover:w-16" />
                 <span className="font-mono text-2xs uppercase tracking-label text-ink-muted">{s.label}</span>
-              </div>
+              </Reveal>
             ))}
           </div>
-        </Reveal>
+        </div>
       </div>
     </section>
   );

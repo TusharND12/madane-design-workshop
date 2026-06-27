@@ -5,6 +5,18 @@
 @tailwind utilities;
 
 /* ------------------------------------------------------------------ */
+/*  Site-wide lowercase aesthetic (yodezeen style).                    */
+/*  Display-only — the underlying text content is untouched, so it's   */
+/*  fully reversible and stays correct for SEO / screen readers.       */
+/*  Placed after @tailwind utilities so it overrides the `uppercase`   */
+/*  and `capitalize` utility classes used throughout the site.         */
+/* ------------------------------------------------------------------ */
+.uppercase,
+.capitalize {
+  text-transform: lowercase !important;
+}
+
+/* ------------------------------------------------------------------ */
 /*  Base                                                              */
 /* ------------------------------------------------------------------ */
 @layer base {
@@ -31,6 +43,7 @@
   body {
     @apply bg-paper text-ink font-sans text-base antialiased;
     font-feature-settings: "kern", "liga", "calt";
+    text-transform: lowercase;
     /* Clip horizontal overflow WITHOUT turning <body> into a scroll container.
        `overflow-x: hidden` forces overflow-y to `auto`, which makes WebKit
        (Safari/iOS) stop pinning `position: sticky` descendants, so the pinned

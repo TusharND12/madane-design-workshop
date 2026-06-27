@@ -7,7 +7,22 @@ import { Button } from "@/components/primitives/Button";
 import { EASE, wordReveal, stagger } from "@/lib/motion";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
-const HEADLINE = ["We", "design", "homes,", "inside", "and", "out."];
+const HEADLINE = [
+  "We",
+  "design",
+  "&",
+  "build",
+  "bespoke",
+  "solutions",
+  "for",
+  "architecture",
+  "&",
+  "interiors",
+  "for",
+  "Bharat",
+  "&",
+  "beyond.",
+];
 
 export function Hero() {
   const ref = useRef<HTMLDivElement>(null);
@@ -87,12 +102,12 @@ export function Hero() {
       {/* Content */}
       <motion.div style={{ y: yText, opacity }} className="relative z-10 flex h-full flex-col justify-end">
         <div className="shell-wide pb-[14vh]">
-          <motion.div variants={stagger(0.04)} initial="hidden" animate="show">
+          <motion.div variants={stagger(0.04)} initial="hidden" animate="show" className="text-center">
             <motion.div variants={wordReveal}>
               <Bracket className="text-ink/70">Architecture · Interiors · Turnkey</Bracket>
             </motion.div>
 
-            <h1 className="mt-7 w-full whitespace-nowrap font-display text-[length:min(5.4vw,78px)] font-medium leading-[1.04] tracking-tight">
+            <h1 className="mt-7 w-full whitespace-nowrap font-display text-[2.1vw] font-medium leading-[1.05] tracking-tight">
               <motion.span variants={stagger(0.08, 0.1)} initial="hidden" animate="show" className="inline">
                 {HEADLINE.map((w, i) => (
                   <span key={i} className="inline-block overflow-hidden align-bottom">
@@ -104,12 +119,12 @@ export function Hero() {
               </motion.span>
             </h1>
 
-            <motion.p variants={wordReveal} className="mt-8 max-w-lead text-lead font-light text-ink/80">
+            <motion.p variants={wordReveal} className="mt-2 w-full whitespace-nowrap text-[1.3vw] font-light text-ink/80">
               A quiet, precise design workshop, architecture, interiors and turnkey delivery for living and for work.
             </motion.p>
 
-            <motion.div variants={wordReveal} className="mt-10 flex flex-wrap items-center gap-6">
-              <Button href="/projects" variant="secondary" arrow className="border-ink/40 text-ink hover:border-ink hover:bg-ink hover:text-paper">
+            <motion.div variants={wordReveal} className="mt-10 flex flex-wrap items-center justify-center gap-6">
+              <Button href="/projects" variant="tertiary" arrow className="text-ink">
                 See the work
               </Button>
               <Button href="/contact" variant="tertiary" className="text-ink/80">
