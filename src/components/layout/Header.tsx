@@ -2,14 +2,32 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/cn";
 import { site } from "@/content/site";
 import { Logo } from "./Logo";
 import { MobileMenu } from "./MobileMenu";
 
 const HEADER_LINE = 38; // px from top used to test the invert zone
+
+// Nav items with a full-page hover panel of sub-links (yodezeen style).
+type SubItem = { label: string; href: string; img: string };
+const SUBMENUS: Record<string, SubItem[]> = {
+  "/services": [
+    { label: "Architecture", href: "/services#architecture", img: "/assets/services/architecture.jpg" },
+    { label: "Interior", href: "/services#interior", img: "/assets/services/interior.jpg" },
+    { label: "Exterior", href: "/services#exterior", img: "/assets/services/exterior.jpg" },
+    { label: "Turnkey", href: "/services#turnkey", img: "/assets/services/turnkey.jpg" },
+  ],
+  "/projects": [
+    { label: "Architecture", href: "/projects?type=Architecture", img: "/assets/services/architecture.jpg" },
+    { label: "Interior", href: "/projects?type=Interior", img: "/assets/services/interior.jpg" },
+    { label: "Exterior", href: "/projects?type=Exterior", img: "/assets/services/exterior.jpg" },
+    { label: "Turnkey", href: "/projects?type=Turnkey", img: "/assets/services/turnkey.jpg" },
+  ],
+};
 
 export function Header() {
   const pathname = usePathname();
@@ -18,9 +36,32 @@ export function Header() {
   const [invert, setInvert] = useState(true);
   const [hidden, setHidden] = useState(isHome);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [megaMenu, setMegaMenu] = useState<string | null>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastYRef = useRef(0);
   const hiddenRef = useRef(isHome);
   const wasOverHeroRef = useRef(isHome);
+
+  const openMega = (href: string) => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setMegaMenu(href);
+  };
+  const scheduleCloseMega = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(() => setMegaMenu(null), 180);
+  };
+
+  // Close the mega menu whenever the route changes.
+  useEffect(() => setMegaMenu(null), [pathname]);
+
+  const activeSub = megaMenu ? SUBMENUS[megaMenu] : undefined;
+
+  // The image shown behind the mega menu — none by default, then follows
+  // whichever sub-link is hovered. Reset whenever the menu opens/closes.
+  const [hoverImg, setHoverImg] = useState<string | null>(null);
+  useEffect(() => {
+    setHoverImg(null);
+  }, [megaMenu]);
 
   useEffect(() => {
     let ticking = false;
@@ -109,16 +150,20 @@ export function Header() {
         >
           <Logo subdued={!light} />
 
-          <nav aria-label="Primary" className="hidden items-center gap-6 lg:flex xl:gap-7">
+          <nav aria-label="Primary" className="hidden items-center gap-6 lg:flex xl:gap-7" onMouseLeave={scheduleCloseMega}>
             {site.nav.filter((item) => item.href !== "/contact").map((item) => {
               const active = pathname === item.href || pathname.startsWith(item.href + "/");
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={cn("link-underline font-sans text-xs uppercase tracking-[0.14em] transition-opacity duration-300", active ? "opacity-100" : "opacity-70 hover:opacity-100")}
+                  onMouseEnter={() => openMega(item.href)}
+                  className={cn(
+                    "group relative inline-flex items-center justify-center px-2 py-1 font-sans text-xs uppercase tracking-[0.14em] transition-opacity duration-300",
+                    active ? "opacity-100" : "opacity-70 hover:opacity-100",
+                  )}
                 >
-                  {item.label}
+                  <span className="relative">{item.label}</span>
                 </Link>
               );
             })}
@@ -144,6 +189,62 @@ export function Header() {
           </button>
         </div>
       </motion.header>
+
+      {/* Full-page hover mega menu (yodezeen style) */}
+      <AnimatePresence>
+        {activeSub && (
+          <motion.div
+            key={megaMenu}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            onMouseEnter={() => megaMenu && openMega(megaMenu)}
+            onMouseLeave={scheduleCloseMega}
+            className="fixed inset-0 z-40 hidden overflow-hidden bg-black lg:block"
+          >
+            {/* Full-bleed image of the hovered discipline, crossfading */}
+            <AnimatePresence>
+              {hoverImg && (
+                <motion.div
+                  key={hoverImg}
+                  initial={{ opacity: 0, scale: 1.05 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute inset-0"
+                >
+                  <Image src={hoverImg} alt="" fill sizes="100vw" className="object-cover" priority />
+                </motion.div>
+              )}
+            </AnimatePresence>
+            {/* Scrim for legibility, darker on the left where the words sit */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-black/15" aria-hidden="true" />
+
+            <div className="relative shell-wide flex h-full items-center pt-[var(--header-h)]">
+              <ul className="space-y-1">
+                {activeSub.map((s, i) => (
+                  <motion.li
+                    key={s.href}
+                    initial={{ opacity: 0, y: 28 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.08 + i * 0.06, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    onMouseEnter={() => setHoverImg(s.img)}
+                  >
+                    <Link
+                      href={s.href}
+                      onClick={() => setMegaMenu(null)}
+                      className="block font-display text-[clamp(2.5rem,7vw,6rem)] font-bold uppercase leading-[1.05] tracking-tight text-ink/70 drop-shadow-[0_2px_24px_rgba(0,0,0,0.65)] transition-colors duration-300 hover:text-ink"
+                    >
+                      {s.label}
+                    </Link>
+                  </motion.li>
+                ))}
+              </ul>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
     </>
