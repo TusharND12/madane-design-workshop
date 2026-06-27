@@ -1139,7 +1139,7 @@ export const projects: Project[] = [
   {
     "slug": "aadiarpan-nx-residences",
     "name": "Aadiarpan & Nx Residences",
-    "type": "Architecture",
+    "type": "Exterior",
     "category": "Residential",
     "client": "Aadishikhar Developers",
     "location": "Sion, Mumbai",
@@ -1187,7 +1187,7 @@ export const projects: Project[] = [
   {
     "slug": "carter-road",
     "name": "Carter Road Project",
-    "type": "Architecture",
+    "type": "Exterior",
     "category": "Residential",
     "location": "Carter Road, Bandra West, Mumbai",
     "city": "Mumbai",
@@ -1239,7 +1239,7 @@ export const projects: Project[] = [
   {
     "slug": "palatial-heights",
     "name": "Palatial Heights",
-    "type": "Architecture",
+    "type": "Exterior",
     "category": "Residential",
     "client": "Srujan",
     "location": "Bandstand, Mumbai",
@@ -1282,7 +1282,7 @@ export const projects: Project[] = [
   {
     "slug": "lumax",
     "name": "Lumax",
-    "type": "Architecture",
+    "type": "Turnkey",
     "category": "Industrial",
     "client": "Lumax",
     "location": "Gurgaon, Haryana",
@@ -1336,7 +1336,7 @@ export const projects: Project[] = [
   {
     "slug": "new-tulshi-baug",
     "name": "New Tulshi Baug",
-    "type": "Architecture",
+    "type": "Exterior",
     "category": "Commercial",
     "client": "Motoshree Estates",
     "location": "Tulsi Baug, Pune",
@@ -1475,7 +1475,7 @@ export const projects: Project[] = [
   {
     "slug": "highmount",
     "name": "Highmount",
-    "type": "Architecture",
+    "type": "Exterior",
     "category": "Residential",
     "location": "Mumbai",
     "city": "Mumbai",
@@ -1682,7 +1682,7 @@ export const projects: Project[] = [
   {
     "slug": "seclore",
     "name": "Seclore",
-    "type": "Interior",
+    "type": "Turnkey",
     "category": "Corporate Offices",
     "client": "Seclore",
     "location": "R Square, Andheri East, Mumbai",
@@ -1747,7 +1747,7 @@ export const projects: Project[] = [
   {
     "slug": "planetcast-media",
     "name": "Planetcast Media",
-    "type": "Interior",
+    "type": "Turnkey",
     "category": "Corporate Offices",
     "client": "Planetcast Media",
     "location": "Raheja Interface, Malad East, Mumbai",
@@ -1812,7 +1812,7 @@ export const projects: Project[] = [
   {
     "slug": "tata-digital",
     "name": "Tata Digital",
-    "type": "Interior",
+    "type": "Turnkey",
     "category": "Corporate Offices",
     "client": "Tata Digital",
     "location": "One International Centre, Dadar, Mumbai",
@@ -1875,7 +1875,7 @@ export const projects: Project[] = [
   {
     "slug": "rush-co-works",
     "name": "Rush Co-Works",
-    "type": "Interior",
+    "type": "Turnkey",
     "category": "Coworking",
     "client": "Rush Co-Works",
     "location": "Plutonium, Turbhe, Navi Mumbai",
@@ -1939,7 +1939,7 @@ export const projects: Project[] = [
   {
     "slug": "odyssey-logistics",
     "name": "Odyssey Logistics",
-    "type": "Interior",
+    "type": "Turnkey",
     "category": "Logistics",
     "client": "Odyssey Logistics",
     "location": "Gundecha Onclave, Mumbai",
@@ -1988,7 +1988,7 @@ export const projects: Project[] = [
   {
     "slug": "sgl",
     "name": "Solitaire Geological Laboratory (SGL)",
-    "type": "Interior",
+    "type": "Turnkey",
     "category": "Corporate Offices",
     "client": "Solitaire Geological Laboratory (SGL)",
     "location": "Capital, BKC, Mumbai",
@@ -2052,7 +2052,7 @@ export const projects: Project[] = [
   {
     "slug": "talegaon-project",
     "name": "Talegaon Project",
-    "type": "Architecture",
+    "type": "Exterior",
     "category": "Commercial",
     "location": "Talegaon, Pune",
     "city": "Pune",
@@ -2104,7 +2104,7 @@ export const projects: Project[] = [
   {
     "slug": "eminent-realtors-excise-bhavan",
     "name": "Eminent Realtors Excise Bhavan",
-    "type": "Architecture",
+    "type": "Turnkey",
     "category": "Institutional",
     "client": "Eminent Developers",
     "location": "Fort, Mumbai",
