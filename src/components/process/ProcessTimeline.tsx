@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform, useMotionTemplate, type MotionValue } from "framer-motion";
+import { createContext, useContext, useRef } from "react";
+import { motion, useScroll, useTransform, useMotionTemplate, useMotionValue, type MotionValue } from "framer-motion";
 import type { ProcessStep } from "@/lib/schema";
 import { Bracket } from "@/components/primitives/Bracket";
 
@@ -87,6 +87,9 @@ function NodeCircle({ i }: { i: number }) {
   );
 }
 
+// 0 = under construction (cool grey glass), 1 = finished home (warm, lit).
+const FinishContext = createContext<MotionValue<number> | null>(null);
+
 /** A single flat surface in the 3D scene (a wall, roof slope, gable, window…). */
 function Plane({
   w,
@@ -107,10 +110,23 @@ function Plane({
   glow?: boolean; // warm, lit (windows / door)
   cross?: boolean; // window mullions
 }) {
+  const fallback = useMotionValue(0);
+  const finish = useContext(FinishContext) ?? fallback;
   const rgb = glow ? WARM : INK;
   const line = `rgba(${INK},0.45)`;
+
+  // On completion the surface warms to the studio's brass tone and brightens.
+  const warmTint = Math.min(0.92, tint * (glow ? 1.6 : 1.7));
+  const bg = useTransform(finish, [0, 1], [`rgba(${rgb},${tint})`, `rgba(${WARM},${warmTint})`]);
+  const bd = useTransform(finish, [0, 1], [`rgba(${rgb},${border})`, `rgba(${WARM},${Math.min(0.95, border * 1.25)})`]);
+  const shadow = useTransform(
+    finish,
+    [0, 1],
+    [glow ? `0 0 14px rgba(${WARM},0.22)` : "0 0 0 rgba(0,0,0,0)", glow ? `0 0 24px rgba(${WARM},0.5)` : `0 0 18px rgba(${WARM},0.14)`]
+  );
+
   return (
-    <div
+    <motion.div
       style={{
         position: "absolute",
         left: "50%",
@@ -118,15 +134,17 @@ function Plane({
         width: w,
         height: h,
         transform: `translate(-50%, -50%) ${transform}`,
-        background: `rgba(${rgb},${tint})`,
-        border: `1px solid rgba(${rgb},${border})`,
+        backgroundColor: bg,
+        borderWidth: 1,
+        borderStyle: "solid",
+        borderColor: bd,
         boxSizing: "border-box",
         clipPath: clip,
         backgroundImage: cross ? `linear-gradient(${line},${line}), linear-gradient(${line},${line})` : undefined,
         backgroundSize: cross ? "1px 100%, 100% 1px" : undefined,
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
-        boxShadow: glow ? `0 0 14px rgba(${WARM},0.22)` : undefined,
+        boxShadow: shadow,
       }}
     />
   );
@@ -185,12 +203,23 @@ function Part({ progress, from, to, rise, children }: { progress: MotionValue<nu
 /** Perspective scene: the house builds up and turns a full circle as you scroll. */
 function House({ progress }: { progress: MotionValue<number> }) {
   const rotateY = useTransform(progress, [0, 0.85], [0, 360]);
-  const transform = useMotionTemplate`scale(1.4) rotateX(-12deg) rotateY(${rotateY}deg)`;
+  const transform = useMotionTemplate`scale(1.75) rotateX(-12deg) rotateY(${rotateY}deg)`;
+  // Once the house is built, warm it up and light it to the studio's palette.
+  const finish = useTransform(progress, [0.64, 0.92], [0, 1]);
+  const ambient = useTransform(finish, [0, 1], [0, 0.9]);
 
   return (
-    <div className="absolute inset-0 flex items-center justify-center" style={{ perspective: "1700px", perspectiveOrigin: "50% 46%" }}>
-      <motion.div style={{ position: "relative", transformStyle: "preserve-3d", transform }}>
-        {/* Soft ground glow to seat the house */}
+    <div className="absolute inset-0">
+      {/* Warm key light that fades in as the home is finished */}
+      <motion.div
+        className="absolute inset-0"
+        style={{ opacity: ambient, background: `radial-gradient(58% 50% at 44% 44%, rgba(${WARM},0.12), rgba(${WARM},0) 70%)` }}
+        aria-hidden="true"
+      />
+      <div className="absolute inset-0 flex items-center justify-center" style={{ perspective: "1700px", perspectiveOrigin: "50% 46%" }}>
+        <FinishContext.Provider value={finish}>
+          <motion.div style={{ position: "relative", transformStyle: "preserve-3d", transform }}>
+            {/* Soft ground glow to seat the house */}
         <div
           style={{
             position: "absolute",
@@ -219,11 +248,13 @@ function House({ progress }: { progress: MotionValue<number> }) {
         <Part progress={progress} from={0.36} to={0.52} rise={-32}>
           {roofFaces()}
         </Part>
-        {/* 05 details */}
-        <Part progress={progress} from={0.48} to={0.64} rise={0}>
-          {detailFaces()}
-        </Part>
-      </motion.div>
+            {/* 05 details */}
+            <Part progress={progress} from={0.48} to={0.64} rise={0}>
+              {detailFaces()}
+            </Part>
+          </motion.div>
+        </FinishContext.Provider>
+      </div>
     </div>
   );
 }
@@ -243,7 +274,7 @@ function StepRow({ draw, step, i }: { draw: MotionValue<number>; step: ProcessSt
       />
       <div className="font-mono text-2xs tracking-label text-ink-muted">{step.index}</div>
       <h3 className="mt-1.5 font-display text-2xl leading-none tracking-tight text-ink">{step.title}</h3>
-      <p className="mt-2 max-w-xs text-sm leading-relaxed text-ink-muted">{step.caption ?? ""}</p>
+      <p className="mt-2.5 max-w-sm text-sm leading-relaxed text-ink-muted">{step.body}</p>
     </motion.li>
   );
 }
@@ -276,7 +307,7 @@ export function ProcessTimeline({ steps }: { steps: ProcessStep[] }) {
               </div>
 
               {/* Steps */}
-              <ol className="space-y-8">
+              <ol className="space-y-6">
                 {steps.map((step, i) => (
                   <StepRow key={step.index} draw={draw} step={step} i={i} />
                 ))}
@@ -287,7 +318,7 @@ export function ProcessTimeline({ steps }: { steps: ProcessStep[] }) {
       </div>
 
       {/* Mobile — vertical icon spine */}
-      <div className="shell-wide md:hidden">
+      <div className="shell-wide pb-20 md:hidden">
         <ol className="relative mt-14">
           <span className="absolute bottom-6 left-7 top-6 w-px border-l border-dashed border-ink-muted/40" aria-hidden="true" />
           {steps.map((step, i) => (
@@ -312,25 +343,6 @@ export function ProcessTimeline({ steps }: { steps: ProcessStep[] }) {
         </ol>
       </div>
 
-      {/* Detail grid — fades in below the build */}
-      <div className="shell-wide pb-24 md:pb-32">
-        <div className="hidden grid-cols-2 gap-px border border-hairline bg-hairline md:grid lg:grid-cols-3">
-          {steps.map((step, i) => (
-            <motion.div
-              key={step.index}
-              className="bg-paper p-8"
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.6, ease: EASE, delay: (i % 3) * 0.08 }}
-            >
-              <span className="font-mono text-2xs tracking-label text-ink-muted">{step.index}</span>
-              <h3 className="mt-4 font-display text-2xl leading-none tracking-tight text-ink">{step.title}</h3>
-              <p className="mt-4 text-sm leading-relaxed text-ink-muted">{step.body}</p>
-            </motion.div>
-          ))}
-        </div>
-      </div>
     </section>
   );
 }
