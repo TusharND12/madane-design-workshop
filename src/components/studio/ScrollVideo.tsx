@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useScroll, useMotionValueEvent } from "framer-motion";
+import { motion, useScroll, useMotionValue, useMotionValueEvent, useTransform } from "framer-motion";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
@@ -27,6 +27,11 @@ export function ScrollVideo({ src }: { src: string }) {
   const duration = useRef(0);
   const rafId = useRef<number | null>(null);
 
+  // Scroll progress through the section (0..1), used to drive the storytelling
+  // overlays — a kicker caption that fades through, and a hairline that fills.
+  const progress = useMotionValue(0);
+  const kickerOpacity = useTransform(progress, [0, 0.12, 0.68, 0.9], [0, 1, 1, 0]);
+
   // Map scroll position over the section to 0..1, geometric so it survives the
   // route's `zoom` (PageZoom) skew like the other pinned sections do.
   const measure = () => {
@@ -37,6 +42,7 @@ export function ScrollVideo({ src }: { src: string }) {
     const top = el.getBoundingClientRect().top; // 0 at pin-start → -range at pin-end
     const p = clamp(-top / range, 0, 1);
     targetTime.current = p * (duration.current || 0);
+    progress.set(p);
   };
 
   useMotionValueEvent(scrollY, "change", measure);
@@ -148,6 +154,29 @@ export function ScrollVideo({ src }: { src: string }) {
           className="pointer-events-none absolute inset-x-0 bottom-0 h-[10%]"
           style={{ background: "linear-gradient(to bottom, transparent, var(--paper))" }}
         />
+
+        {/* Kicker caption — fades in over the film and out as you scroll past. */}
+        <motion.div
+          aria-hidden="true"
+          style={{ opacity: kickerOpacity }}
+          className="pointer-events-none absolute left-[clamp(1.25rem,4vw,3rem)] top-[clamp(5.5rem,14vh,9rem)] z-30"
+        >
+          <span className="block font-mono text-2xs uppercase tracking-label text-ink/70">Since 2008</span>
+          <span className="mt-1 block max-w-[18ch] font-display text-xl font-light leading-tight tracking-tight text-ink/90 md:text-2xl">
+            The people behind the practice.
+          </span>
+        </motion.div>
+
+        {/* Scrub progress hairline — fills as the film scrubs, signalling it is
+            scroll-driven. */}
+        <div className="pointer-events-none absolute right-[clamp(1.25rem,4vw,3rem)] top-1/2 z-30 -translate-y-1/2">
+          <div className="relative h-20 w-px bg-ink/15">
+            <motion.div
+              className="absolute inset-x-0 top-0 h-full origin-top bg-ink/85"
+              style={{ scaleY: progress }}
+            />
+          </div>
+        </div>
       </div>
     </section>
   );
