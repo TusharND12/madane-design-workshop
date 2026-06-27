@@ -127,7 +127,7 @@ export function ScrollVideo({ src }: { src: string }) {
         <video
           ref={videoRef}
           className="absolute inset-0 h-full w-full object-contain"
-          style={{ objectPosition: "50% 100%" }}
+          style={{ objectPosition: "50% 50%" }}
           src={src}
           muted
           playsInline
