@@ -1,15 +1,25 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { motion, useMotionValue, useMotionValueEvent, useScroll, useTransform, type MotionValue } from "framer-motion";
-import { SectionHeader } from "@/components/primitives/SectionHeader";
+import {
+  AnimatePresence,
+  cubicBezier,
+  motion,
+  useMotionValue,
+  useMotionValueEvent,
+  useScroll,
+  useTransform,
+  type MotionValue,
+} from "framer-motion";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 /**
- * The crew, vertical "pill" (stadium) portrait cards on a dark, plastered wall.
- * The section pins and the row slides horizontally as you scroll vertically, so
- * the whole team passes across the wall. Reduced motion shows a normal scroll row.
+ * The crew, a scattered "constellation" of portraits (yodezeen.com/about style).
+ * The section pins and, as you scroll, the skewed grayscale portraits rise up
+ * from below the screen into a scattered field while a large category title and a
+ * discipline list hold the centre. Mobile rises a tidy grid; reduced motion shows
+ * a static grid.
  */
 type Member = { name: string; src: string };
 
@@ -35,87 +45,119 @@ const TEAM: Member[] = [
   { name: "Prince", src: "/assets/team/prince.png" },
 ];
 
-// Dark-theme header tones, cycled across the cards for subtle variety.
-const TONES = ["#23262F", "#2A241E", "#272A2E", "#2C2622"];
+const CATEGORIES = ["Architects", "Interior Designers", "Project Management", "Operations Team"];
 
-// Fine grain for the plastered-wall feel (grayscale fractal noise).
-const NOISE =
-  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
+// Scatter field, one slot per member: left/top in %, width in vw, stacking z and
+// a 0..1 rise delay so they cascade up in a pleasing (non-linear) order. Hand
+// placed to spread across the frame and leave the centre legible for the title.
+const SCATTER = [
+  { left: 5, top: 20, w: 11, z: 5, delay: 0.1 },
+  { left: 18, top: 5, w: 10, z: 8, delay: 0.3 },
+  { left: 29, top: 30, w: 9, z: 3, delay: 0.55 },
+  { left: 1, top: 55, w: 10, z: 6, delay: 0.2 },
+  { left: 13, top: 73, w: 11, z: 9, delay: 0.42 },
+  { left: 25, top: 50, w: 8, z: 2, delay: 0.66 },
+  { left: 39, top: 11, w: 10, z: 7, delay: 0.05 },
+  { left: 37, top: 67, w: 9, z: 4, delay: 0.5 },
+  { left: 49, top: 40, w: 11, z: 1, delay: 0.72 },
+  { left: 60, top: 7, w: 10, z: 8, delay: 0.18 },
+  { left: 52, top: 64, w: 9, z: 5, delay: 0.34 },
+  { left: 64, top: 34, w: 12, z: 6, delay: 0.6 },
+  { left: 72, top: 58, w: 10, z: 7, delay: 0.26 },
+  { left: 70, top: 13, w: 9, z: 4, delay: 0.48 },
+  { left: 82, top: 29, w: 11, z: 8, delay: 0.12 },
+  { left: 88, top: 55, w: 10, z: 6, delay: 0.38 },
+  { left: 80, top: 77, w: 9, z: 5, delay: 0.64 },
+  { left: 92, top: 11, w: 8, z: 3, delay: 0.56 },
+  { left: 45, top: 84, w: 9, z: 7, delay: 0.22 },
+];
 
-// The slide is coupled to the *true* geometric pin progress (read live from
-// getBoundingClientRect), so it spans the whole pinned range regardless of the
-// CSS `zoom: 0.9` (PageZoom) skew. A small tail keeps the last card on screen
-// for a beat before the section releases.
+const RISE = 760; // px the cards travel up from below the fold
+const ARC = 120; // px sideways bow mid-flight, so cards sweep in on a curve
+const ROT = 9; // deg of tilt at launch, easing to straight on arrival
+const EASE_FN = cubicBezier(0.16, 1, 0.3, 1);
 const TAIL = 0.06;
-// Generous left/right breathing room so the first and last cards clear the edge
-// fade and read fully (not dissolved against the screen edges).
-const SHELL_PAD = "clamp(2.5rem, 7vw, 8rem)";
-// Horizontal cut, a crisp line on each side past which the card images are not
-// visible at all (so they never bleed into the vacant rope space). The line sits
-// just outside the first/last card positions, so those stay fully crisp.
-const FADE =
-  "linear-gradient(to right, transparent 0%, transparent 4.5%, #000 6%, #000 94%, transparent 95.5%, transparent 100%)";
-// Wave, each card rides a gentle sine as the row travels, so scrolling sideways
-// sends a wave rippling across the team.
-const WAVE_AMP = 22; // px
-const wavePhase = (index: number, xv: number) => index * 0.9 + xv * 0.004;
-
-// A slender cord that hangs and sways in the vacant wall space beside the row,
-// two path keyframes the rope eases between (the weight at the bottom rides along).
-const ROPE_A = "M30 0 C 26 220, 21 520, 19 788";
-const ROPE_B = "M30 0 C 34 220, 39 520, 41 788";
 
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 
+// Fine grain for a quiet, filmic black backdrop.
+const NOISE =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
+
 export function TeamShowcase() {
+  const reduced = usePrefersReducedMotion();
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const on = () => setIsDesktop(mq.matches);
+    on();
+    mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, []);
+
+  if (reduced) return <StaticGrid />;
+  return isDesktop ? <ScatterPinned /> : <MobileRise />;
+}
+
+/* Shared dark backdrop. */
+function Backdrop() {
   return (
-    <section className="relative bg-paper">
-      {/* Wall, base tone + soft top light + edge vignette */}
+    <>
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
         style={{
-          backgroundColor: "#141414",
-          backgroundImage:
-            "radial-gradient(120% 70% at 50% -10%, rgba(236,236,230,0.06), transparent 55%)," +
-            "radial-gradient(120% 90% at 50% 120%, rgba(0,0,0,0.55), transparent 60%)",
+          backgroundColor: "#0a0a0a",
+          backgroundImage: "radial-gradient(120% 80% at 50% 30%, rgba(236,236,230,0.05), transparent 60%)",
         }}
       />
-      {/* Wall grain */}
       <div aria-hidden className="pointer-events-none absolute inset-0 opacity-[0.05]" style={{ backgroundImage: NOISE }} />
-
-      <div className="relative z-10">
-        <div className="shell-wide pt-section">
-          <SectionHeader
-            index="03"
-            label="The crew"
-            title="The people behind the calm."
-            align="between"
-            intro="Architects, designers and project leads, the team that turns the studio's quiet into built work."
-          />
-        </div>
-
-        <Slider />
-      </div>
-    </section>
+    </>
   );
 }
 
-function Slider() {
-  const reduced = usePrefersReducedMotion();
-  if (reduced) return <StaticRow />;
-  return <ScrollSlider />;
+/* Centre overlay, the cycling category title + the discipline list. */
+function CrewTitle({ active }: { active: number }) {
+  return (
+    <div className="pointer-events-none absolute inset-0 z-30 flex flex-col items-center justify-center">
+      <span className="absolute left-[clamp(1.25rem,4vw,3rem)] top-[clamp(1.25rem,4vh,2.5rem)] font-mono text-2xs uppercase tracking-label text-ink/55">
+        03 · The crew
+      </span>
+
+      <AnimatePresence mode="wait">
+        <motion.h2
+          key={active}
+          initial={{ opacity: 0, y: 22 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -22 }}
+          transition={{ duration: 0.5, ease: EASE_FN }}
+          className="px-6 text-center font-display text-[clamp(2.6rem,11vw,9.5rem)] font-medium uppercase leading-[0.92] tracking-tight text-ink drop-shadow-[0_8px_40px_rgba(0,0,0,0.7)]"
+        >
+          {CATEGORIES[active]}
+        </motion.h2>
+      </AnimatePresence>
+
+      <ul className="absolute bottom-[clamp(1.5rem,6vh,3.5rem)] flex flex-col items-center gap-1.5 text-center font-mono text-2xs uppercase tracking-label">
+        {CATEGORIES.map((c, i) => (
+          <li
+            key={c}
+            className={`transition-colors duration-300 ${i === active ? "text-ink" : "text-ink/30"}`}
+          >
+            {c}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
-/** Pinned section, vertical scroll slides the row horizontally across the wall. */
-function ScrollSlider() {
+/* Desktop, pinned scatter that rises from below as you scroll. */
+function ScatterPinned() {
   const parentRef = useRef<HTMLDivElement>(null);
-  const stageRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const maxX = useRef(0);
-
   const { scrollY } = useScroll();
-  const x = useMotionValue(0);
+  const prog = useMotionValue(0);
+  const [active, setActive] = useState(0);
 
   const update = () => {
     const parent = parentRef.current;
@@ -124,157 +166,155 @@ function ScrollSlider() {
     if (range <= 0) return;
     const top = parent.getBoundingClientRect().top; // 0 at pin-start → -range at pin-end
     const p = clamp(-top / range / (1 - TAIL), 0, 1);
-    x.set(-maxX.current * p);
+    prog.set(p);
+    // Categories cycle once the field is mostly up.
+    const q = clamp((p - 0.4) / 0.6, 0, 0.999);
+    setActive(Math.floor(q * CATEGORIES.length));
   };
 
   useMotionValueEvent(scrollY, "change", update);
-
   useEffect(() => {
-    const measure = () => {
-      const track = trackRef.current;
-      const stage = stageRef.current;
-      if (!track || !stage) return;
-      // scrollWidth includes the left padding but omits the right padding, so add
-      // it back, otherwise the last card parks flush to the edge (under the cut).
-      const padRight = parseFloat(getComputedStyle(track).paddingRight) || 0;
-      maxX.current = Math.max(0, track.scrollWidth - stage.clientWidth + padRight);
-      update();
-    };
-    measure();
-    const ro = new ResizeObserver(measure);
-    if (trackRef.current) ro.observe(trackRef.current);
-    window.addEventListener("resize", measure);
-    return () => {
-      ro.disconnect();
-      window.removeEventListener("resize", measure);
-    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div ref={parentRef} style={{ height: `${TEAM.length * 14 + 40}vh` }}>
-      <div className="sticky top-0 flex h-[100svh] flex-col justify-center">
-        <Rope side="left" />
-        <Rope side="right" />
-        <div ref={stageRef} className="relative z-10 w-full overflow-hidden" style={{ WebkitMaskImage: FADE, maskImage: FADE }}>
-          <motion.div ref={trackRef} style={{ x, paddingLeft: SHELL_PAD, paddingRight: SHELL_PAD }} className="flex items-center gap-5 py-9 md:gap-6">
-            {TEAM.map((m, i) => (
-              <WaveCard key={m.src} x={x} index={i}>
-                <PillCard member={m} tone={TONES[i % TONES.length]} priority={i < 5} />
-              </WaveCard>
-            ))}
-          </motion.div>
+    <section ref={parentRef} className="relative bg-paper" style={{ height: "300vh" }} aria-label="The crew">
+      <div className="sticky top-0 h-[100svh] overflow-hidden">
+        <Backdrop />
+        <div className="absolute inset-0 z-10">
+          {TEAM.map((m, i) => (
+            <ScatterCard key={m.src} prog={prog} pos={SCATTER[i % SCATTER.length]} member={m} />
+          ))}
         </div>
-
-        <div className="relative z-10 shell-wide mt-9 flex items-center justify-between font-mono text-2xs uppercase tracking-label text-ink-muted">
-          <span>Scroll to meet the team</span>
-          <span>
-            {String(TEAM.length).padStart(2, "0")} <span className="text-ink/30">people</span>
-          </span>
-        </div>
+        <CrewTitle active={active} />
       </div>
-    </div>
+    </section>
   );
 }
 
-/** One card riding the wave, vertical offset follows a sine of its position +
-    the row's travel, so sliding the row ripples a wave across the team. */
-function WaveCard({ x, index, children }: { x: MotionValue<number>; index: number; children: React.ReactNode }) {
-  const y = useTransform(x, (xv) => Math.sin(wavePhase(index, xv)) * WAVE_AMP);
-  return (
-    <motion.div style={{ y }} className="shrink-0">
-      {children}
-    </motion.div>
-  );
-}
+function ScatterCard({
+  prog,
+  pos,
+  member,
+}: {
+  prog: MotionValue<number>;
+  pos: (typeof SCATTER)[number];
+  member: Member;
+}) {
+  const start = pos.delay * 0.45;
+  const end = start + 0.3;
+  // Cards on the left bow left, those on the right bow right; the further from
+  // centre, the wider the arc — so the field sweeps up on curves, not straight.
+  const dir = pos.left < 50 ? -1 : 1;
+  const arc = ARC * (0.45 + Math.abs(pos.left - 50) / 50) * dir;
 
-/** Decorative swaying cord for the vacant wall space on either side of the row. */
-function Rope({ side }: { side: "left" | "right" }) {
-  const reduced = usePrefersReducedMotion();
-  const t = { duration: 7, repeat: Infinity, repeatType: "mirror" as const, ease: "easeInOut" as const };
+  const r = useTransform(prog, [start, end], [0, 1], { clamp: true, ease: EASE_FN });
+  const y = useTransform(r, [0, 1], [RISE, 0]);
+  const x = useTransform(r, (rv) => Math.sin((1 - rv) * Math.PI) * arc);
+  const rotate = useTransform(r, [0, 1], [dir * ROT, 0]);
+  const opacity = useTransform(r, [0, 1], [0, 1]);
+  const scale = useTransform(r, [0, 1], [0.9, 1]);
+
   return (
-    <div
-      aria-hidden
-      className={`pointer-events-none absolute top-1/2 z-0 hidden h-[64vh] w-[clamp(3rem,6vw,7rem)] -translate-y-1/2 opacity-40 md:block ${
-        side === "left" ? "left-[1.5%]" : "right-[1.5%] -scale-x-100"
-      }`}
+    <motion.div
+      className="group absolute"
+      style={{
+        left: `${pos.left}%`,
+        top: `${pos.top}%`,
+        width: `${pos.w}vw`,
+        minWidth: "7rem",
+        maxWidth: "15rem",
+        zIndex: pos.z,
+        x,
+        y,
+        rotate,
+        opacity,
+        scale,
+        transformOrigin: "bottom center",
+      }}
     >
-      <svg viewBox="0 0 60 800" preserveAspectRatio="xMidYMid meet" className="h-full w-full">
-        <motion.path
-          d={ROPE_A}
-          fill="none"
-          stroke="#ECECE6"
-          strokeWidth={2.4}
-          strokeLinecap="round"
-          animate={reduced ? undefined : { d: [ROPE_A, ROPE_B] }}
-          transition={reduced ? undefined : t}
-        />
-        <motion.circle
-          cx={19}
-          cy={788}
-          r={5}
-          fill="#ECECE6"
-          animate={reduced ? undefined : { cx: [19, 41] }}
-          transition={reduced ? undefined : t}
-        />
-      </svg>
-    </div>
-  );
-}
-
-/** Reduced-motion fallback, a plain horizontally-scrollable row. */
-function StaticRow() {
-  return (
-    <div className="pb-section pt-12 md:pt-14">
-      <div
-        className="flex gap-5 overflow-x-auto pb-6 pt-3 md:gap-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        style={{ paddingLeft: SHELL_PAD, paddingRight: SHELL_PAD, WebkitMaskImage: FADE, maskImage: FADE }}
-      >
-        {TEAM.map((m, i) => (
-          <div key={m.src} className="shrink-0">
-            <PillCard member={m} tone={TONES[i % TONES.length]} priority={i < 5} />
-          </div>
-        ))}
-      </div>
-      <div className="shell-wide mt-7 font-mono text-2xs uppercase tracking-label text-ink-muted">
-        {String(TEAM.length).padStart(2, "0")} <span className="text-ink/30">people</span>
-      </div>
-    </div>
-  );
-}
-
-function PillCard({ member, tone, priority }: { member: Member; tone: string; priority: boolean }) {
-  const [first, ...rest] = member.name.split(" ");
-  const last = rest.join(" ");
-  return (
-    <div
-      className="group relative aspect-[1/2.35] w-[clamp(11rem,17vw,13.5rem)] select-none overflow-hidden rounded-full shadow-[0_26px_55px_-22px_rgba(0,0,0,0.85)] ring-1 ring-white/[0.04]"
-      style={{ backgroundColor: tone }}
-    >
-      {/* Name, thin Avant Garde Extra Light, lowercase, first name over surname */}
-      <div className="absolute inset-x-0 top-[6.5%] z-10 px-4 text-center leading-[0.95]">
-        <span className="block font-display text-[1.35rem] font-light lowercase tracking-[0.01em] text-ink">
-          {first}
-        </span>
-        {last && (
-          <span className="mt-1 block font-display text-[0.82rem] font-light lowercase tracking-[0.16em] text-ink/55">
-            {last}
-          </span>
-        )}
-      </div>
-
-      {/* Portrait, fully rounded bottom to follow the pill, gentle top corners */}
-      <div className="absolute inset-x-2 bottom-2 top-[22%] overflow-hidden rounded-b-full rounded-t-[1.75rem] bg-mount">
+      <div className="relative aspect-[3/4] overflow-hidden bg-mount shadow-[0_30px_60px_-30px_rgba(0,0,0,0.9)] ring-1 ring-white/[0.05]">
         <Image
           src={member.src}
           alt={`${member.name}, Madane Design Workshop.`}
           fill
           draggable={false}
-          sizes="(max-width:640px) 45vw, 220px"
-          priority={priority}
-          className="object-cover object-[50%_18%] grayscale transition-[filter,transform] duration-700 ease-editorial group-hover:scale-[1.03] group-hover:grayscale-0"
+          sizes="(max-width:768px) 40vw, 220px"
+          className="object-cover object-[50%_18%] grayscale transition-[filter] duration-700 ease-editorial group-hover:grayscale-0"
         />
+        {/* Name on hover */}
+        <span className="absolute inset-x-0 bottom-0 translate-y-2 bg-gradient-to-t from-black/80 to-transparent px-3 pb-2.5 pt-8 text-center font-mono text-[0.55rem] uppercase tracking-label text-ink opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+          {member.name}
+        </span>
       </div>
-    </div>
+    </motion.div>
+  );
+}
+
+/* Mobile, a tidy grid whose cards rise from below as they enter the viewport. */
+function MobileRise() {
+  return (
+    <section className="relative overflow-hidden bg-paper py-section" aria-label="The crew">
+      <Backdrop />
+      <div className="relative z-10 shell-wide">
+        <span className="font-mono text-2xs uppercase tracking-label text-ink/55">03 · The crew</span>
+        <h2 className="mt-3 font-display text-[clamp(2.4rem,16vw,4.5rem)] font-medium uppercase leading-[0.92] tracking-tight text-ink">
+          The crew
+        </h2>
+        <ul className="mt-4 flex flex-wrap gap-x-4 gap-y-1 font-mono text-2xs uppercase tracking-label text-ink/45">
+          {CATEGORIES.map((c) => (
+            <li key={c}>{c}</li>
+          ))}
+        </ul>
+
+        <div className="mt-9 grid grid-cols-2 gap-3 xs:grid-cols-3">
+          {TEAM.map((m, i) => {
+            const dir = i % 2 === 0 ? -1 : 1;
+            return (
+            <motion.div
+              key={m.src}
+              initial={{ opacity: 0, y: 80, x: dir * 36, rotate: dir * 5 }}
+              whileInView={{ opacity: 1, y: 0, x: 0, rotate: 0 }}
+              viewport={{ once: true, margin: "-10% 0px" }}
+              transition={{ duration: 0.6, ease: EASE_FN, delay: (i % 3) * 0.06 }}
+              className="relative aspect-[3/4] overflow-hidden bg-mount ring-1 ring-white/[0.05]"
+            >
+              <Image
+                src={m.src}
+                alt={`${m.name}, Madane Design Workshop.`}
+                fill
+                sizes="45vw"
+                className="object-cover object-[50%_18%] grayscale"
+              />
+            </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* Reduced-motion fallback, a plain static grid. */
+function StaticGrid() {
+  return (
+    <section className="relative overflow-hidden bg-paper py-section" aria-label="The crew">
+      <Backdrop />
+      <div className="relative z-10 shell-wide">
+        <h2 className="font-display text-[clamp(2.4rem,12vw,6rem)] font-medium uppercase leading-[0.92] tracking-tight text-ink">
+          The crew
+        </h2>
+        <div className="mt-9 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-5">
+          {TEAM.map((m) => (
+            <div key={m.src} className="relative aspect-[3/4] overflow-hidden bg-mount ring-1 ring-white/[0.05]">
+              <Image src={m.src} alt={`${m.name}, Madane Design Workshop.`} fill sizes="25vw" className="object-cover object-[50%_18%] grayscale" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }

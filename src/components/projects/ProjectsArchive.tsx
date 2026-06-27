@@ -4,12 +4,17 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import type { Project, ProjectType } from "@/lib/schema";
-import { FilterBar } from "./FilterBar";
-import { ArchitectureFrame } from "./ArchitectureFrame";
-import { ButtonAction } from "@/components/primitives/Button";
 import { EASE } from "@/lib/motion";
+
+// A varied aspect cycle gives the grid a calm masonry rhythm without borders or
+// chrome — images do all the talking (yodezeen.com/projects style).
+const ASPECTS = ["4 / 3", "3 / 4", "1 / 1", "4 / 3", "3 / 4", "4 / 3", "1 / 1", "3 / 4"];
+
+// Native <option>s can't take Tailwind classes; style them to the dark theme so
+// the popup list stays legible.
+const OPTION_STYLE: React.CSSProperties = { backgroundColor: "#181818", color: "#ECECE6" };
 
 export function ProjectsArchive({
   projects,
@@ -26,15 +31,9 @@ export function ProjectsArchive({
   const pathname = usePathname();
   const params = useSearchParams();
 
-  const initialType = (params.get("type") as ProjectType | null) ?? "All";
-  const initialLoc = params.get("city") ?? "All";
-  const initialCat = params.get("sector") ?? "All";
-
-  const [type, setType] = useState<ProjectType | "All">(
-    types.includes(initialType as ProjectType) ? (initialType as ProjectType) : "All"
-  );
-  const [location, setLocation] = useState<string | "All">(locations.includes(initialLoc) ? initialLoc : "All");
-  const [category, setCategory] = useState<string | "All">(categories.includes(initialCat) ? initialCat : "All");
+  const [type, setType] = useState<ProjectType | "All">("All");
+  const [location, setLocation] = useState<string | "All">("All");
+  const [category, setCategory] = useState<string | "All">("All");
 
   useEffect(() => {
     const t = (params.get("type") as ProjectType | null) ?? "All";
@@ -45,26 +44,35 @@ export function ProjectsArchive({
     setCategory(categories.includes(s) ? s : "All");
   }, [params, types, locations, categories]);
 
-  const syncUrl = useCallback(
-    (nextType: ProjectType | "All", nextLoc: string | "All", nextCat: string | "All") => {
+  const sync = useCallback(
+    (nt: ProjectType | "All", nl: string | "All", nc: string | "All") => {
       const sp = new URLSearchParams();
-      if (nextType !== "All") sp.set("type", nextType);
-      if (nextLoc !== "All") sp.set("city", nextLoc);
-      if (nextCat !== "All") sp.set("sector", nextCat);
+      if (nt !== "All") sp.set("type", nt);
+      if (nl !== "All") sp.set("city", nl);
+      if (nc !== "All") sp.set("sector", nc);
       const qs = sp.toString();
       router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
+      if (typeof window !== "undefined") {
+        const lenis = window.__lenis;
+        if (lenis) lenis.scrollTo(0, { duration: 0.7 });
+        else window.scrollTo({ top: 0, behavior: "smooth" });
+      }
     },
     [router, pathname]
   );
 
-  const counts = useMemo(() => {
-    const c: Record<string, number> = {};
-    for (const t of types)
-      c[t] = projects.filter(
-        (p) => p.type === t && (location === "All" || p.city === location) && (category === "All" || p.category === category)
-      ).length;
-    return c;
-  }, [projects, types, location, category]);
+  const onType = (t: ProjectType | "All") => {
+    setType(t);
+    sync(t, location, category);
+  };
+  const onLocation = (l: string | "All") => {
+    setLocation(l);
+    sync(type, l, category);
+  };
+  const onCategory = (c: string | "All") => {
+    setCategory(c);
+    sync(type, location, c);
+  };
 
   const filtered = useMemo(
     () =>
@@ -77,139 +85,115 @@ export function ProjectsArchive({
     [projects, type, location, category]
   );
 
-  // After a filter changes, return to the top so the new results read from the
-  // start (use Lenis if present so it matches the site's smooth scrolling).
-  function scrollTop() {
-    if (typeof window === "undefined") return;
-    const lenis = window.__lenis;
-    if (lenis) lenis.scrollTo(0, { duration: 0.7 });
-    else window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
-  function handleType(t: ProjectType | "All") {
-    setType(t);
-    syncUrl(t, location, category);
-    scrollTop();
-  }
-  function handleLocation(l: string | "All") {
-    setLocation(l);
-    syncUrl(type, l, category);
-    scrollTop();
-  }
-  function handleCategory(c: string | "All") {
-    setCategory(c);
-    syncUrl(type, location, c);
-    scrollTop();
-  }
+  const tabs: (ProjectType | "All")[] = ["All", ...types];
 
   return (
-    <div className="shell-wide pb-section">
-      <FilterBar
-        types={types}
-        locations={locations}
-        categories={categories}
-        activeType={type}
-        activeLocation={location}
-        activeCategory={category}
-        counts={counts}
-        onType={handleType}
-        onLocation={handleLocation}
-        onCategory={handleCategory}
-        total={projects.filter((p) => (location === "All" || p.city === location) && (category === "All" || p.category === category)).length}
-      />
-
-      {/* Count line */}
-      <div className="mt-6 flex items-center justify-between font-mono text-2xs uppercase tracking-label text-ink-muted">
-        <span>
-          {String(filtered.length).padStart(2, "0")} {filtered.length === 1 ? "project" : "projects"}
-        </span>
-        <span>
-          {type === "All" ? "All disciplines" : type}
-          {category !== "All" ? ` · ${category}` : ""}
-          {location !== "All" ? ` · ${location}` : ""}
-        </span>
+    <div className="w-full px-3 pb-section">
+      {/* Minimal filter — discipline tabs + sector/city dropdowns, one line */}
+      <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 font-mono text-2xs uppercase tracking-label">
+        {tabs.map((t) => {
+          const active = t === type;
+          return (
+            <button
+              key={t}
+              type="button"
+              onClick={() => onType(t)}
+              className={`relative pb-1.5 transition-colors duration-300 ${active ? "text-ink" : "text-ink-muted hover:text-ink"}`}
+            >
+              {t}
+              {active && <motion.span layoutId="proj-tab" className="absolute inset-x-0 bottom-0 h-px bg-ink" />}
+            </button>
+          );
+        })}
+        <Select allLabel="All sectors" value={category} options={categories} onChange={onCategory} ariaLabel="Filter by sector" />
+        <Select allLabel="All cities" value={location} options={locations} onChange={onLocation} ariaLabel="Filter by city" />
       </div>
 
+      {/* Clean masonry gallery */}
       {filtered.length === 0 ? (
-        <EmptyState
-          onReset={() => {
-            setType("All");
-            setLocation("All");
-            setCategory("All");
-            syncUrl("All", "All", "All");
-            scrollTop();
-          }}
-        />
+        <p className="mt-20 text-center font-display text-2xl tracking-tight text-ink-muted">Nothing here yet.</p>
       ) : (
-        <div className="relative mt-8 px-6 pb-14 pt-12 md:mt-10 md:px-12">
-          {/* Line-art building shell, the cards read as floors inside it */}
-          <ArchitectureFrame />
-          <motion.div layout className="relative z-10 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-            <AnimatePresence mode="popLayout">
-              {filtered.map((p, i) => (
-                <motion.div
-                  key={p.slug}
-                  layout
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.45, ease: EASE, delay: Math.min(i * 0.04, 0.4) }}
-                >
-                  <GalleryCard project={p} index={i + 1} priority={i < 6} />
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
-        </div>
+        <motion.div
+          key={`${type}-${location}-${category}`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, ease: EASE }}
+          className="mt-10 columns-1 gap-3 sm:columns-2 lg:columns-3 xl:columns-4"
+        >
+          {filtered.map((p, i) => (
+            <GalleryCard key={p.slug} project={p} aspect={ASPECTS[i % ASPECTS.length]} priority={i < 6} />
+          ))}
+        </motion.div>
       )}
     </div>
   );
 }
 
-function GalleryCard({ project, index, priority }: { project: Project; index: number; priority: boolean }) {
+function Select({
+  allLabel,
+  value,
+  options,
+  onChange,
+  ariaLabel,
+}: {
+  allLabel: string;
+  value: string;
+  options: string[];
+  onChange: (v: string) => void;
+  ariaLabel: string;
+}) {
+  const active = value !== "All";
+  return (
+    <div className="relative">
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        aria-label={ariaLabel}
+        style={{ colorScheme: "dark" }}
+        className={`max-w-[11rem] cursor-pointer appearance-none truncate bg-transparent pr-5 font-mono text-2xs uppercase tracking-label outline-none transition-colors duration-300 hover:text-ink focus:text-ink ${active ? "text-ink" : "text-ink-muted"}`}
+      >
+        <option value="All" style={OPTION_STYLE}>
+          {allLabel}
+        </option>
+        {options.map((o) => (
+          <option key={o} value={o} style={OPTION_STYLE}>
+            {o}
+          </option>
+        ))}
+      </select>
+      <span className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 text-[0.6rem] text-ink-muted" aria-hidden="true">
+        ↓
+      </span>
+    </div>
+  );
+}
+
+function GalleryCard({ project, aspect, priority }: { project: Project; aspect: string; priority: boolean }) {
   return (
     <Link
       href={`/projects/${project.slug}`}
-      aria-label={`${project.name}, ${project.type}, ${project.city} ${project.year}`}
-      className="group block"
+      aria-label={`${project.name}, ${project.type}, ${project.city}`}
+      className="group mb-3 block break-inside-avoid overflow-hidden bg-mount"
     >
-      {/* Image */}
-      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-card bg-mount">
+      <div className="relative w-full overflow-hidden" style={{ aspectRatio: aspect }}>
         <Image
           src={project.cover}
           alt={project.coverAlt}
           fill
-          sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw"
+          sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 25vw"
           priority={priority}
-          className="object-cover transition-transform duration-700 ease-editorial group-hover:scale-[1.04]"
+          className="object-cover transition-transform duration-[1.2s] ease-editorial group-hover:scale-[1.04]"
         />
-        <span className="absolute left-4 top-4 font-mono text-2xs tracking-label text-white/90 mix-blend-difference">
-          {String(index).padStart(2, "0")}
-        </span>
+        {/* Name reveals on hover — no permanent chrome */}
+        <div className="pointer-events-none absolute inset-0 flex items-end bg-gradient-to-t from-black/75 via-black/0 to-black/0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+          <div className="p-5">
+            <h3 className="font-display text-lg leading-tight tracking-tight text-white md:text-xl">{project.name}</h3>
+            <p className="mt-1 font-mono text-2xs uppercase tracking-label text-white/70">
+              {project.type} · {project.city}
+            </p>
+          </div>
+        </div>
       </div>
-
-      {/* Caption */}
-      <div className="mt-4 flex items-baseline justify-between gap-4">
-        <h3 className="min-w-0 truncate font-display text-lg leading-tight tracking-tight transition-colors duration-300 group-hover:text-ink md:text-xl">
-          {project.name}
-        </h3>
-        <span className="shrink-0 font-mono text-2xs uppercase tracking-label text-ink-muted">{project.type}</span>
-      </div>
-      <p className="mt-1 font-mono text-2xs uppercase tracking-label text-ink-muted">
-        {project.city}
-      </p>
     </Link>
-  );
-}
-
-function EmptyState({ onReset }: { onReset: () => void }) {
-  return (
-    <div className="flex flex-col items-center gap-6 border-t border-hairline py-32 text-center">
-      <p className="font-display text-2xl tracking-tight">No projects in this combination, yet.</p>
-      <p className="max-w-prose text-sm text-ink-muted">Every filter is shareable; try a broader discipline or a different city.</p>
-      <ButtonAction variant="tertiary" onClick={onReset} arrow>
-        Reset filters
-      </ButtonAction>
-    </div>
   );
 }

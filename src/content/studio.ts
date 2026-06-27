@@ -15,7 +15,7 @@ export const studio = {
     "Our work is grounded in five principles, knowledge, patience, love, justice and dedication. We work the same way whether the project is a private villa or a corporate floor: understand it completely, commit to one idea, and deliver it through BIM-integrated workflows and IGBC & USGBC green-building standards.",
   ],
   vision: "Giving the world things they haven't imagined before.",
-  accreditations: ["COA", "IGBC", "IIID", "IIA", "USGBC"],
+  accreditations: ["COA", "IGBC", "IIID", "IIA"],
   image: "/assets/projects/sun-petrochemicals-pvt-ltd-corporate-office/cover.jpg",
   imageAlt: "A completed Madane Design Workshop corporate interior.",
   stats: [
