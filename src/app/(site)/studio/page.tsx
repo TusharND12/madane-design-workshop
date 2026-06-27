@@ -5,6 +5,7 @@ import { PageIntro } from "@/components/common/PageIntro";
 import { SectionHeader } from "@/components/primitives/SectionHeader";
 import { Reveal } from "@/components/primitives/Reveal";
 import { LeadershipShowcase } from "@/components/studio/LeadershipShowcase";
+import { ScrollVideo } from "@/components/studio/ScrollVideo";
 import { TeamShowcase } from "@/components/studio/TeamShowcase";
 import { PageZoom } from "@/components/common/PageZoom";
 import { EnquiryBand } from "@/components/common/EnquiryBand";
@@ -82,6 +83,13 @@ export default function StudioPage() {
             intro="A multidisciplinary leadership team with deep roots in architecture, design, contracts and strategy. Scroll to meet each partner."
           />
         }
+      />
+
+      {/* 03a, Studio film — scroll-scrubbed */}
+      <ScrollVideo
+        src="/assets/video/studio-film.mp4"
+        label="Inside the workshop"
+        statement="Drawn, detailed and delivered under one roof."
       />
 
       {/* 03b, The crew */}
