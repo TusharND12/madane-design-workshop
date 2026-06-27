@@ -1,14 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { EASE } from "@/lib/motion";
-import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 type Leader = { name: string; role: string; credential: string; bio: string; portrait: string };
 type Social = { label: string; href: string };
 
+const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 const initials = (name: string) =>
   name
     .replace(/^Ar\.\s*/, "")
@@ -16,137 +16,287 @@ const initials = (name: string) =>
     .slice(0, 2)
     .map((w) => w[0])
     .join("");
+const firstName = (name: string) => name.replace(/^Ar\.\s*/, "").split(" ")[0];
+
+// Per-partner focal point for the card crop, faces sit at different heights in
+// their photos, so each is positioned to read clearly in the upper zone, above
+// the name block (the men sit high, the women lower).
+const FOCUS: Record<string, string> = {
+  "Ar. Hrishikesh Arun Madane": "50% 16%",
+  "Akshay Arun Madane": "50% 20%",
+  "Ar. Rasika Hrishikesh Madane": "56% 33%",
+  "Priyanka Akshay Madane": "54% 40%",
+};
+
+// A small tail keeps the last partner on screen for a beat before the pinned
+// section releases and the page continues down to the next section.
+const TAIL = 0.08;
 
 /**
- * Leadership, an active portrait beside a clickable strip of the team. Selecting
- * a face grows its portrait to fill the frame and swaps the name, role and bio
- * alongside it. Mirrors the services accordion mechanic, synced to the copy.
+ * Leadership, the partners behind the practice. On desktop the section pins and
+ * scrolling steps through the partners, the active portrait growing to fill the
+ * frame while the name, role and bio swap alongside; after the last partner the
+ * section releases. On phones (where a pinned bio + portrait can't fit a single
+ * viewport) it stays a tap / arrow accordion.
  */
-export function LeadershipShowcase({ items, socials, email }: { items: readonly Leader[]; socials: readonly Social[]; email: string }) {
-  const reduced = usePrefersReducedMotion();
+export function LeadershipShowcase({
+  items,
+  socials,
+  header,
+}: {
+  items: readonly Leader[];
+  socials: readonly Social[];
+  header?: React.ReactNode;
+}) {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const on = () => setIsDesktop(mq.matches);
+    on();
+    mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, []);
+
+  return isDesktop ? (
+    <Pinned items={items} socials={socials} header={header} />
+  ) : (
+    <Accordion items={items} socials={socials} header={header} />
+  );
+}
+
+/* Desktop, pinned section, scroll steps the active partner. */
+function Pinned({ items, socials, header }: { items: readonly Leader[]; socials: readonly Social[]; header?: React.ReactNode }) {
+  const parentRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
+  const N = items.length;
+  const { scrollY } = useScroll();
+
+  // True geometric pin progress, read live from getBoundingClientRect, so it
+  // spans the whole pinned range regardless of the CSS `zoom: 0.9` (PageZoom)
+  // skew on this route.
+  const update = () => {
+    const parent = parentRef.current;
+    if (!parent) return;
+    const range = parent.offsetHeight - window.innerHeight;
+    if (range <= 0) return;
+    const top = parent.getBoundingClientRect().top; // 0 at pin-start → -range at pin-end
+    const p = clamp(-top / range / (1 - TAIL), 0, 1);
+    setActive(Math.min(N - 1, Math.floor(p * N)));
+  };
+
+  useMotionValueEvent(scrollY, "change", update);
+
+  useEffect(() => {
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Arrows / clicking a face scroll to that partner's segment, so the scroll
+  // position (the source of truth for `active`) stays in sync.
+  const navTo = (i: number) => {
+    const parent = parentRef.current;
+    if (!parent) return;
+    const range = parent.offsetHeight - window.innerHeight;
+    const idx = clamp(i, 0, N - 1);
+    const target = parent.offsetTop + ((idx + 0.5) / N) * (1 - TAIL) * range;
+    const lenis = window.__lenis;
+    if (lenis && typeof lenis.scrollTo === "function") lenis.scrollTo(target, { duration: 0.9 });
+    else window.scrollTo({ top: target, behavior: "smooth" });
+  };
+
+  return (
+    <section ref={parentRef} className="relative bg-stone/40" style={{ height: `${N * 80}vh` }}>
+      <div className="sticky top-0 flex h-[100svh] flex-col justify-center overflow-hidden">
+        <Body items={items} socials={socials} active={active} onSelect={navTo} onStep={(d) => navTo(active + d)} header={header} />
+      </div>
+    </section>
+  );
+}
+
+/* Mobile, plain accordion, tap a face or use the arrows. */
+function Accordion({ items, socials, header }: { items: readonly Leader[]; socials: readonly Social[]; header?: React.ReactNode }) {
+  const [active, setActive] = useState(0);
+  const N = items.length;
+  return (
+    <section className="bg-stone/40">
+      <Body
+        items={items}
+        socials={socials}
+        active={active}
+        onSelect={(i) => setActive(clamp(i, 0, N - 1))}
+        onStep={(d) => setActive((i) => (i + d + N) % N)}
+        header={header}
+      />
+    </section>
+  );
+}
+
+/* Shared layout, left = the active partner, right = the portrait strip. */
+function Body({
+  items,
+  socials,
+  active,
+  onSelect,
+  onStep,
+  header,
+}: {
+  items: readonly Leader[];
+  socials: readonly Social[];
+  active: number;
+  onSelect: (i: number) => void;
+  onStep: (dir: number) => void;
+  header?: React.ReactNode;
+}) {
   const a = items[active];
   const N = items.length;
   const pad = (n: number) => String(n).padStart(2, "0");
-  const go = (dir: number) => setActive((i) => (i + dir + N) % N);
 
   return (
-    <div className="mt-12 grid gap-10 md:mt-16 md:grid-cols-12 md:gap-12">
-      {/* Left, the active leader */}
-      <div className="md:col-span-5 md:self-center">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={active}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -16 }}
-            transition={{ duration: 0.45, ease: EASE }}
-          >
-            <h3 className="font-display text-[clamp(1.9rem,4vw,3rem)] font-light leading-[1] tracking-tight">{a.name}</h3>
-            <span className="mt-4 block font-mono text-2xs uppercase tracking-label text-ink-muted">{a.role}</span>
-            <span className="mt-1.5 block font-mono text-2xs uppercase tracking-label text-ink/40">{a.credential}</span>
+    <div className="shell-wide w-full py-[clamp(2.5rem,6vh,5rem)]">
+      {header}
 
-            <div className="mt-6 flex items-center gap-3">
-              {socials.map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  target={s.href.startsWith("http") ? "_blank" : undefined}
-                  rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                  aria-label={`${a.name}, ${s.label}`}
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-hairline text-ink-muted transition-colors duration-300 hover:border-ink hover:text-ink"
-                >
-                  <SocialIcon label={s.label} />
-                </a>
-              ))}
-            </div>
-
-            <p className="mt-7 max-w-prose text-base leading-relaxed text-ink-muted">{a.bio}</p>
-          </motion.div>
-        </AnimatePresence>
-
-        {/* arrow toggle */}
-        <div className="mt-9 flex items-center gap-5">
-          <div className="flex items-center gap-2.5">
-            <button
-              type="button"
-              onClick={() => go(-1)}
-              aria-label="Previous leader"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-hairline text-ink-muted transition-colors duration-300 hover:border-ink hover:text-ink"
+      <div className="mt-10 grid gap-10 md:mt-12 md:grid-cols-12 md:gap-12">
+        {/* Left, the active partner */}
+        <div className="md:col-span-5 md:self-center">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={a.name}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.45, ease: EASE }}
             >
-              <Arrow dir="left" />
-            </button>
-            <button
-              type="button"
-              onClick={() => go(1)}
-              aria-label="Next leader"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-hairline text-ink-muted transition-colors duration-300 hover:border-ink hover:text-ink"
-            >
-              <Arrow dir="right" />
-            </button>
-          </div>
-          <span className="font-mono text-2xs tracking-label text-ink-muted">
-            {pad(active + 1)} <span className="text-ink/30">/ {pad(N)}</span>
-          </span>
-        </div>
-      </div>
+              <h3 className="font-display text-[clamp(1.9rem,4vw,3rem)] font-light leading-[1] tracking-tight">{a.name}</h3>
+              <span className="mt-4 block font-mono text-2xs uppercase tracking-label text-ink-muted">{a.role}</span>
+              <span className="mt-1.5 block font-mono text-2xs uppercase tracking-label text-ink/40">{a.credential}</span>
 
-      {/* Right, portrait strip */}
-      <div className="md:col-span-7">
-        <div className="flex h-[60vh] min-h-[420px] flex-col gap-2 md:h-[clamp(380px,52vh,520px)] md:flex-row">
-          {items.map((m, i) => {
-            const isActive = i === active;
-            return (
+              <div className="mt-6 flex items-center gap-3">
+                {socials.map((s) => (
+                  <a
+                    key={s.label}
+                    href={s.href}
+                    target={s.href.startsWith("http") ? "_blank" : undefined}
+                    rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    aria-label={`${a.name}, ${s.label}`}
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-hairline text-ink-muted transition-colors duration-300 hover:border-ink hover:text-ink"
+                  >
+                    <SocialIcon label={s.label} />
+                  </a>
+                ))}
+              </div>
+
+              <p className="mt-7 max-w-prose text-base leading-relaxed text-ink-muted">{a.bio}</p>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* arrow toggle + index */}
+          <div className="mt-9 flex items-center gap-5">
+            <div className="flex items-center gap-2.5">
               <button
-                key={m.name}
                 type="button"
-                onClick={() => setActive(i)}
-                onMouseEnter={() => setActive(i)}
-                onFocus={() => setActive(i)}
-                aria-label={`Show ${m.name}`}
-                aria-pressed={isActive}
-                className="group relative block overflow-hidden rounded-card bg-mount"
-                style={{
-                  flexGrow: reduced ? 1 : isActive ? 6 : 1,
-                  flexBasis: 0,
-                  transition: reduced ? undefined : "flex-grow 0.7s cubic-bezier(0.16,1,0.3,1)",
-                }}
+                onClick={() => onStep(-1)}
+                aria-label="Previous partner"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-hairline text-ink-muted transition-colors duration-300 hover:border-ink hover:text-ink"
               >
-                {m.portrait ? (
-                  <Image
-                    src={m.portrait}
-                    alt={`${m.name}, ${m.role}.`}
-                    fill
-                    sizes="(max-width:768px) 100vw, 40vw"
-                    className={`object-cover object-top transition-all duration-700 ease-editorial ${isActive ? "grayscale-0 brightness-100" : "grayscale brightness-[0.78] group-hover:brightness-90"}`}
-                  />
-                ) : (
-                  <span aria-hidden="true" className={`flex h-full w-full items-center justify-center font-display tracking-tight ${isActive ? "text-6xl text-ink/85" : "text-3xl text-ink/55"}`}>
-                    {initials(m.name)}
-                  </span>
-                )}
-
-                {/* collapsed: vertical name tab */}
-                <motion.span
-                  animate={{ opacity: isActive ? 0 : 1 }}
-                  transition={{ duration: 0.3, ease: EASE }}
-                  className="pointer-events-none absolute inset-x-0 bottom-4 hidden justify-center md:flex"
-                >
-                  <span className="font-mono text-2xs uppercase tracking-label text-ink [writing-mode:vertical-rl] [text-orientation:mixed]">
-                    {m.name.replace(/^Ar\.\s*/, "").split(" ")[0]}
-                  </span>
-                </motion.span>
-
-                {/* mobile collapsed name */}
-                <span className="absolute bottom-3 left-4 font-mono text-2xs uppercase tracking-label text-ink md:hidden">
-                  {m.name.replace(/^Ar\.\s*/, "").split(" ")[0]}
-                </span>
+                <Arrow dir="left" />
               </button>
-            );
-          })}
+              <button
+                type="button"
+                onClick={() => onStep(1)}
+                aria-label="Next partner"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-hairline text-ink-muted transition-colors duration-300 hover:border-ink hover:text-ink"
+              >
+                <Arrow dir="right" />
+              </button>
+            </div>
+            <span className="font-mono text-2xs tracking-label text-ink-muted">
+              {pad(active + 1)} <span className="text-ink/30">/ {pad(N)}</span>
+            </span>
+          </div>
+        </div>
+
+        {/* Right, the partners as a stack of premium cards, the active one
+            expands to a full card face, the rest collapse to labelled bars. */}
+        <div className="md:col-span-7">
+          <div className="flex h-[60vh] min-h-[440px] flex-col gap-3 md:h-[clamp(400px,56vh,560px)]">
+            {items.map((m, i) => {
+              const isActive = i === active;
+              return (
+                <button
+                  key={m.name}
+                  type="button"
+                  onClick={() => onSelect(i)}
+                  aria-label={`Show ${m.name}`}
+                  aria-pressed={isActive}
+                  className="group relative block overflow-hidden rounded-[1.35rem] text-left ring-1 ring-white/10 shadow-[0_26px_55px_-30px_rgba(0,0,0,0.9)]"
+                  style={{
+                    flexGrow: isActive ? 6 : 1,
+                    flexBasis: 0,
+                    transition: "flex-grow 0.7s cubic-bezier(0.16,1,0.3,1)",
+                  }}
+                >
+                  {/* Card face, the portrait */}
+                  {m.portrait ? (
+                    <Image
+                      src={m.portrait}
+                      alt={`${m.name}, ${m.role}.`}
+                      fill
+                      sizes="(max-width:768px) 100vw, 55vw"
+                      style={{ objectPosition: FOCUS[m.name] ?? "50% 20%" }}
+                      className={`object-cover transition-all duration-700 ease-editorial ${isActive ? "scale-100 grayscale-0 brightness-95" : "scale-105 grayscale brightness-[0.6] group-hover:brightness-75"}`}
+                    />
+                  ) : (
+                    <span aria-hidden="true" className="absolute inset-0 flex items-center justify-center bg-mount font-display text-4xl tracking-tight text-ink/40">
+                      {initials(m.name)}
+                    </span>
+                  )}
+
+                  {/* Theme tint + brushed-metal sheen */}
+                  <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-br from-stone/35 via-transparent to-sand/30" />
+                  <span aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(115deg,transparent_32%,rgba(236,236,230,0.10)_47%,transparent_62%)]" />
+
+                  {/* Legibility scrims */}
+                  <span aria-hidden="true" className="absolute inset-x-0 top-0 h-[30%] bg-gradient-to-b from-black/55 to-transparent" />
+                  <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[70%] bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
+
+                  {/* Top row, wordmark + chip (active card only) */}
+                  <span className={`absolute inset-x-0 top-0 flex items-center justify-between px-5 py-4 transition-opacity duration-500 ${isActive ? "opacity-100" : "opacity-0"}`}>
+                    <span className="font-display text-sm lowercase tracking-tight text-ink/90">madane</span>
+                    <Chip />
+                  </span>
+
+                  {/* Embossed name block (active card only) */}
+                  <span className={`absolute inset-x-0 bottom-0 block px-5 pb-5 transition-opacity duration-500 ${isActive ? "opacity-100" : "opacity-0"}`}>
+                    <span className="block font-mono text-2xs uppercase tracking-[0.32em] text-ink/55">{pad(i + 1)} · Partner</span>
+                    <span className="mt-1.5 block font-display text-[clamp(1.4rem,2.4vw,2rem)] font-light leading-[1.05] tracking-tight text-ink">{m.name}</span>
+                    <span className="mt-1 block font-mono text-2xs uppercase tracking-label text-ink/70">{m.role}</span>
+                  </span>
+
+                  {/* Compact bar (collapsed card) */}
+                  <span className={`absolute inset-0 flex items-center justify-between px-5 transition-opacity duration-300 ${isActive ? "opacity-0" : "opacity-100"}`}>
+                    <span className="font-display text-base lowercase tracking-tight text-ink/85">{firstName(m.name)}</span>
+                    <span className="font-mono text-2xs uppercase tracking-[0.3em] text-ink/45">{pad(i + 1)} / {pad(N)}</span>
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>
+  );
+}
+
+/* A small brushed-metal EMV chip, warm taupe to sit with the sand palette. */
+function Chip() {
+  return (
+    <span aria-hidden="true" className="relative block h-6 w-8 overflow-hidden rounded-[5px] bg-gradient-to-br from-[#bda87e] via-[#8d7a52] to-[#5f5137] ring-1 ring-black/30">
+      <span className="absolute inset-x-1.5 top-1/2 h-px -translate-y-1/2 bg-black/25" />
+      <span className="absolute inset-y-1.5 left-1/2 w-px -translate-x-1/2 bg-black/25" />
+    </span>
   );
 }
 

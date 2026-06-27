@@ -67,19 +67,22 @@ export default function StudioPage() {
       </section>
 
       {/* 03, Leadership */}
-      <section className="bg-stone/40">
-        <div className="shell-wide py-section">
-          <SectionHeader index="02" label="Leadership" title="The partners behind the practice." align="between" intro="A multidisciplinary leadership team with deep roots in architecture, design, contracts and strategy. Select a face to read more." />
-          <LeadershipShowcase
-            items={studio.leadership}
-            socials={[
-              ...site.socials.filter((s) => s.label === "Instagram" || s.label === "LinkedIn"),
-              { label: "Email", href: `mailto:${site.contact.email}` },
-            ]}
-            email={site.contact.email}
+      <LeadershipShowcase
+        items={studio.leadership}
+        socials={[
+          ...site.socials.filter((s) => s.label === "Instagram" || s.label === "LinkedIn"),
+          { label: "Email", href: `mailto:${site.contact.email}` },
+        ]}
+        header={
+          <SectionHeader
+            index="02"
+            label="Leadership"
+            title="The partners behind the practice."
+            align="between"
+            intro="A multidisciplinary leadership team with deep roots in architecture, design, contracts and strategy. Scroll to meet each partner."
           />
-        </div>
-      </section>
+        }
+      />
 
       {/* 03b, The crew */}
       <TeamShowcase />
