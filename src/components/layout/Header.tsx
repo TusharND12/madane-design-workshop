@@ -178,8 +178,8 @@ export function Header() {
           {/* Mobile spacer to balance the menu button so the logo stays centred */}
           <div className="w-8 lg:hidden" aria-hidden="true" />
 
-          {/* Centre logo - absolutely centred so side widths never shift it */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          {/* Logo - left on mobile, absolutely centred from lg up so side widths never shift it */}
+          <div className="absolute left-6 top-1/2 -translate-y-1/2 lg:left-1/2 lg:-translate-x-1/2">
             <Logo subdued={!light} />
           </div>
 
