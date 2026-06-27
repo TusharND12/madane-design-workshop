@@ -94,7 +94,7 @@ export function ScrollVideo({ src }: { src: string }) {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-paper"
+      className="relative bg-black pt-[var(--header-h)]"
       style={reduced ? undefined : { height: `${TRACK_VH}vh` }}
       aria-label="Studio film"
     >
@@ -105,13 +105,14 @@ export function ScrollVideo({ src }: { src: string }) {
             : "sticky top-0 h-[100svh] overflow-hidden"
         }
       >
-        {/* Poster colour behind the frame while it buffers */}
-        <div className="absolute inset-0 bg-mount" aria-hidden="true" />
+        {/* Black field behind the frame so the full composition reads edge to
+            edge (and any letterbox bars stay invisible against the clip). */}
+        <div className="absolute inset-0 bg-black" aria-hidden="true" />
 
         <video
           ref={videoRef}
-          className="absolute inset-0 h-full w-full object-cover"
-          style={{ objectPosition: "50% 18%" }}
+          className="absolute inset-0 h-full w-full object-contain"
+          style={{ objectPosition: "50% 100%" }}
           src={src}
           muted
           playsInline
@@ -120,20 +121,6 @@ export function ScrollVideo({ src }: { src: string }) {
           loop={reduced}
           tabIndex={-1}
           aria-hidden="true"
-        />
-
-        {/* Legibility scrims, ink falloff (no colour) to keep the grade quiet */}
-        <div className="absolute inset-0 bg-gradient-to-b from-paper/70 via-paper/15 to-paper/80" aria-hidden="true" />
-        <div className="absolute inset-0 bg-paper/15" aria-hidden="true" />
-
-        {/* Cinematic vignette on large screens */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 hidden min-[1200px]:block"
-          style={{
-            background:
-              "radial-gradient(120% 110% at 50% 45%, transparent 50%, rgba(15,15,15,0.34) 78%, rgba(15,15,15,0.66) 100%)",
-          }}
         />
       </div>
     </section>
