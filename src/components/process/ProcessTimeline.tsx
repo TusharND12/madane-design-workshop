@@ -272,9 +272,9 @@ function StepRow({ draw, step, i }: { draw: MotionValue<number>; step: ProcessSt
         style={{ scaleY: barScaleY }}
         aria-hidden="true"
       />
-      <div className="font-mono text-[0.6rem] tracking-label text-ink-muted">{step.index}</div>
-      <h3 className="mt-1.5 font-display text-lg leading-none tracking-tight text-ink">{step.title}</h3>
-      <p className="mt-2 max-w-sm text-xs leading-relaxed text-ink-muted">{step.body}</p>
+      <div className="font-mono text-[0.55rem] tracking-label text-ink-muted">{step.index}</div>
+      <h3 className="mt-1 font-display text-sm leading-none tracking-tight text-ink">{step.title}</h3>
+      <p className="mt-1.5 max-w-xs text-[0.7rem] leading-relaxed text-ink-muted">{step.body}</p>
     </motion.li>
   );
 }
