@@ -73,7 +73,7 @@ export function ScrollVideo({ src }: { src: string }) {
     // is frame-rate independent (exponential smoothing on elapsed time), so the
     // motion stays steady at 60Hz, 120Hz or under load. With the all-intra
     // encode every frame is a keyframe, so each seek is cheap.
-    const SMOOTH = 5.5; // higher = snappier, lower = silkier/more trailing
+    const SMOOTH = 9; // higher = snappier, lower = silkier/more trailing
     let last = performance.now();
     const tick = (now: number) => {
       const dt = Math.min(0.05, (now - last) / 1000);
@@ -82,7 +82,7 @@ export function ScrollVideo({ src }: { src: string }) {
       if (v && duration.current && !seeking) {
         const cur = v.currentTime;
         const diff = targetTime.current - cur;
-        if (Math.abs(diff) > 0.0015) {
+        if (Math.abs(diff) > 0.0008) {
           const f = 1 - Math.exp(-SMOOTH * dt);
           try {
             v.currentTime = cur + diff * f;
