@@ -9,7 +9,7 @@ const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v
 // How tall the scroll track is — taller reads as a slower, more deliberate
 // scrub. The video is pinned for the whole track and its playback is driven by
 // scroll position (yodezeen.com/about style), eased so it glides.
-const TRACK_VH = 160;
+const TRACK_VH = 125;
 
 /**
  * A cinematic interlude: a full-bleed video whose playback is scrubbed by scroll
@@ -159,7 +159,7 @@ export function ScrollVideo({ src }: { src: string }) {
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-0 bottom-0 h-[10%]"
-          style={{ background: "linear-gradient(to bottom, transparent, var(--paper))" }}
+          style={{ background: "linear-gradient(to bottom, transparent, #000)" }}
         />
 
         {/* Kicker caption — fades in over the film and out as you scroll past. */}

@@ -105,7 +105,7 @@ function Backdrop() {
         aria-hidden
         className="pointer-events-none absolute inset-0"
         style={{
-          backgroundColor: "var(--paper)",
+          backgroundColor: "#000",
           backgroundImage: "radial-gradient(120% 80% at 50% 30%, rgba(236,236,230,0.05), transparent 60%)",
         }}
       />
@@ -114,13 +114,16 @@ function Backdrop() {
   );
 }
 
-/* Centre overlay — a single static title. */
-function CrewTitle() {
+/* Centre overlay — the title, which fades out once the portraits are all up. */
+function CrewTitle({ opacity }: { opacity: MotionValue<number> }) {
   return (
     <div className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center">
-      <h2 className="px-6 text-center font-display text-[clamp(2.6rem,11vw,9.5rem)] font-medium uppercase leading-[0.92] tracking-tight text-ink drop-shadow-[0_8px_40px_rgba(0,0,0,0.7)]">
+      <motion.h2
+        style={{ opacity }}
+        className="px-6 text-center font-display text-[clamp(2.6rem,11vw,9.5rem)] font-medium uppercase leading-[0.92] tracking-tight text-ink drop-shadow-[0_8px_40px_rgba(0,0,0,0.7)]"
+      >
         Architects
-      </h2>
+      </motion.h2>
     </div>
   );
 }
@@ -130,6 +133,8 @@ function ScatterPinned() {
   const parentRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
   const prog = useMotionValue(0);
+  // The title holds while the portraits rise, then fades out once they are all up.
+  const titleOpacity = useTransform(prog, [0.05, 0.16, 0.8, 0.95], [0, 1, 1, 0]);
 
   const update = () => {
     const parent = parentRef.current;
@@ -150,7 +155,7 @@ function ScatterPinned() {
   }, []);
 
   return (
-    <section ref={parentRef} className="relative bg-paper" style={{ height: "300vh" }} aria-label="The crew">
+    <section ref={parentRef} className="relative bg-black" style={{ height: "300vh" }} aria-label="The crew">
       <div className="sticky top-0 h-[100svh] overflow-hidden">
         <Backdrop />
         <div className="absolute inset-0 z-10">
@@ -158,7 +163,7 @@ function ScatterPinned() {
             <ScatterCard key={m.src} prog={prog} pos={SCATTER[i % SCATTER.length]} member={m} />
           ))}
         </div>
-        <CrewTitle />
+        <CrewTitle opacity={titleOpacity} />
       </div>
     </section>
   );
@@ -226,7 +231,7 @@ function ScatterCard({
 /* Mobile, a tidy grid whose cards rise from below as they enter the viewport. */
 function MobileRise() {
   return (
-    <section className="relative overflow-hidden bg-paper py-section" aria-label="The crew">
+    <section className="relative overflow-hidden bg-black py-section" aria-label="The crew">
       <Backdrop />
       <div className="relative z-10 shell-wide">
         <h2 className="font-display text-[clamp(2.4rem,16vw,4.5rem)] font-medium uppercase leading-[0.92] tracking-tight text-ink">
@@ -264,7 +269,7 @@ function MobileRise() {
 /* Reduced-motion fallback, a plain static grid. */
 function StaticGrid() {
   return (
-    <section className="relative overflow-hidden bg-paper py-section" aria-label="The crew">
+    <section className="relative overflow-hidden bg-black py-section" aria-label="The crew">
       <Backdrop />
       <div className="relative z-10 shell-wide">
         <h2 className="font-display text-[clamp(2.4rem,12vw,6rem)] font-medium uppercase leading-[0.92] tracking-tight text-ink">

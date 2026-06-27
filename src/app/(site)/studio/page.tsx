@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getStudio, getClients } from "@/lib/cms";
 import { Reveal } from "@/components/primitives/Reveal";
 import { ScrollVideo } from "@/components/studio/ScrollVideo";
+import { StatementReveal } from "@/components/studio/StatementReveal";
 import { TeamShowcase } from "@/components/studio/TeamShowcase";
 import { PageZoom } from "@/components/common/PageZoom";
 import { EnquiryBand } from "@/components/common/EnquiryBand";
@@ -24,25 +25,14 @@ export default function StudioPage() {
       {/* Studio film — scroll-scrubbed, full-bleed */}
       <ScrollVideo src="/assets/video/studio-film.mp4" />
 
-      {/* One bold statement, lots of air */}
-      <section className="bg-paper">
-        <div className="shell-wide py-[clamp(5rem,18vh,12rem)]">
-          <Reveal>
-            <span className="font-mono text-2xs uppercase tracking-label text-ink-muted">Mumbai · since 2008</span>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <h1 className="mt-8 max-w-[15ch] font-display text-[clamp(2.4rem,7.5vw,6.5rem)] font-light leading-[1.0] tracking-tight">
-              Giving the world things they haven&rsquo;t imagined before.
-            </h1>
-          </Reveal>
-        </div>
-      </section>
+      {/* One bold statement — a vertical film grows over it on scroll */}
+      <StatementReveal />
 
       {/* The crew — scattered constellation */}
       <TeamShowcase />
 
       {/* Principles, words only */}
-      <section className="bg-stone/40">
+      <section className="bg-black">
         <div className="shell-wide flex flex-wrap items-end justify-between gap-x-8 gap-y-12 py-[clamp(4.5rem,13vh,8.5rem)]">
           {studio.principles.map((p, i) => (
             <Reveal key={p.en} delay={(i % 5) * 0.05} className="text-center">
@@ -54,7 +44,7 @@ export default function StudioPage() {
       </section>
 
       {/* Trust wall — accreditations + marquee clients */}
-      <section className="bg-paper">
+      <section className="bg-black">
         <div className="shell-wide py-[clamp(4.5rem,13vh,8.5rem)]">
           <Reveal className="flex flex-wrap items-center gap-x-10 gap-y-4">
             {studio.accreditations.map((a) => (
