@@ -8,7 +8,7 @@ import { ScrollProgress } from "@/components/layout/ScrollProgress";
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
-    <MotionConfig reducedMotion="user">
+    <MotionConfig reducedMotion="never">
       <a
         href="#main"
         className="sr-only z-[110] focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:inline-flex focus:h-11 focus:items-center focus:rounded-none focus:bg-ink focus:px-5 focus:font-mono focus:text-2xs focus:uppercase focus:tracking-label focus:text-paper"

@@ -59,9 +59,6 @@
   .wave-drift {
     animation: wave-drift 16s ease-in-out infinite alternate;
   }
-  @media (prefers-reduced-motion: reduce) {
-    .wave-drift { animation: none; }
-  }
 
   /* Seamless credential ticker, two identical tracks slide one full width */
   @keyframes marquee {
@@ -70,9 +67,6 @@
   }
   .marquee-track {
     animation: marquee 38s linear infinite;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .marquee-track { animation: none; }
   }
 
   h1, h2, h3, h4 {
@@ -278,25 +272,12 @@
 }
 
 /* ------------------------------------------------------------------ */
-/*  Reduced motion, all motion becomes an instant cross-fade (PRD)   */
+/*  Motion is intentionally always on. We no longer disable animation  */
+/*  under `prefers-reduced-motion: reduce` because Apple devices trip   */
+/*  that flag without the user choosing it (iOS Low Power Mode forces   */
+/*  it on; many Macs ship with Reduce Motion enabled), which left the   */
+/*  whole site static on iPhone/Mac/Safari. See usePrefersReducedMotion.*/
 /* ------------------------------------------------------------------ */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.12s !important;
-    scroll-behavior: auto !important;
-  }
-  .reveal {
-    transform: none;
-    transition: opacity 0.2s linear;
-  }
-  .grain {
-    display: none;
-  }
-}
 
 /* ------------------------------------------------------------------ */
 /*  Reduced transparency, drop the purely decorative grain so the     */
