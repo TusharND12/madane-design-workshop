@@ -31,7 +31,14 @@
   body {
     @apply bg-paper text-ink font-sans text-base antialiased;
     font-feature-settings: "kern", "liga", "calt";
+    /* Clip horizontal overflow WITHOUT turning <body> into a scroll container.
+       `overflow-x: hidden` forces overflow-y to `auto`, which makes WebKit
+       (Safari/iOS) stop pinning `position: sticky` descendants, so the pinned
+       scroll sections (device showcase, services, values, sketch) blow past
+       without waiting for their animation. `clip` is exempt from that rule and
+       keeps sticky working. `hidden` stays as the fallback for Safari < 16. */
     overflow-x: hidden;
+    overflow-x: clip;
   }
 
   /* Lenis */
