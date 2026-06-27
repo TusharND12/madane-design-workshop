@@ -128,6 +128,29 @@ export function Header() {
   // Light text only when over a dark zone AND not yet solid.
   const light = invert && !solid;
 
+  // Split the nav evenly to sit on either side of the centred logo.
+  const navItems = site.nav.filter((item) => item.href !== "/contact");
+  const mid = Math.ceil(navItems.length / 2);
+  const leftItems = navItems.slice(0, mid);
+  const rightItems = navItems.slice(mid);
+
+  const renderItem = (item: (typeof navItems)[number]) => {
+    const active = pathname === item.href || pathname.startsWith(item.href + "/");
+    return (
+      <Link
+        key={item.href}
+        href={item.href}
+        onMouseEnter={() => openMega(item.href)}
+        className={cn(
+          "inline-flex items-center justify-center px-2 py-1 font-sans text-xs uppercase tracking-[0.14em] transition-opacity duration-300",
+          active ? "opacity-100" : "opacity-70 hover:opacity-100",
+        )}
+      >
+        {item.label}
+      </Link>
+    );
+  };
+
   return (
     <>
       <motion.header
@@ -142,51 +165,48 @@ export function Header() {
       >
         <div
           className={cn(
-            "flex h-14 w-full max-w-5xl items-center justify-between gap-6 rounded-full pl-6 pr-3 transition-[background-color,border-color,box-shadow] duration-300 ease-editorial",
+            "relative flex h-14 w-full max-w-6xl items-center justify-between gap-4 rounded-full px-6 transition-[background-color,border-color,box-shadow] duration-300 ease-editorial",
             solid
               ? "border border-white/10 bg-paper/20 shadow-[0_10px_30px_-16px_rgba(0,0,0,0.5)] backdrop-blur-xl"
               : "border border-white/5 bg-paper/5 backdrop-blur-xl"
           )}
         >
-          <Logo subdued={!light} />
+          {/* Left nav (desktop) */}
+          <nav aria-label="Primary" className="hidden items-center justify-start gap-6 lg:flex xl:gap-7" onMouseLeave={scheduleCloseMega}>
+            {leftItems.map(renderItem)}
+          </nav>
+          {/* Mobile spacer to balance the menu button so the logo stays centred */}
+          <div className="w-8 lg:hidden" aria-hidden="true" />
 
-          <nav aria-label="Primary" className="hidden items-center gap-6 lg:flex xl:gap-7" onMouseLeave={scheduleCloseMega}>
-            {site.nav.filter((item) => item.href !== "/contact").map((item) => {
-              const active = pathname === item.href || pathname.startsWith(item.href + "/");
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onMouseEnter={() => openMega(item.href)}
-                  className={cn(
-                    "group relative inline-flex items-center justify-center px-2 py-1 font-sans text-xs uppercase tracking-[0.14em] transition-opacity duration-300",
-                    active ? "opacity-100" : "opacity-70 hover:opacity-100",
-                  )}
-                >
-                  <span className="relative">{item.label}</span>
-                </Link>
-              );
-            })}
+          {/* Centre logo — absolutely centred so side widths never shift it */}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+            <Logo subdued={!light} />
+          </div>
+
+          {/* Right nav + enquire / mobile menu */}
+          <div className="flex items-center justify-end gap-6">
+            <nav aria-label="More" className="hidden items-center gap-6 lg:flex xl:gap-7" onMouseLeave={scheduleCloseMega}>
+              {rightItems.map(renderItem)}
+            </nav>
             <Link
               href="/contact"
               className={cn(
-                "inline-flex h-9 items-center rounded-full px-5 font-sans text-xs uppercase tracking-[0.14em] transition-colors duration-300",
+                "hidden h-9 items-center rounded-full px-5 font-sans text-xs uppercase tracking-[0.14em] transition-colors duration-300 lg:inline-flex",
                 light ? "border border-ink/40 text-ink hover:bg-ink hover:text-paper" : "bg-ink text-paper hover:bg-ink/90"
               )}
             >
               Enquire
             </Link>
-          </nav>
-
-          <button
-            type="button"
-            onClick={() => setMenuOpen(true)}
-            aria-label="Open menu"
-            aria-expanded={menuOpen}
-            className="link-underline font-mono text-2xs uppercase tracking-label lg:hidden"
-          >
-            [ menu ]
-          </button>
+            <button
+              type="button"
+              onClick={() => setMenuOpen(true)}
+              aria-label="Open menu"
+              aria-expanded={menuOpen}
+              className="link-underline font-mono text-2xs uppercase tracking-label lg:hidden"
+            >
+              [ menu ]
+            </button>
+          </div>
         </div>
       </motion.header>
 
