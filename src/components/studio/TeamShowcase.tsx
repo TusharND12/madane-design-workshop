@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import {
-  AnimatePresence,
   cubicBezier,
   motion,
   useMotionValue,
@@ -44,8 +43,6 @@ const TEAM: Member[] = [
   { name: "Pratik", src: "/assets/team/pratik.png" },
   { name: "Prince", src: "/assets/team/prince.png" },
 ];
-
-const CATEGORIES = ["Architects", "Interior Designers", "Project Management", "Operations Team"];
 
 // Scatter field, one slot per member: left/top in %, width in vw, stacking z and
 // a 0..1 rise delay so they cascade up in a pleasing (non-linear) order. Hand
@@ -108,7 +105,7 @@ function Backdrop() {
         aria-hidden
         className="pointer-events-none absolute inset-0"
         style={{
-          backgroundColor: "#0a0a0a",
+          backgroundColor: "var(--paper)",
           backgroundImage: "radial-gradient(120% 80% at 50% 30%, rgba(236,236,230,0.05), transparent 60%)",
         }}
       />
@@ -117,37 +114,13 @@ function Backdrop() {
   );
 }
 
-/* Centre overlay, the cycling category title + the discipline list. */
-function CrewTitle({ active }: { active: number }) {
+/* Centre overlay — a single static title. */
+function CrewTitle() {
   return (
-    <div className="pointer-events-none absolute inset-0 z-30 flex flex-col items-center justify-center">
-      <span className="absolute left-[clamp(1.25rem,4vw,3rem)] top-[clamp(1.25rem,4vh,2.5rem)] font-mono text-2xs uppercase tracking-label text-ink/55">
-        03 · The crew
-      </span>
-
-      <AnimatePresence mode="wait">
-        <motion.h2
-          key={active}
-          initial={{ opacity: 0, y: 22 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -22 }}
-          transition={{ duration: 0.5, ease: EASE_FN }}
-          className="px-6 text-center font-display text-[clamp(2.6rem,11vw,9.5rem)] font-medium uppercase leading-[0.92] tracking-tight text-ink drop-shadow-[0_8px_40px_rgba(0,0,0,0.7)]"
-        >
-          {CATEGORIES[active]}
-        </motion.h2>
-      </AnimatePresence>
-
-      <ul className="absolute bottom-[clamp(1.5rem,6vh,3.5rem)] flex flex-col items-center gap-1.5 text-center font-mono text-2xs uppercase tracking-label">
-        {CATEGORIES.map((c, i) => (
-          <li
-            key={c}
-            className={`transition-colors duration-300 ${i === active ? "text-ink" : "text-ink/30"}`}
-          >
-            {c}
-          </li>
-        ))}
-      </ul>
+    <div className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center">
+      <h2 className="px-6 text-center font-display text-[clamp(2.6rem,11vw,9.5rem)] font-medium uppercase leading-[0.92] tracking-tight text-ink drop-shadow-[0_8px_40px_rgba(0,0,0,0.7)]">
+        Architects
+      </h2>
     </div>
   );
 }
@@ -157,7 +130,6 @@ function ScatterPinned() {
   const parentRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
   const prog = useMotionValue(0);
-  const [active, setActive] = useState(0);
 
   const update = () => {
     const parent = parentRef.current;
@@ -167,9 +139,6 @@ function ScatterPinned() {
     const top = parent.getBoundingClientRect().top; // 0 at pin-start → -range at pin-end
     const p = clamp(-top / range / (1 - TAIL), 0, 1);
     prog.set(p);
-    // Categories cycle once the field is mostly up.
-    const q = clamp((p - 0.4) / 0.6, 0, 0.999);
-    setActive(Math.floor(q * CATEGORIES.length));
   };
 
   useMotionValueEvent(scrollY, "change", update);
@@ -189,7 +158,7 @@ function ScatterPinned() {
             <ScatterCard key={m.src} prog={prog} pos={SCATTER[i % SCATTER.length]} member={m} />
           ))}
         </div>
-        <CrewTitle active={active} />
+        <CrewTitle />
       </div>
     </section>
   );
@@ -260,15 +229,9 @@ function MobileRise() {
     <section className="relative overflow-hidden bg-paper py-section" aria-label="The crew">
       <Backdrop />
       <div className="relative z-10 shell-wide">
-        <span className="font-mono text-2xs uppercase tracking-label text-ink/55">03 · The crew</span>
-        <h2 className="mt-3 font-display text-[clamp(2.4rem,16vw,4.5rem)] font-medium uppercase leading-[0.92] tracking-tight text-ink">
-          The crew
+        <h2 className="font-display text-[clamp(2.4rem,16vw,4.5rem)] font-medium uppercase leading-[0.92] tracking-tight text-ink">
+          Architects
         </h2>
-        <ul className="mt-4 flex flex-wrap gap-x-4 gap-y-1 font-mono text-2xs uppercase tracking-label text-ink/45">
-          {CATEGORIES.map((c) => (
-            <li key={c}>{c}</li>
-          ))}
-        </ul>
 
         <div className="mt-9 grid grid-cols-2 gap-3 xs:grid-cols-3">
           {TEAM.map((m, i) => {
@@ -305,7 +268,7 @@ function StaticGrid() {
       <Backdrop />
       <div className="relative z-10 shell-wide">
         <h2 className="font-display text-[clamp(2.4rem,12vw,6rem)] font-medium uppercase leading-[0.92] tracking-tight text-ink">
-          The crew
+          Architects
         </h2>
         <div className="mt-9 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-5">
           {TEAM.map((m) => (

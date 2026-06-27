@@ -9,7 +9,7 @@ const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v
 // How tall the scroll track is — taller reads as a slower, more deliberate
 // scrub. The video is pinned for the whole track and its playback is driven by
 // scroll position (yodezeen.com/about style), eased so it glides.
-const TRACK_VH = 280;
+const TRACK_VH = 160;
 
 /**
  * A cinematic interlude: a full-bleed video whose playback is scrubbed by scroll
@@ -123,20 +123,29 @@ export function ScrollVideo({ src }: { src: string }) {
           aria-hidden="true"
         />
 
-        {/* Cinematic vignette — darkens the edges toward the paper tone so the
-            frame reads graded and the bottom edge melts into the section below. */}
+        {/* Cinematic vignette — darkens the corners toward black so the frame
+            reads graded. */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              "radial-gradient(125% 115% at 50% 42%, transparent 55%, rgba(15,15,15,0.45) 82%, rgba(15,15,15,0.9) 100%)",
+              "radial-gradient(130% 120% at 50% 42%, transparent 52%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0.95) 100%)",
           }}
         />
-        {/* Extra fade on the very bottom to blend into the next section cleanly. */}
+        {/* Feather every edge into black so the video melts softly at its borders. */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-[9%]"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to right, #000 0%, transparent 16%, transparent 84%, #000 100%), linear-gradient(to bottom, #000 0%, transparent 14%, transparent 86%, #000 100%)",
+          }}
+        />
+        {/* Very bottom blends into the next (paper) section cleanly. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-[10%]"
           style={{ background: "linear-gradient(to bottom, transparent, var(--paper))" }}
         />
       </div>
