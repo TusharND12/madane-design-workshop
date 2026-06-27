@@ -66,7 +66,7 @@ export function CareerRoles() {
               >
                 <a
                   href={applyHref(r.apply ? "Open application" : r.title)}
-                  className="group inline-flex items-start justify-center gap-2.5 leading-[1.04]"
+                  className="group relative inline-flex items-start justify-center leading-[1.04]"
                 >
                   <span
                     className={`font-display text-[clamp(1.35rem,3.1vw,2.6rem)] font-bold uppercase tracking-tight transition-colors duration-300 ${
@@ -75,8 +75,10 @@ export function CareerRoles() {
                   >
                     {r.title}
                   </span>
+                  {/* Department sits beside the word but out of layout flow, so the
+                      title stays centred and the button lines up under it. */}
                   <span
-                    className={`mt-1.5 hidden whitespace-nowrap font-mono text-[0.55rem] uppercase leading-tight tracking-label transition-opacity duration-300 sm:block ${
+                    className={`absolute left-full top-1.5 ml-2.5 hidden whitespace-nowrap font-mono text-[0.55rem] uppercase leading-tight tracking-label transition-opacity duration-300 sm:block ${
                       isActive ? "text-ink/70 opacity-100" : "text-ink/30 opacity-0"
                     }`}
                   >

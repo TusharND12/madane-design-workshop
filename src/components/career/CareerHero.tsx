@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Bracket } from "@/components/primitives/Bracket";
 import { wordReveal, stagger } from "@/lib/motion";
@@ -19,13 +19,6 @@ export function CareerHero() {
   const yText = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
 
-  // After a beat, the studio film crossfades in over the opening shot.
-  const [showFilm, setShowFilm] = useState(false);
-  useEffect(() => {
-    const t = setTimeout(() => setShowFilm(true), 4000);
-    return () => clearTimeout(t);
-  }, []);
-
   return (
     <section
       ref={ref}
@@ -35,20 +28,8 @@ export function CareerHero() {
     >
       <motion.div className="absolute inset-0" style={{ scale, y: yMedia }}>
         <video className="absolute inset-0 h-full w-full object-cover" autoPlay muted loop playsInline preload="auto">
-          <source src="/assets/video/homepage-hero.mp4" type="video/mp4" />
+          <source src="/assets/video/career-roles.mp4" type="video/mp4" />
         </video>
-        {showFilm && (
-          <motion.div
-            className="absolute inset-0"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <video className="absolute inset-0 h-full w-full object-cover" autoPlay muted loop playsInline preload="auto">
-              <source src="/assets/video/career-roles.mp4" type="video/mp4" />
-            </video>
-          </motion.div>
-        )}
       </motion.div>
 
       {/* Legibility scrims */}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
@@ -18,12 +18,15 @@ export function Header() {
   const [invert, setInvert] = useState(true);
   const [hidden, setHidden] = useState(isHome);
   const [menuOpen, setMenuOpen] = useState(false);
+  const lastYRef = useRef(0);
+  const hiddenRef = useRef(isHome);
 
   useEffect(() => {
     let ticking = false;
     const compute = () => {
       ticking = false;
-      setSolid(window.scrollY > 20);
+      const y = window.scrollY;
+      setSolid(y > 20);
       const zones = document.querySelectorAll<HTMLElement>("[data-invert-zone]");
       let over = false;
       zones.forEach((z) => {
@@ -32,24 +35,32 @@ export function Header() {
       });
       setInvert(over);
 
-      // On the landing page, keep the header hidden while the Hero (the first
-      // invert zone) still fills the top of the viewport; reveal it once the
-      // visitor scrolls past the landing section.
+      // Hide on scroll down, reveal on scroll up — on every page. Always shown
+      // near the very top; small deadzone so tiny jitters don't toggle it.
+      const last = lastYRef.current;
+      let hide: boolean;
+      if (y <= 80) hide = false;
+      else if (y > last + 4) hide = true;
+      else if (y < last - 4) hide = false;
+      else hide = hiddenRef.current;
+      lastYRef.current = y;
+
+      // Page-specific overrides that force the header hidden regardless of
+      // scroll direction:
       if (isHome) {
+        // Keep it hidden while the Hero still fills the top of the viewport.
         const landing = document.querySelector<HTMLElement>("[data-invert-zone]");
         const bottom = landing?.getBoundingClientRect().bottom ?? 0;
-        setHidden(bottom > 120);
+        if (bottom > 120) hide = true;
       } else {
-        // On pages with a sticky filter bar (the projects archive), hide the
-        // main header once that bar scrolls up and sticks to the top, so the
-        // two bars never stack.
+        // On the projects archive, stay hidden once the sticky filter bar
+        // reaches the top, so the two bars never stack.
         const filter = document.querySelector<HTMLElement>("[data-filter-bar]");
-        if (filter) {
-          setHidden(filter.getBoundingClientRect().top <= 120);
-        } else {
-          setHidden(false);
-        }
+        if (filter && filter.getBoundingClientRect().top <= 120) hide = true;
       }
+
+      hiddenRef.current = hide;
+      setHidden(hide);
     };
     const onScroll = () => {
       if (!ticking) {
