@@ -94,7 +94,7 @@ export function Header() {
       >
         <div
           className={cn(
-            "flex h-14 w-full max-w-4xl items-center justify-between gap-6 rounded-full pl-6 pr-3 transition-[background-color,border-color,box-shadow] duration-300 ease-editorial",
+            "flex h-14 w-full max-w-5xl items-center justify-between gap-6 rounded-full pl-6 pr-3 transition-[background-color,border-color,box-shadow] duration-300 ease-editorial",
             solid
               ? "border border-white/10 bg-paper/20 shadow-[0_10px_30px_-16px_rgba(0,0,0,0.5)] backdrop-blur-xl"
               : "border border-white/5 bg-paper/5 backdrop-blur-xl"
@@ -102,8 +102,8 @@ export function Header() {
         >
           <Logo subdued={!light} />
 
-          <nav aria-label="Primary" className="hidden items-center gap-7 lg:flex">
-            {site.nav.slice(0, 4).map((item) => {
+          <nav aria-label="Primary" className="hidden items-center gap-6 lg:flex xl:gap-7">
+            {site.nav.filter((item) => item.href !== "/contact").map((item) => {
               const active = pathname === item.href || pathname.startsWith(item.href + "/");
               return (
                 <Link

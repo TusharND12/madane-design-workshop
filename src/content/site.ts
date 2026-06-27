@@ -46,6 +46,8 @@ export const site = {
     { label: "Projects", href: "/projects" },
     { label: "Services", href: "/services" },
     { label: "Process", href: "/process" },
+    { label: "Career", href: "/career" },
+    { label: "News", href: "/news" },
     { label: "Contact", href: "/contact" },
   ],
   credit: { by: "Athreix Innovations LLP", href: "https://athreix.com" },
