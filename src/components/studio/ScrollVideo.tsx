@@ -67,16 +67,23 @@ export function ScrollVideo({ src }: { src: string }) {
     video.addEventListener("seeking", onSeeking);
     video.addEventListener("seeked", onSeeked);
 
-    // Ease currentTime toward the scroll target so the scrub glides. With the
-    // all-intra encode every frame is a keyframe, so each seek is cheap.
-    const tick = () => {
+    // Ease currentTime toward the scroll target so the scrub glides. The easing
+    // is frame-rate independent (exponential smoothing on elapsed time), so the
+    // motion stays steady at 60Hz, 120Hz or under load. With the all-intra
+    // encode every frame is a keyframe, so each seek is cheap.
+    const SMOOTH = 6.5; // higher = snappier, lower = silkier/more trailing
+    let last = performance.now();
+    const tick = (now: number) => {
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
       const v = videoRef.current;
       if (v && duration.current && !seeking) {
         const cur = v.currentTime;
         const diff = targetTime.current - cur;
-        if (Math.abs(diff) > 0.004) {
+        if (Math.abs(diff) > 0.0015) {
+          const f = 1 - Math.exp(-SMOOTH * dt);
           try {
-            v.currentTime = cur + diff * 0.3;
+            v.currentTime = cur + diff * f;
           } catch {
             /* seeking can throw mid-load; ignore and retry next frame */
           }
@@ -167,16 +174,6 @@ export function ScrollVideo({ src }: { src: string }) {
           </span>
         </motion.div>
 
-        {/* Scrub progress hairline — fills as the film scrubs, signalling it is
-            scroll-driven. */}
-        <div className="pointer-events-none absolute right-[clamp(1.25rem,4vw,3rem)] top-1/2 z-30 -translate-y-1/2">
-          <div className="relative h-20 w-px bg-ink/15">
-            <motion.div
-              className="absolute inset-x-0 top-0 h-full origin-top bg-ink/85"
-              style={{ scaleY: progress }}
-            />
-          </div>
-        </div>
       </div>
     </section>
   );
