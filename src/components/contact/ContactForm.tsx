@@ -149,6 +149,11 @@ function Field({
   );
 }
 
+// Native <option> popups can't take Tailwind classes reliably; style them to the
+// dark theme tokens so the dropdown list is legible (otherwise light text renders
+// on the OS default white popup and disappears).
+const OPTION_STYLE: React.CSSProperties = { backgroundColor: "#181818", color: "#ECECE6" };
+
 function SelectField({
   id, label, value, onChange, options, placeholder,
 }: {
@@ -162,10 +167,11 @@ function SelectField({
           id={id}
           value={value}
           onChange={(e) => onChange(e.target.value)}
+          style={{ colorScheme: "dark" }}
           className="w-full appearance-none rounded-none border-0 border-b border-ink/20 bg-transparent py-3 pr-8 text-lead text-ink outline-none transition-colors duration-300 focus:border-ink"
         >
           {options.map((o) => (
-            <option key={o || "none"} value={o}>{o === "" ? placeholder ?? "" : o}</option>
+            <option key={o || "none"} value={o} style={OPTION_STYLE}>{o === "" ? placeholder ?? "" : o}</option>
           ))}
         </select>
         <span className="pointer-events-none absolute right-1 top-1/2 -translate-y-1/2 text-ink-muted" aria-hidden="true">↓</span>
