@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -20,18 +20,6 @@ export function ServicesCards() {
   const [active, setActive] = useState(0);
   const N = services.length;
   const step = (d: number) => setActive((a) => (a + d + N) % N);
-
-  // On mobile the panels stack and grow in height; a gentler expansion ratio
-  // keeps the collapsed rows tall enough for their index + title. Desktop keeps
-  // the dramatic side-by-side reveal.
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 768px)");
-    const update = () => setIsMobile(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, []);
 
   return (
     <section className="bg-paper">
@@ -55,8 +43,8 @@ export function ServicesCards() {
           </span>
         </div>
 
-        {/* Accordion row */}
-        <div className="mt-5 flex h-[58vh] min-h-[420px] flex-col gap-1.5 md:mt-7 md:h-[68vh] md:flex-row md:gap-2.5">
+        {/* Accordion row — horizontal side-by-side at every size */}
+        <div className="mt-5 flex h-[58vh] min-h-[400px] flex-row gap-1.5 md:mt-7 md:h-[68vh] md:gap-2.5">
           {services.map((s, i) => {
             const isActive = i === active;
             return (
@@ -68,9 +56,9 @@ export function ServicesCards() {
                 onFocus={() => setActive(i)}
                 onClick={() => setActive(i)}
                 aria-label={`${s.title}, ${s.tagline}`}
-                className="group relative block overflow-hidden rounded-card bg-mount md:h-full"
+                className="group relative block h-full overflow-hidden rounded-card bg-mount"
                 style={{
-                  flexGrow: reduced ? 1 : isActive ? (isMobile ? 4 : 6) : 1,
+                  flexGrow: reduced ? 1 : isActive ? 6 : 1,
                   flexBasis: 0,
                   transition: reduced ? undefined : "flex-grow 0.8s cubic-bezier(0.16,1,0.3,1)",
                 }}
@@ -109,9 +97,9 @@ export function ServicesCards() {
                   <motion.span
                     animate={{ opacity: isActive ? 0 : 1 }}
                     transition={{ duration: 0.35, ease: EASE }}
-                    className="pointer-events-none absolute inset-x-0 bottom-5 hidden justify-center md:flex"
+                    className="pointer-events-none absolute inset-x-0 bottom-5 flex justify-center"
                   >
-                    <span className="font-display text-lg font-light tracking-tight text-ink [writing-mode:vertical-rl] [text-orientation:mixed]">
+                    <span className="font-display text-base font-light tracking-tight text-ink [writing-mode:vertical-rl] [text-orientation:mixed] md:text-lg">
                       {s.title}
                     </span>
                   </motion.span>
@@ -120,25 +108,16 @@ export function ServicesCards() {
                   <motion.div
                     animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 12 }}
                     transition={{ duration: 0.5, ease: EASE, delay: isActive ? 0.15 : 0 }}
-                    className="absolute inset-x-0 bottom-0 p-6 md:p-8"
+                    className="absolute inset-x-0 bottom-0 p-4 md:p-8"
                   >
-                    <h3 className="font-display text-2xl font-medium leading-[0.95] tracking-tight text-ink md:text-4xl">
+                    <h3 className="font-display text-xl font-medium leading-[0.95] tracking-tight text-ink md:text-4xl">
                       {s.title}
                     </h3>
-                    <p className="mt-2 max-w-prose text-sm leading-relaxed text-ink/75 md:text-base">{s.tagline}</p>
-                    <span className="link-underline mt-5 inline-flex font-mono text-2xs uppercase tracking-label text-ink">
+                    <p className="mt-2 max-w-prose text-xs leading-relaxed text-ink/75 md:text-base">{s.tagline}</p>
+                    <span className="link-underline mt-4 inline-flex font-mono text-2xs uppercase tracking-label text-ink md:mt-5">
                       Explore
                     </span>
                   </motion.div>
-
-                  {/* Mobile title (collapsed rows), fades out on the open panel */}
-                  <motion.span
-                    animate={{ opacity: isActive ? 0 : 1 }}
-                    transition={{ duration: 0.35, ease: EASE }}
-                    className="pointer-events-none absolute bottom-4 left-5 font-display text-base tracking-tight text-ink md:hidden"
-                  >
-                    {s.title}
-                  </motion.span>
                 </div>
               </Link>
             );
