@@ -19,14 +19,16 @@ export function CountUp({ value, className }: { value: string; className?: strin
   const [n, setN] = useState(0);
 
   useEffect(() => {
-    if (!inView || !m) return;
+    if (!inView || target === 0) return;
     const controls = animate(0, target, {
       duration: 1.5,
       ease: [0.16, 1, 0.3, 1],
       onUpdate: (v) => setN(v),
     });
     return () => controls.stop();
-  }, [inView, target, m]);
+    // `m`/`target` derive from the static `value` prop; depend only on inView + target.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inView, target]);
 
   if (!m) return <span className={className}>{value}</span>;
   return (
