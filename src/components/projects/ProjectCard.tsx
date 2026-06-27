@@ -1,8 +1,10 @@
 "use client";
 
+import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import type { Project } from "@/lib/schema";
+import { useProjectZoom, zoomClick } from "./ProjectZoom";
 
 /**
  * Project card, dark/black framed card with the cover floating on a near-black
@@ -21,17 +23,20 @@ export function ProjectCard({
   priority?: boolean;
 }) {
   const aspect = variant === "wide" ? "aspect-[16/10]" : "aspect-[4/5]";
+  const zoom = useProjectZoom();
+  const imgRef = useRef<HTMLDivElement>(null);
 
   return (
     <Link
       href={`/projects/${project.slug}`}
       data-cursor-view
       aria-label={`${project.name}, ${project.type}, ${project.city} ${project.year}`}
+      onClick={(e) => zoomClick(e, zoom?.open, project, imgRef.current)}
       className="group flex h-full flex-col rounded-[18px] border border-hairline bg-mount p-3.5 transition-all duration-500 ease-editorial hover:-translate-y-1 hover:border-ink/20 hover:shadow-[0_38px_70px_-34px_rgba(0,0,0,0.9)]"
     >
       {/* Image floats on a near-black panel with breathing room */}
       <div className="rounded-[13px] bg-paper p-4">
-        <div className={`relative w-full overflow-hidden rounded-[9px] bg-paper ${aspect}`}>
+        <div ref={imgRef} className={`relative w-full overflow-hidden rounded-[9px] bg-paper ${aspect}`}>
           <Image
             src={project.cover}
             alt={project.coverAlt}

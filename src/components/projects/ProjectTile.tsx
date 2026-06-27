@@ -1,11 +1,13 @@
 "use client";
 
+import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/cn";
 import type { Project } from "@/lib/schema";
 import { EASE } from "@/lib/motion";
+import { useProjectZoom, zoomClick } from "./ProjectZoom";
 
 /**
  * Editorial project tile (PRD §6.4): image + mono index + name + location/year.
@@ -27,6 +29,8 @@ export function ProjectTile({
   className?: string;
 }) {
   const aspect = ratio === "portrait" ? "aspect-[4/5]" : ratio === "square" ? "aspect-square" : "aspect-[3/2]";
+  const zoom = useProjectZoom();
+  const imgRef = useRef<HTMLDivElement>(null);
 
   return (
     <Link
@@ -34,8 +38,9 @@ export function ProjectTile({
       className={cn("group block", className)}
       data-cursor-view
       aria-label={`${project.name}, ${project.type}, ${project.city} ${project.year}`}
+      onClick={(e) => zoomClick(e, zoom?.open, project, imgRef.current)}
     >
-      <div className={cn("relative w-full overflow-hidden bg-mount", aspect)}>
+      <div ref={imgRef} className={cn("relative w-full overflow-hidden bg-mount", aspect)}>
         <motion.div
           className="absolute inset-0"
           initial={{ scale: 1.04, opacity: 0 }}

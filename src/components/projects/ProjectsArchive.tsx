@@ -4,19 +4,14 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import type { Project, ProjectType } from "@/lib/schema";
 import { EASE } from "@/lib/motion";
-import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
-
-type Zoom = { href: string; src: string; alt: string; rect: DOMRect; vw: number; vh: number };
+import { useProjectZoom, zoomClick } from "./ProjectZoom";
 
 // A varied aspect cycle gives the grid a calm masonry rhythm without borders or
 // chrome — images do all the talking (yodezeen.com/projects style).
 const ASPECTS = ["4 / 3", "3 / 4", "1 / 1", "4 / 3", "3 / 4", "4 / 3", "1 / 1", "3 / 4"];
-
-// Smooth in-and-out easing (easeInOutQuart) for the image-expand transition.
-const EXPAND = [0.76, 0, 0.24, 1] as const;
 
 // Native <option>s can't take Tailwind classes; style them to the dark theme so
 // the popup list stays legible.
@@ -36,24 +31,7 @@ export function ProjectsArchive({
   const router = useRouter();
   const pathname = usePathname();
   const params = useSearchParams();
-  const reduced = usePrefersReducedMotion();
-
-  // Image-expand transition (yodezeen-style): the clicked cover grows from its
-  // grid slot to fullscreen, then we navigate; the route curtain reveals the page.
-  const [zoom, setZoom] = useState<Zoom | null>(null);
-  const openProject = useCallback(
-    (project: Project, rect: DOMRect) => {
-      setZoom({
-        href: `/projects/${project.slug}`,
-        src: project.cover,
-        alt: project.coverAlt,
-        rect,
-        vw: window.innerWidth,
-        vh: window.innerHeight,
-      });
-    },
-    []
-  );
+  const zoom = useProjectZoom();
 
   const [type, setType] = useState<ProjectType | "All">("All");
   const [location, setLocation] = useState<string | "All">("All");
@@ -150,39 +128,11 @@ export function ProjectsArchive({
               project={p}
               aspect={ASPECTS[i % ASPECTS.length]}
               priority={i < 6}
-              onOpen={reduced ? undefined : openProject}
+              onOpen={zoom?.open}
             />
           ))}
         </motion.div>
       )}
-
-      {/* Fullscreen image-expand overlay — GPU transform FLIP for a smooth glide */}
-      <AnimatePresence>
-        {zoom && (
-          <motion.div
-            className="pointer-events-none fixed inset-0 z-[60]"
-            initial={{ backgroundColor: "rgba(15,15,15,0)" }}
-            animate={{ backgroundColor: "rgba(15,15,15,0.65)" }}
-            transition={{ duration: 0.85, ease: EXPAND }}
-          >
-            <motion.div
-              className="absolute left-0 top-0 overflow-hidden bg-mount [backface-visibility:hidden] will-change-transform"
-              style={{ width: zoom.vw, height: zoom.vh, transformOrigin: "0 0" }}
-              initial={{
-                x: zoom.rect.left,
-                y: zoom.rect.top,
-                scaleX: zoom.rect.width / zoom.vw,
-                scaleY: zoom.rect.height / zoom.vh,
-              }}
-              animate={{ x: 0, y: 0, scaleX: 1, scaleY: 1 }}
-              transition={{ duration: 0.85, ease: EXPAND }}
-              onAnimationComplete={() => router.push(zoom.href)}
-            >
-              <Image src={zoom.src} alt={zoom.alt} fill priority sizes="100vw" className="object-cover" />
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }
@@ -235,24 +185,15 @@ function GalleryCard({
   project: Project;
   aspect: string;
   priority: boolean;
-  onOpen?: (project: Project, rect: DOMRect) => void;
+  onOpen?: (a: { href: string; src: string; alt: string; rect: DOMRect }) => void;
 }) {
   const imgRef = useRef<HTMLDivElement>(null);
-
-  const handleClick = (e: React.MouseEvent) => {
-    // Let modified clicks (new tab / new window) and reduced-motion through.
-    if (!onOpen || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
-    const el = imgRef.current;
-    if (!el) return;
-    e.preventDefault();
-    onOpen(project, el.getBoundingClientRect());
-  };
 
   return (
     <Link
       href={`/projects/${project.slug}`}
       aria-label={`${project.name}, ${project.type}, ${project.city}`}
-      onClick={handleClick}
+      onClick={(e) => zoomClick(e, onOpen, project, imgRef.current)}
       className="group mb-3 block break-inside-avoid overflow-hidden bg-mount"
     >
       <div ref={imgRef} className="relative w-full overflow-hidden" style={{ aspectRatio: aspect }}>

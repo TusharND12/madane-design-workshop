@@ -5,6 +5,7 @@ import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { Loader } from "@/components/layout/Loader";
 import { Grain } from "@/components/layout/Grain";
 import { ScrollProgress } from "@/components/layout/ScrollProgress";
+import { ProjectZoomProvider } from "@/components/projects/ProjectZoom";
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -20,7 +21,9 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
       <Grain />
       <ScrollProgress />
       <Header />
-      <main id="main">{children}</main>
+      <ProjectZoomProvider>
+        <main id="main">{children}</main>
+      </ProjectZoomProvider>
       <Footer />
     </MotionConfig>
   );

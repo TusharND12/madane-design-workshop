@@ -7,12 +7,14 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import type { Project } from "@/lib/schema";
 import { Bracket } from "@/components/primitives/Bracket";
 import { ProjectTile } from "@/components/projects/ProjectTile";
+import { useProjectZoom, zoomClick } from "@/components/projects/ProjectZoom";
 
 /** "Next project" full-bleed continuation + related tiles (PRD P5). */
 export function NextProject({ next, related }: { next: Project; related: Project[] }) {
   const ref = useRef<HTMLAnchorElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end end"] });
   const scale = useTransform(scrollYProgress, [0, 1], [1.12, 1]);
+  const zoom = useProjectZoom();
 
   return (
     <>
@@ -29,7 +31,7 @@ export function NextProject({ next, related }: { next: Project; related: Project
         </section>
       )}
 
-      <Link ref={ref} href={`/projects/${next.slug}`} data-cursor-view className="group on-ink relative block h-[80vh] min-h-[520px] w-full overflow-hidden bg-paper text-ink">
+      <Link ref={ref} href={`/projects/${next.slug}`} data-cursor-view onClick={(e) => zoomClick(e, zoom?.open, next, ref.current)} className="group on-ink relative block h-[80vh] min-h-[520px] w-full overflow-hidden bg-paper text-ink">
         <motion.div className="absolute inset-0" style={{ scale }}>
           <Image src={next.cover} alt={next.coverAlt} fill sizes="100vw" className="object-cover opacity-70 transition-opacity duration-700 group-hover:opacity-85" />
         </motion.div>
