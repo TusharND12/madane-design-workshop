@@ -122,7 +122,7 @@ function CrewTitle({ opacity }: { opacity: MotionValue<number> }) {
         style={{ opacity }}
         className="px-6 text-center font-display text-[clamp(2.6rem,11vw,9.5rem)] font-medium uppercase leading-[0.92] tracking-tight text-ink drop-shadow-[0_8px_40px_rgba(0,0,0,0.7)]"
       >
-        Architects
+        The Team
       </motion.h2>
     </div>
   );
@@ -180,6 +180,10 @@ function ScatterCard({
 }) {
   const start = pos.delay * 0.45;
   const end = start + 0.3;
+  // Cards placed low in the frame run past the bottom of the viewport, so a
+  // name strip anchored to the card's bottom edge is clipped off-screen. For
+  // those, anchor the name to the TOP of the card instead so it stays visible.
+  const nameAtTop = pos.top >= 60;
   // Cards on the left bow left, those on the right bow right; the further from
   // centre, the wider the arc - so the field sweeps up on curves, not straight.
   const dir = pos.left < 50 ? -1 : 1;
@@ -195,6 +199,9 @@ function ScatterCard({
   return (
     <motion.div
       className="group absolute"
+      // Lift the hovered card above every other so its name strip is never
+      // covered by a neighbouring portrait with a higher base z-index.
+      whileHover={{ zIndex: 50 }}
       style={{
         left: `${pos.left}%`,
         top: `${pos.top}%`,
@@ -219,8 +226,15 @@ function ScatterCard({
           sizes="(max-width:768px) 40vw, 220px"
           className="object-cover object-[50%_18%] grayscale transition-[filter] duration-700 ease-editorial group-hover:grayscale-0"
         />
-        {/* Name on hover */}
-        <span className="absolute inset-x-0 bottom-0 translate-y-2 bg-gradient-to-t from-black/80 to-transparent px-3 pb-2.5 pt-8 text-center font-mono text-[0.55rem] uppercase tracking-label text-ink opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+        {/* Name on hover - flips to the top edge for low cards so it never
+            clips below the viewport. */}
+        <span
+          className={
+            nameAtTop
+              ? "absolute inset-x-0 top-0 -translate-y-2 bg-gradient-to-b from-black/80 to-transparent px-3 pb-8 pt-2.5 text-center font-mono text-[0.55rem] uppercase tracking-label text-ink opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
+              : "absolute inset-x-0 bottom-0 translate-y-2 bg-gradient-to-t from-black/80 to-transparent px-3 pb-2.5 pt-8 text-center font-mono text-[0.55rem] uppercase tracking-label text-ink opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
+          }
+        >
           {member.name}
         </span>
       </div>
@@ -235,7 +249,7 @@ function MobileRise() {
       <Backdrop />
       <div className="relative z-10 shell-wide">
         <h2 className="font-display text-[clamp(2.4rem,16vw,4.5rem)] font-medium uppercase leading-[0.92] tracking-tight text-ink">
-          Architects
+          The Team
         </h2>
 
         <div className="mt-9 grid grid-cols-2 gap-3 xs:grid-cols-3">
@@ -273,7 +287,7 @@ function StaticGrid() {
       <Backdrop />
       <div className="relative z-10 shell-wide">
         <h2 className="font-display text-[clamp(2.4rem,12vw,6rem)] font-medium uppercase leading-[0.92] tracking-tight text-ink">
-          Architects
+          The Team
         </h2>
         <div className="mt-9 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-5">
           {TEAM.map((m) => (
