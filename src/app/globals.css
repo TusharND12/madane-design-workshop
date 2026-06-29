@@ -33,6 +33,19 @@
     -moz-osx-font-smoothing: grayscale;
     scroll-behavior: auto; /* Lenis owns scrolling */
 
+    /* Clip horizontal overflow on the ROOT (the viewport scroller), not on
+       <body>. On WebKit (Safari/iOS), any `overflow-x` on <body> can turn the
+       body into its own scroll container, and a `position: sticky` descendant
+       then sticks to that body box instead of the viewport - so every pinned
+       scroll section (device showcase, services, values, sketch, studio film,
+       statement, crew) blows straight past without holding its animation.
+       Clipping on <html> propagates to the viewport without creating a second
+       scroll container, so sticky keeps pinning to the viewport on every
+       engine. `hidden` is the fallback for Safari < 16 (clip unsupported) and
+       is itself sticky-safe on the root scroller. */
+    overflow-x: hidden;
+    overflow-x: clip;
+
     /* Fluid root scale, every rem-based size (type, spacing, radius) scales
        with the viewport from one knob. Tuned to stay at 16px through 1440px
        (where the layout is designed), then grow on larger monitors so the
@@ -44,14 +57,9 @@
     @apply bg-paper text-ink font-sans text-base antialiased;
     font-feature-settings: "kern", "liga", "calt";
     text-transform: lowercase;
-    /* Clip horizontal overflow WITHOUT turning <body> into a scroll container.
-       `overflow-x: hidden` forces overflow-y to `auto`, which makes WebKit
-       (Safari/iOS) stop pinning `position: sticky` descendants, so the pinned
-       scroll sections (device showcase, services, values, sketch) blow past
-       without waiting for their animation. `clip` is exempt from that rule and
-       keeps sticky working. `hidden` stays as the fallback for Safari < 16. */
-    overflow-x: hidden;
-    overflow-x: clip;
+    /* No `overflow-x` here on purpose - the horizontal clip lives on <html>
+       (the root scroller) so <body> never becomes a scroll container that
+       breaks `position: sticky` pinning on WebKit. See the html rule above. */
   }
 
   /* Lenis */
