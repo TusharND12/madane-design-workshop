@@ -240,6 +240,7 @@ export function Header() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.08 + i * 0.06, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                     onMouseEnter={() => setHoverImg(s.img)}
+                    onMouseLeave={() => setHoverImg(null)}
                   >
                     <Link
                       href={s.href}
