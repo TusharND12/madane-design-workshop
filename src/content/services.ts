@@ -18,7 +18,7 @@ export const services: Service[] = [
   {
     slug: "interior",
     index: "02",
-    title: "Interior",
+    title: "Commercial Interior",
     tagline: "Where the day is actually spent.",
     summary:
       "Interiors for homes and workspaces, planning, material, light and detail tuned until the space disappears and the life inside it comes forward.",
@@ -31,15 +31,15 @@ export const services: Service[] = [
   {
     slug: "exterior",
     index: "03",
-    title: "Exterior",
-    tagline: "The first thing anyone reads.",
+    title: "Residential Interiors",
+    tagline: "Where you actually live.",
     summary:
-      "Façades, forecourts, signage and environmental identity, the exterior gesture that tells the street what a place is before you step inside.",
-    forWhom: "Brands and owners who need their building to be legible at speed and at scale.",
-    includes: ["Façade strategy", "Signage & graphics", "Lighting", "Forecourt & approach", "Material specification"],
-    image: "/assets/services/exterior.jpg",
-    imageAlt: "Exterior, a confident, street-facing façade and approach.",
-    filterType: "Exterior",
+      "Interiors for homes, planning, material, light and detail tuned to how a family really lives, so every room feels calm, considered and entirely your own.",
+    forWhom: "Homeowners who want their space resolved with the same rigour we bring to our commercial work.",
+    includes: ["Space planning", "Material & finish", "Lighting design", "Joinery & detail", "FF&E and styling"],
+    image: "/assets/services/residential-interior.png",
+    imageAlt: "Residential interior, a warm timber-lined living room with a marble feature wall, sculptural cream seating and a dining area beyond.",
+    filterType: "Interior",
   },
   {
     slug: "turnkey",
