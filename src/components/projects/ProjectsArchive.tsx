@@ -17,9 +17,16 @@ const ASPECTS = ["4 / 3", "3 / 4", "1 / 1", "4 / 3", "3 / 4", "4 / 3", "1 / 1", 
 // the popup list stays legible.
 const OPTION_STYLE: React.CSSProperties = { backgroundColor: "#181818", color: "#ECECE6" };
 
+// Discipline filter: Architecture / Interior, and Interior's two sectors,
+// Commercial / Residential (classified by category, not by the raw type field).
+const RESIDENTIAL_CATEGORIES = new Set(["Residential", "Villas"]);
+type Discipline = "All" | "Architecture" | "Interior";
+type Kind = "All" | "Commercial" | "Residential";
+const DISCIPLINE_KEYS: Discipline[] = ["All", "Architecture", "Interior"];
+const KIND_KEYS: Kind[] = ["All", "Commercial", "Residential"];
+
 export function ProjectsArchive({
   projects,
-  types,
   locations,
   categories,
 }: {
@@ -33,23 +40,27 @@ export function ProjectsArchive({
   const params = useSearchParams();
   const zoom = useProjectZoom();
 
-  const [type, setType] = useState<ProjectType | "All">("All");
+  const [discipline, setDiscipline] = useState<Discipline>("All");
+  const [kind, setKind] = useState<Kind>("All");
   const [location, setLocation] = useState<string | "All">("All");
   const [category, setCategory] = useState<string | "All">("All");
 
   useEffect(() => {
-    const t = (params.get("type") as ProjectType | null) ?? "All";
+    const t = params.get("type") as Discipline | null;
+    const k = params.get("kind") as Kind | null;
     const c = params.get("city") ?? "All";
     const s = params.get("sector") ?? "All";
-    setType(types.includes(t as ProjectType) ? (t as ProjectType) : "All");
+    setDiscipline(t && DISCIPLINE_KEYS.includes(t) ? t : "All");
+    setKind(k && KIND_KEYS.includes(k) ? k : "All");
     setLocation(locations.includes(c) ? c : "All");
     setCategory(categories.includes(s) ? s : "All");
-  }, [params, types, locations, categories]);
+  }, [params, locations, categories]);
 
   const sync = useCallback(
-    (nt: ProjectType | "All", nl: string | "All", nc: string | "All") => {
+    (nd: Discipline, nk: Kind, nl: string | "All", nc: string | "All") => {
       const sp = new URLSearchParams();
-      if (nt !== "All") sp.set("type", nt);
+      if (nd !== "All") sp.set("type", nd);
+      if (nk !== "All") sp.set("kind", nk);
       if (nl !== "All") sp.set("city", nl);
       if (nc !== "All") sp.set("sector", nc);
       const qs = sp.toString();
@@ -63,60 +74,106 @@ export function ProjectsArchive({
     [router, pathname]
   );
 
-  const onType = (t: ProjectType | "All") => {
-    setType(t);
-    sync(t, location, category);
+  const onDiscipline = (d: Discipline) => {
+    setDiscipline(d);
+    setKind("All"); // reset the Interior sub-filter whenever the discipline changes
+    sync(d, "All", location, category);
+  };
+  const onKind = (k: Kind) => {
+    setKind(k);
+    sync(discipline, k, location, category);
   };
   const onLocation = (l: string | "All") => {
     setLocation(l);
-    sync(type, l, category);
+    sync(discipline, kind, l, category);
   };
   const onCategory = (c: string | "All") => {
     setCategory(c);
-    sync(type, location, c);
+    sync(discipline, kind, location, c);
+  };
+
+  // "Interior" covers any project with interior work (type OR services), so its
+  // Residential sub-filter can surface villas/residences that are filed as
+  // Architecture. Commercial/Residential are split by category.
+  const isInterior = (p: Project) => p.type === "Interior" || (p.services?.includes("Interior") ?? false);
+  const matchesFilters = (p: Project) => {
+    if (discipline === "Architecture" && p.type !== "Architecture") return false;
+    if (discipline === "Interior") {
+      if (!isInterior(p)) return false;
+      if (kind === "Commercial" && RESIDENTIAL_CATEGORIES.has(p.category)) return false;
+      if (kind === "Residential" && !RESIDENTIAL_CATEGORIES.has(p.category)) return false;
+    }
+    if (location !== "All" && p.city !== location) return false;
+    if (category !== "All" && p.category !== category) return false;
+    return true;
   };
 
   const filtered = useMemo(
-    () =>
-      projects.filter(
-        (p) =>
-          (type === "All" || p.type === type) &&
-          (location === "All" || p.city === location) &&
-          (category === "All" || p.category === category)
-      ),
-    [projects, type, location, category]
+    () => projects.filter(matchesFilters),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [projects, discipline, kind, location, category]
   );
 
-  const tabs: (ProjectType | "All")[] = ["All", ...types];
+  const disciplineTab = (key: Discipline, label: string) => {
+    const active = key === discipline;
+    return (
+      <button
+        key={key}
+        type="button"
+        onClick={() => onDiscipline(key)}
+        className={`relative pb-1.5 transition-colors duration-300 ${active ? "text-ink" : "text-ink-muted hover:text-ink"}`}
+      >
+        {label}
+        {active && <motion.span layoutId="proj-tab" className="absolute inset-x-0 bottom-0 h-px bg-ink" />}
+      </button>
+    );
+  };
+  const kindTab = (key: Kind, label: string) => {
+    const active = key === kind;
+    return (
+      <button
+        key={key}
+        type="button"
+        onClick={() => onKind(key)}
+        className={`relative pb-1.5 transition-colors duration-300 ${active ? "text-ink" : "text-ink-muted hover:text-ink"}`}
+      >
+        {label}
+        {active && <motion.span layoutId="proj-kind" className="absolute inset-x-0 bottom-0 h-px bg-ink" />}
+      </button>
+    );
+  };
 
   return (
-    <div className="w-full px-3 pb-section">
-      {/* Minimal filter - discipline tabs + sector/city dropdowns, one line */}
-      <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 font-mono text-2xs uppercase tracking-label">
-        {tabs.map((t) => {
-          const active = t === type;
-          return (
-            <button
-              key={t}
-              type="button"
-              onClick={() => onType(t)}
-              className={`relative pb-1.5 transition-colors duration-300 ${active ? "text-ink" : "text-ink-muted hover:text-ink"}`}
-            >
-              {t}
-              {active && <motion.span layoutId="proj-tab" className="absolute inset-x-0 bottom-0 h-px bg-ink" />}
-            </button>
-          );
-        })}
-        <Select allLabel="All sectors" value={category} options={categories} onChange={onCategory} ariaLabel="Filter by sector" />
-        <Select allLabel="All cities" value={location} options={locations} onChange={onLocation} ariaLabel="Filter by city" />
+    <div className="w-full pb-section">
+      {/* Filter band - discipline tabs on the left, sector/city dropdowns on the right */}
+      <div className="border-y border-hairline">
+        <div className="shell-wide flex flex-wrap items-center justify-between gap-x-8 gap-y-3 py-4 font-mono text-2xs uppercase tracking-label">
+          <div className="flex flex-wrap items-center gap-x-7 gap-y-3">
+            {disciplineTab("All", "All")}
+            {disciplineTab("Architecture", "Architecture")}
+            {disciplineTab("Interior", "Interior")}
+            {discipline === "Interior" && (
+              <>
+                <span className="h-3 w-px bg-hairline" aria-hidden="true" />
+                {kindTab("Commercial", "Commercial")}
+                {kindTab("Residential", "Residential")}
+              </>
+            )}
+          </div>
+          <div className="flex items-center gap-x-7 gap-y-3">
+            <Select allLabel="All sectors" value={category} options={categories} onChange={onCategory} ariaLabel="Filter by sector" />
+            <Select allLabel="All cities" value={location} options={locations} onChange={onLocation} ariaLabel="Filter by city" />
+          </div>
+        </div>
       </div>
 
       {/* Clean masonry gallery */}
+      <div className="px-3">
       {filtered.length === 0 ? (
         <p className="mt-20 text-center font-display text-2xl tracking-tight text-ink-muted">Nothing here yet.</p>
       ) : (
         <motion.div
-          key={`${type}-${location}-${category}`}
+          key={`${discipline}-${kind}-${location}-${category}`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, ease: EASE }}
@@ -133,6 +190,7 @@ export function ProjectsArchive({
           ))}
         </motion.div>
       )}
+      </div>
     </div>
   );
 }

@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { getProjects, getLocations, getCategories, PROJECT_TYPES } from "@/lib/cms";
-import { Bracket } from "@/components/primitives/Bracket";
 import { Reveal } from "@/components/primitives/Reveal";
 import { ProjectsArchive } from "@/components/projects/ProjectsArchive";
 import { EnquiryBand } from "@/components/common/EnquiryBand";
@@ -20,14 +19,16 @@ export default function ProjectsPage() {
 
   return (
     <>
-      <header className="shell-wide pb-12 pt-[calc(var(--header-h)+clamp(3rem,9vw,7rem))] text-center">
+      <header className="shell-wide pb-10 pt-[calc(var(--header-h)+clamp(3rem,9vw,7rem))] text-center">
         <Reveal>
-          <Bracket>Projects</Bracket>
+          <h1 className="font-display text-[clamp(2.25rem,7vw,5rem)] font-bold uppercase leading-[0.92] tracking-tight">
+            All projects
+          </h1>
         </Reveal>
         <Reveal delay={0.06}>
-          <h1 className="mx-auto mt-8 max-w-[16ch] font-display text-[clamp(2.5rem,8vw,5.5rem)] leading-[0.98] tracking-tighter">
-            Selected work.
-          </h1>
+          <p className="mt-1 font-display text-[clamp(1.5rem,5.5vw,3.75rem)] font-bold uppercase leading-[0.95] tracking-tight text-ink/15">
+            Architecture / Interior design
+          </p>
         </Reveal>
       </header>
       <Suspense fallback={null}>
