@@ -32,15 +32,14 @@ const ROW_BOTTOM = (() => {
 // Scroll windows (section progress 0..1). The roster reads first and fully
 // clears over black BEFORE the handshake appears, so the clasp never shows
 // behind the logos.
-const CONTENT_OUT_START = 0.12;
-const CONTENT_OUT_END = 0.26;
-const VIDEO_IN = 0.3;
-const SCRUB_START = 0.4;
-const SCRUB_END = 0.72; // hold after this
-const VIDEO_OUT_START = 0.78; // film dissolves to black
-const VIDEO_OUT_END = 0.86;
-const STATEMENT_IN_START = 0.84; // process statement rises in its place
-const STATEMENT_IN_END = 0.92;
+const CONTENT_IN_END = 0.06; // the roster fades in as the section pins
+const CONTENT_OUT_START = 0.14;
+const CONTENT_OUT_END = 0.24;
+const VIDEO_IN = 0.26; // handshake follows the roster with little delay
+const SCRUB_START = 0.34;
+const SCRUB_END = 0.6; // hands clasp; the film then holds and stays on screen
+const STATEMENT_IN_START = 0.66; // statement + CTA compose into the clasp's empty spaces
+const STATEMENT_IN_END = 0.8;
 
 export function Recognition() {
   const reduced = usePrefersReducedMotion();
@@ -57,9 +56,9 @@ function Cinematic() {
 
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end end"] });
 
-  const videoOpacity = useTransform(scrollYProgress, [VIDEO_IN, SCRUB_START, VIDEO_OUT_START, VIDEO_OUT_END], [0, 1, 1, 0]);
-  const pushIn = useTransform(scrollYProgress, [SCRUB_START, VIDEO_OUT_END], [1.06, 1.0]); // slow pull-back (zoom out)
-  const contentOpacity = useTransform(scrollYProgress, [CONTENT_OUT_START, CONTENT_OUT_END], [1, 0]);
+  const videoOpacity = useTransform(scrollYProgress, [VIDEO_IN, SCRUB_START], [0, 1]); // fades in, then stays (holds the clasp)
+  const pushIn = useTransform(scrollYProgress, [SCRUB_START, SCRUB_END], [1.06, 1.0]); // slow pull-back settles at the clasp
+  const contentOpacity = useTransform(scrollYProgress, [0, CONTENT_IN_END, CONTENT_OUT_START, CONTENT_OUT_END], [0, 1, 1, 0]);
   const statementOpacity = useTransform(scrollYProgress, [STATEMENT_IN_START, STATEMENT_IN_END], [0, 1]);
   const statementY = useTransform(scrollYProgress, [STATEMENT_IN_START, STATEMENT_IN_END], [28, 0]);
 
@@ -127,7 +126,7 @@ function Cinematic() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative bg-black" style={{ height: "520vh" }} aria-label="Trusted across India">
+    <section ref={sectionRef} className="relative bg-black" style={{ height: "440vh" }} aria-label="Trusted across India">
       <div className="sticky top-0 h-[100svh] overflow-hidden">
         {/* Handshake film, scrubbed by scroll with a slow push-in */}
         <motion.div
@@ -176,29 +175,36 @@ function Cinematic() {
           </div>
         </motion.div>
 
-        {/* Process statement, rises in place as the handshake dissolves to black */}
+        {/* Statement above the hands, CTA below - composed into the clasp's empty spaces */}
         <motion.div
-          style={{ opacity: statementOpacity, y: statementY, willChange: "transform, opacity" }}
-          className="absolute inset-0 z-20 flex items-center justify-center"
+          style={{ opacity: statementOpacity, willChange: "opacity" }}
+          className="absolute inset-0 z-20 flex flex-col items-center justify-between px-6 py-[clamp(2.25rem,8vh,6rem)] text-center"
         >
-          <div className="shell-wide mx-auto max-w-4xl text-center">
+          {/* Upper vacant space, above the clasped hands */}
+          <motion.div style={{ y: statementY }} className="mx-auto max-w-3xl">
             <span className="font-mono text-2xs uppercase tracking-[0.5em] text-ink-muted">04, Method</span>
-            <h2 className="mt-8 font-display text-[clamp(1.9rem,4.6vw,3.4rem)] font-light leading-[1.12] tracking-tight text-ink">
+            <h2
+              className="mt-5 font-display text-[clamp(1.4rem,3.4vw,2.7rem)] font-light leading-[1.14] tracking-tight text-ink"
+              style={{ textShadow: "0 2px 30px rgba(0,0,0,0.85)" }}
+            >
               We craft spaces and the life within them, we strive to resolve every detail and deliver the extraordinary.
             </h2>
-            <div className="mt-10 flex justify-center">
-              <Link
-                href="/process"
-                className="group inline-flex items-center gap-4 border border-ink/25 px-8 py-4 font-sans text-xs uppercase tracking-[0.2em] text-ink transition-colors duration-300 hover:border-ink"
-              >
-                Our process
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
+          </motion.div>
+
+          {/* Bottom vacant space, below the clasped hands */}
+          <motion.div style={{ y: statementY }}>
+            <Link
+              href="/process"
+              className="group inline-flex items-center gap-4 font-sans text-xs uppercase tracking-[0.2em] text-ink opacity-90 transition-opacity duration-300 hover:opacity-100"
+            >
+              Our process
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.6"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   aria-hidden="true"
@@ -207,8 +213,7 @@ function Cinematic() {
                   <path d="M7 17L17 7M9 7h8v8" />
                 </svg>
               </Link>
-            </div>
-          </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>
