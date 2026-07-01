@@ -70,7 +70,7 @@ export function Hero() {
             playsInline
             preload="auto"
           >
-            <source src="/assets/video/landing-hero.mp4" type="video/mp4" />
+            <source src="/assets/video/landing-hero-v3.mp4" type="video/mp4" />
           </video>
         </motion.div>
       </motion.div>
@@ -125,10 +125,10 @@ export function Hero() {
 
             <motion.div variants={wordReveal} className="mt-10 flex flex-wrap items-center justify-center gap-6">
               <Button href="/projects" variant="tertiary" arrow className="text-ink">
-                See the work
+                Dive in
               </Button>
-              <Button href="/contact" variant="tertiary" className="text-ink/80">
-                Start an enquiry
+              <Button href="/lets-talk" variant="tertiary" className="text-ink/80">
+                Let&apos;s talk
               </Button>
             </motion.div>
           </motion.div>

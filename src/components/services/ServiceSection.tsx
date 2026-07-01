@@ -83,7 +83,7 @@ export function ServiceSection({ service, flip }: { service: Service; flip: bool
 
             <Reveal delay={0.22} className="mt-10">
               <Button href={`/projects?type=${service.filterType}`} variant="tertiary" arrow>
-                See {service.title.toLowerCase()} projects
+                See it built
               </Button>
             </Reveal>
           </div>

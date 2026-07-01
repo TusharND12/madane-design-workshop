@@ -31,7 +31,7 @@ export function StudioIntro() {
           </Reveal>
           <Reveal delay={0.14} className="mt-10">
             <Button href="/studio" variant="tertiary" arrow>
-              Read our philosophy
+              Go deeper
             </Button>
           </Reveal>
         </div>

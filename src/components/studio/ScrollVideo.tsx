@@ -19,7 +19,15 @@ const TRACK_VH = 230;
  * forward, scrolling up rewinds it. Reduced-motion falls back to a quiet looping
  * clip. Styled to the studio's dark, editorial theme.
  */
-export function ScrollVideo({ src }: { src: string }) {
+export function ScrollVideo({
+  src,
+  kicker = "Since 2008",
+  title = "The people behind the practice.",
+}: {
+  src: string;
+  kicker?: string;
+  title?: string;
+}) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const reduced = usePrefersReducedMotion();
@@ -170,9 +178,9 @@ export function ScrollVideo({ src }: { src: string }) {
           style={{ opacity: kickerOpacity }}
           className="pointer-events-none absolute left-[clamp(1.25rem,4vw,3rem)] top-[clamp(5.5rem,14vh,9rem)] z-30"
         >
-          <span className="block font-mono text-2xs uppercase tracking-label text-ink/70">Since 2008</span>
+          <span className="block font-mono text-2xs uppercase tracking-label text-ink/70">{kicker}</span>
           <span className="mt-1 block max-w-[18ch] font-display text-xl font-light leading-tight tracking-tight text-ink/90 md:text-2xl">
-            The people behind the practice.
+            {title}
           </span>
         </motion.div>
 

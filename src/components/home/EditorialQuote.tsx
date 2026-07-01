@@ -54,7 +54,7 @@ export function EditorialQuote() {
 
           <motion.div variants={fadeUp} className="mt-11">
             <Button href="/studio" variant="secondary" arrow>
-              Read our philosophy
+              Go deeper
             </Button>
           </motion.div>
         </motion.div>

@@ -3,11 +3,13 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { getProcess } from "@/lib/cms";
-import { SectionHeader } from "@/components/primitives/SectionHeader";
-import { Button } from "@/components/primitives/Button";
 import { Reveal } from "@/components/primitives/Reveal";
 
-/** Working method, condensed, horizontal on desktop with a drawing line (PRD H6). */
+/**
+ * Working method, condensed, horizontal on desktop with a drawing line (PRD H6).
+ * The statement + "Our process" CTA that introduces it now rises in place at the
+ * tail of the handshake section, so this strip is just the five steps.
+ */
 export function ProcessStrip() {
   const steps = getProcess();
   const ref = useRef<HTMLDivElement>(null);
@@ -17,15 +19,7 @@ export function ProcessStrip() {
   return (
     <section className="bg-paper">
       <div className="shell-wide py-section">
-        <SectionHeader
-          index="04"
-          label="Process"
-          title="Five steps, no surprises."
-          intro="A clear sequence from first conversation to a snag-free handover."
-          align="between"
-        />
-
-        <div ref={ref} className="relative mt-12 md:mt-16">
+        <div ref={ref} className="relative">
           {/* Connecting line (desktop), drawn as you scroll */}
           <div className="absolute left-[10px] right-[10px] top-[34px] hidden h-px bg-hairline lg:block" aria-hidden="true">
             <motion.div className="h-full origin-left bg-ink" style={{ scaleX: lineScale }} />
@@ -33,12 +27,7 @@ export function ProcessStrip() {
 
           <ol className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5 lg:gap-4">
             {steps.map((step, i) => (
-              <Reveal
-                as="li"
-                key={step.index}
-                delay={i * 0.06}
-                className="group relative flex flex-col pt-6 lg:pr-6"
-              >
+              <Reveal as="li" key={step.index} delay={i * 0.06} className="group relative flex flex-col pt-6 lg:pr-6">
                 <span className="relative z-10 flex h-5 w-5 items-center justify-center rounded-full border border-ink bg-paper" aria-hidden="true">
                   <span className="h-2 w-2 rounded-full bg-ink transition-transform duration-500 ease-editorial group-hover:scale-125" />
                 </span>
@@ -49,12 +38,6 @@ export function ProcessStrip() {
             ))}
           </ol>
         </div>
-
-        <Reveal className="mt-16">
-          <Button href="/process" variant="tertiary" arrow>
-            See how we work
-          </Button>
-        </Reveal>
       </div>
     </section>
   );
