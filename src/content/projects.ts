@@ -302,6 +302,7 @@ export const projects: Project[] = [
     services: ["Architecture"],
     cover: "/assets/projects/hero-electric-manufacturing-facility/cover.jpg",
     coverAlt: "Corner approach render of the Hero Electric facility showing the two-storey panelised facade, glazed upper office volume and circular red logo, with landscaped palms and a sports car at the entry.",
+    gridCover: "/assets/projects/hero-electric-manufacturing-facility/cover.png",
     narrative: {
       brief: "A bold industrial facility for Hero Electric in Ludhiana, where crisp panelised facades meet a sweeping red branded canopy.",
       site: "Industrial commission in Ludhiana, Punjab, India. Under construction.",
@@ -329,6 +330,7 @@ export const projects: Project[] = [
     scope: ["Architecture and interior design for a 3-screen theatre complex"],
     services: ["Architecture", "Interior"],
     cover: "/assets/projects/ufo-moviez-cinema-complex/cover.jpg",
+    gridCover: "/assets/projects/ufo-moviez-cinema-complex/cover.png",
     coverAlt: "NOVA Cinemaz lobby render with reflective black floor, circuit-line ceiling, poster wall and a row of red sofas.",
     narrative: {
       brief: "A bold 3-screen cinema complex wrapping a mosaic-coloured facade around dramatic red-lit auditoriums and a lounge-style foyer.",
@@ -361,6 +363,7 @@ export const projects: Project[] = [
     scope: ["Architecture", "Landscape and interiors", "Architectural planning and detailing"],
     services: ["Architecture", "Interior"],
     cover: "/assets/projects/advait-126-136/cover.jpg",
+    gridCover: "/assets/projects/advait-126-136/cover.png",
     coverAlt: "Twin towers 126 and 136 shown side by side against a bright blue sky, capturing the full development at a glance.",
     narrative: {
       brief: "A pair of Ground+17 residential towers in Mumbai, clad in warm earthy tones with crisp vertical fins and slim balcony lines.",
@@ -389,6 +392,7 @@ export const projects: Project[] = [
     scope: ["Corporate office interior fit-out", "Reception lobby", "Cabins", "Meeting/boardrooms", "Open workstations"],
     services: ["Interior", "Turnkey"],
     cover: "/assets/projects/akasa-noida/cover.jpg",
+    gridCover: "/assets/projects/akasa-noida/cover.png",
     coverAlt: "Double-height reception lobby render with curved bronze desk, 'Pooja Fin Lease' branding, lounge seating and full-height curtain-wall glazing.",
     narrative: {
       brief: "A corporate office fit-out in Noida for NBFC Pooja Fin Lease, pairing a double-height marble lobby with warm, material-rich boardrooms and bright open workspaces.",
@@ -418,6 +422,7 @@ export const projects: Project[] = [
     scope: ["Commercial interior design and fit-out: reception", "Open-plan workstations", "Private cabins", "Breakout/lounge"],
     services: ["Interior", "Turnkey"],
     cover: "/assets/projects/arcelormittal-construction-office/cover.jpg",
+    gridCover: "/assets/projects/arcelormittal-construction-office/cover.png",
     coverAlt: "Branded reception with timber feature wall, ArcelorMittal Construction signage, grey desk and yellow sofas.",
     narrative: {
       brief: "A high-rise corporate office fit-out for ArcelorMittal Construction, blending warm wood-and-orange branding with an industrial exposed-ceiling palette.",
@@ -448,6 +453,7 @@ export const projects: Project[] = [
     scope: ["Commercial interior design and fit-out of a chartered accountant office: reception/lobby", "Open-plan workstation bays", "And meeting/cabin areas."],
     services: ["Interior", "Turnkey"],
     cover: "/assets/projects/ca-office-andheri-west/cover.jpg",
+    gridCover: "/assets/projects/ca-office-andheri-west/cover.png",
     coverAlt: "Warm reception corridor with green glass conference room, slatted wood wall and framed abstract art.",
     narrative: {
       brief: "A compact Andheri West chartered-accountancy office where typographic feature walls and bold colour accents energise tight, efficient workstation bays.",
@@ -730,6 +736,7 @@ export const projects: Project[] = [
     scope: ["Commercial interior fit-out and design", "Reception", "Open-plan workstations", "Breakout/collaboration zones", "Glazed meeting rooms"],
     services: ["Interior", "Turnkey"],
     cover: "/assets/projects/reynaers-aluminium-office-5th-floor-oberoi-garden/cover.jpg",
+    gridCover: "/assets/projects/reynaers-aluminium-office-5th-floor-oberoi-garden/cover.png",
     coverAlt: "Reception lounge with curved white desk and the branded REYNAERS aluminium frosted-glass screen, video wall and waiting seating.",
     narrative: {
       brief: "A bright, glass-and-aluminium corporate office for Reynaers on the 5th floor at Oberoi Garden, branded around the company's signature blue.",
@@ -761,6 +768,7 @@ export const projects: Project[] = [
     scope: ["Commercial interior design and fit-out of a corporate office: reception", "Open-plan workstations", "Meeting rooms", "Breakout/lounge zones"],
     services: ["Interior", "Turnkey"],
     cover: "/assets/projects/reynaers-office/cover.jpg",
+    gridCover: "/assets/projects/reynaers-office/cover.png",
     coverAlt: "Reception with backlit desk, concrete pendant, project video-wall and the etched Reynaers R logo on the glass partition.",
     narrative: {
       brief: "A sleek corporate office fit-out for aluminium-systems brand Reynaers, blending a backlit reception, glass-walled meeting rooms and a green-accented open-plan floor on a curved \"boomerang\" plate.",
@@ -796,6 +804,7 @@ export const projects: Project[] = [
     scope: ["Commercial interior fit-out", "Reception", "Open-plan workstations", "Meeting room", "Breakout and biophilic zones"],
     services: ["Interior", "Turnkey"],
     cover: "/assets/projects/semac-office-l-and-t-seawoods/cover.jpg",
+    gridCover: "/assets/projects/semac-office-l-and-t-seawoods/cover.png",
     coverAlt: "SEMAC reception with a sculptural white curved desk, arched wood portals, sacred statuary and green lounge seating over terrazzo flooring.",
     narrative: {
       brief: "A warm, biophilic corporate office for SEMAC at L&T Seawoods, defined by sculptural arched wood portals, Indian mythological murals and lush greenery.",
@@ -827,6 +836,7 @@ export const projects: Project[] = [
     scope: ["Architecture and landscape design"],
     services: ["Architecture"],
     cover: "/assets/projects/sus-residential-development/cover.jpg",
+    gridCover: "/assets/projects/sus-residential-development/cover.png",
     coverAlt: "Aerial view of the U-shaped tower cluster framing a landscaped podium courtyard with pool and palm rows.",
     narrative: {
       brief: "A G+13 residential township in Sus, Pune, wrapping landscaped courtyards and a pool deck within a crisp white modernist tower cluster.",
@@ -856,6 +866,7 @@ export const projects: Project[] = [
     scope: ["Architecture and amenity / terrace landscape design across multiple residential towers (Swastik Platinum", "Pearl", "Divine and Pantnagar)"],
     services: ["Architecture"],
     cover: "/assets/projects/swastik-group-residential-towers/cover.jpg",
+    gridCover: "/assets/projects/swastik-group-residential-towers/cover.png",
     coverAlt: "Hero daytime render of the full Swastik Platinum tower with a textured grille facade and planted podium.",
     narrative: {
       brief: "A family of high-rise residential towers for the Swastik Group, lifting landscaped play decks, infinity pools and sky lounges onto the Mumbai skyline.",
@@ -891,6 +902,7 @@ export const projects: Project[] = [
     scope: ["Architectural planning and detailing"],
     services: ["Architecture"],
     cover: "/assets/projects/tata-elxsi/cover.jpg",
+    gridCover: "/assets/projects/tata-elxsi/cover.png",
     coverAlt: "Frontal street-level render of the office tower, glazed fin facade cantilevered over a palm-lined drop-off and entrance.",
     narrative: {
       brief: "An 18-storey commercial office tower in Bangalore, capped by a dramatic cantilevered glass-and-fin upper volume floating over a screened podium.",
@@ -1178,6 +1190,7 @@ export const projects: Project[] = [
       "Architecture"
     ],
     "cover": "/assets/projects/aadiarpan-nx-residences/cover.jpg",
+    "gridCover": "/assets/projects/aadiarpan-nx-residences/cover.png",
     "coverAlt": "Design render of a slim luxury apartment tower at Sion wrapped in vertical greenery, with stacked terraces and balconies.",
     "narrative": {
       "brief": "A luxury boutique residential development at Sion, Mumbai, with terraces and balconies layered across a slim tower wrapped in vertical greenery.",
@@ -1225,6 +1238,7 @@ export const projects: Project[] = [
       "Architecture"
     ],
     "cover": "/assets/projects/carter-road/cover.jpg",
+    "gridCover": "/assets/projects/carter-road/cover.png",
     "coverAlt": "Dusk render of a sea-facing residential tower on Carter Road with stacked, deep-curved balconies.",
     "narrative": {
       "brief": "A sea-facing, ultra-luxury bespoke residential development on Carter Road, Bandra West, with curved balconies framing views across the Arabian Sea.",
@@ -1278,6 +1292,7 @@ export const projects: Project[] = [
       "Architecture"
     ],
     "cover": "/assets/projects/palatial-heights/cover.jpg",
+    "gridCover": "/assets/projects/palatial-heights/cover.png",
     "coverAlt": "Dusk render of a slim sea-shore residential tower at Bandstand with an illuminated bronze-toned crown.",
     "narrative": {
       "brief": "A sea-shore luxury residential tower at Bandstand, Mumbai, designed so that 75% of rooms open to terraces with extended views over the sea.",
@@ -1322,6 +1337,7 @@ export const projects: Project[] = [
       "Architecture"
     ],
     "cover": "/assets/projects/lumax/cover.jpg",
+    "gridCover": "/assets/projects/lumax/cover.png",
     "coverAlt": "Fitted-out reception carrying the red Lumax branding in the new Gurgaon office building.",
     "narrative": {
       "brief": "A B+G+2 office and facility building for auto-component maker Lumax in Gurgaon, delivered in collaboration with SEMAC Consultants.",
@@ -1376,6 +1392,7 @@ export const projects: Project[] = [
       "Architecture"
     ],
     "cover": "/assets/projects/new-tulshi-baug/cover.jpg",
+    "gridCover": "/assets/projects/new-tulshi-baug/cover.png",
     "coverAlt": "Dusk render of the New Tulshi Baug showroom building with its illuminated, lace-like perforated facade.",
     "narrative": {
       "brief": "A luxury boutique-showroom and commercial building at Tulsi Baug, Pune, wrapped in an intricate white filigree-patterned facade.",
@@ -1640,6 +1657,7 @@ export const projects: Project[] = [
     ],
     "cover": "/assets/projects/women-welfare-centre/cover.jpg",
     "coverAlt": "The completed red-brick Women Welfare Centre at Malkapur with colonnaded verandahs around a planted courtyard.",
+    "gridCover": "/assets/projects/women-welfare-centre/cover.png",
     "narrative": {
       "brief": "A completed, low-maintenance welfare centre for rural women's empowerment at Malkapur, built in load-bearing red brick around a planted courtyard.",
       "site": "Malkapur, Maharashtra, Completed.",
@@ -1728,6 +1746,7 @@ export const projects: Project[] = [
       "Turnkey"
     ],
     "cover": "/assets/projects/seclore/cover.jpg",
+    "gridCover": "/assets/projects/seclore/cover.png",
     "coverAlt": "Curved backlit reception of the Seclore office under a warm wood-slat ceiling.",
     "narrative": {
       "brief": "A 20,000 sq.ft. design-and-build software office in Andheri East where warm wood-slat ceilings, biophilic workstations and a backlit reception set a calm, trust-driven tone.",
@@ -1793,6 +1812,7 @@ export const projects: Project[] = [
       "Turnkey"
     ],
     "cover": "/assets/projects/planetcast-media/cover.jpg",
+    "gridCover": "/assets/projects/planetcast-media/cover.png",
     "coverAlt": "Green, campus-like breakout space at the Planetcast Media office in Malad with tiered seating and greenery.",
     "narrative": {
       "brief": "A media company's Malad office that turns the workplace into a green, playful campus of tiered seating, biophilic breakouts and a graphic cafeteria.",
@@ -1856,6 +1876,7 @@ export const projects: Project[] = [
       "Turnkey"
     ],
     "cover": "/assets/projects/tata-digital/cover.jpg",
+    "gridCover": "/assets/projects/tata-digital/cover.png",
     "coverAlt": "Grand circular reception under a star-lit dome with a backlit Tata Digital brand wall.",
     "narrative": {
       "brief": "A proposed Dadar headquarters whose domed, star-lit circular reception signals corporate gravitas balanced with biophilic, colourful collaboration spaces.",
@@ -1920,6 +1941,7 @@ export const projects: Project[] = [
       "Turnkey"
     ],
     "cover": "/assets/projects/rush-co-works/cover.jpg",
+    "gridCover": "/assets/projects/rush-co-works/cover.png",
     "coverAlt": "Hospitality-led co-working space at Rush Co-Works, Turbhe, with a cafe counter and communal seating.",
     "narrative": {
       "brief": "A Turbhe co-working club built around hospitality and play, with cafes, communal dining and a games arcade rather than rows of desks.",
@@ -1984,6 +2006,7 @@ export const projects: Project[] = [
       "Turnkey"
     ],
     "cover": "/assets/projects/odyssey-logistics/cover.jpg",
+    "gridCover": "/assets/projects/odyssey-logistics/cover.png",
     "coverAlt": "Calm reception lounge of the Odyssey Logistics office under a wood-slat ceiling with marble flooring.",
     "narrative": {
       "brief": "A compact 10,000 sq.ft. logistics head office in Gundecha Onclave dressed in warm wood, marble and brass for a refined, residential-feeling workplace.",
@@ -2033,6 +2056,7 @@ export const projects: Project[] = [
       "Turnkey"
     ],
     "cover": "/assets/projects/sgl/cover.jpg",
+    "gridCover": "/assets/projects/sgl/cover.png",
     "coverAlt": "Marble reception of the Solitaire Geological Laboratory office with a monolithic stone desk against a black feature wall.",
     "narrative": {
       "brief": "A 3,500 sq.ft. office for a geological laboratory at Capital, BKC, fittingly clad in dramatic stone with patterned marble floors and a sculptural black feature wall.",
