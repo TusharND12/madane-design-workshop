@@ -182,7 +182,7 @@ export function Header() {
               {rightItems.map(renderItem)}
             </nav>
             <Link
-              href="/contact"
+              href="/lets-talk"
               className="hidden items-center px-2 py-1 font-sans text-xs uppercase tracking-[0.14em] opacity-70 transition-opacity duration-300 hover:opacity-100 lg:inline-flex"
             >
               Let&apos;s talk

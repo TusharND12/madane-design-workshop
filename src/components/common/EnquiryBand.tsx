@@ -13,7 +13,7 @@ export function EnquiryBand({
   projectTag?: string;
   image?: string;
 }) {
-  const enquireHref = projectTag ? `/contact?project=${encodeURIComponent(projectTag)}` : "/contact";
+  const enquireHref = projectTag ? `/lets-talk?project=${encodeURIComponent(projectTag)}` : "/lets-talk";
 
   return (
     <section className="relative z-10 bg-paper pb-[clamp(3rem,7vw,6rem)] pt-section">
