@@ -21,13 +21,14 @@ import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
  * counter-rotates so it always stays upright through the spin.
  */
 const VALUES = [
-  { sa: "न्याय", tr: "Nyāya", en: "Justice", note: "Fairness to the client, the craft and the land." },
-  { sa: "धैर्य", tr: "Dhairya", en: "Fortitude", note: "The patience to carry a vision from first line to keys." },
-  { sa: "धर्म", tr: "Dharma", en: "Stewardship", note: "Design as duty, to the people and the generations who inherit it." },
-  { sa: "ज्ञान", tr: "Jñāna", en: "Knowledge", note: "Rigour, research and craft behind every decision." },
+  { sa: "ज्ञान", tr: "Jñāna", en: "Knowledge", note: "Incorporating continued education." },
+  { sa: "धैर्य", tr: "Dhairya", en: "Patience", note: "Creating through patience." },
+  { sa: "प्रेम", tr: "Prema", en: "Love", note: "We love what we do." },
+  { sa: "न्याय", tr: "Nyāya", en: "Justice", note: "Our work does justice." },
+  { sa: "समर्पण", tr: "Samarpaṇa", en: "Dedication", note: "Our team is dedicated to the cause." },
 ];
 const N = VALUES.length;
-const STEP = 360 / N; // 90° between petals
+const STEP = 360 / N; // 72° between petals
 
 export function ValuesFlower() {
   const reduced = usePrefersReducedMotion();
@@ -53,16 +54,12 @@ function Scene() {
   const v = VALUES[active];
 
   return (
-    <section ref={ref} className="relative h-[400vh] bg-stone">
+    <section ref={ref} className="relative h-[500vh] bg-stone">
       <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden pt-[5.5rem] md:pt-0">
         <div className="shell-wide grid w-full items-center gap-6 md:grid-cols-2 md:gap-8">
           {/* Left, the spinning flower */}
           <div className="relative mx-auto flex aspect-square w-full max-w-[clamp(180px,52vw,500px)] items-center justify-center md:max-w-[clamp(240px,40vw,500px)]">
             <motion.div className="relative h-full w-full" style={{ rotate: rot }}>
-              {/* blank petals interleaved, matching the word petals, for a fuller bloom */}
-              {VALUES.map((val, i) => (
-                <BlankPetal key={`bp-${val.en}`} index={i} />
-              ))}
               {VALUES.map((val, i) => (
                 <Petal key={val.en} index={i} rot={rot} active={i === active} sa={val.sa} />
               ))}
@@ -112,18 +109,6 @@ function Scene() {
         </div>
       </div>
     </section>
-  );
-}
-
-function BlankPetal({ index }: { index: number }) {
-  return (
-    <div
-      className="absolute left-1/2 top-1/2 h-[42%] w-[19%]"
-      style={{ transform: `translate(-50%, -50%) rotate(${index * STEP + STEP / 2}deg) translateY(-86%)` }}
-      aria-hidden="true"
-    >
-      <div className="h-full w-full rounded-[50%_50%_50%_50%/62%_62%_38%_38%] border border-ink/25" />
-    </div>
   );
 }
 

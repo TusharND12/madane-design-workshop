@@ -198,7 +198,7 @@ function GalleryCard({
     >
       <div ref={imgRef} className="relative w-full overflow-hidden" style={{ aspectRatio: aspect }}>
         <Image
-          src={project.cover}
+          src={project.gridCover ?? project.cover}
           alt={project.coverAlt}
           fill
           sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 25vw"

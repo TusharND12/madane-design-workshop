@@ -129,7 +129,7 @@ export function Header() {
   const light = invert && !solid;
 
   // Split the nav evenly to sit on either side of the centred logo.
-  const navItems = site.nav.filter((item) => item.href !== "/contact");
+  const navItems = site.nav;
   const mid = Math.ceil(navItems.length / 2);
   const leftItems = navItems.slice(0, mid);
   const rightItems = navItems.slice(mid);
@@ -158,44 +158,34 @@ export function Header() {
         animate={{ y: hidden ? -120 : 0, opacity: hidden ? 0 : 1 }}
         transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
         className={cn(
-          "fixed inset-x-0 top-[clamp(0.75rem,1.6vw,1.25rem)] z-50 flex justify-center px-4 transition-colors duration-300 ease-editorial",
+          "fixed inset-x-0 top-0 z-50 bg-transparent transition-colors duration-300 ease-editorial",
           hidden && "pointer-events-none",
           light ? "text-ink on-ink" : "text-ink"
         )}
       >
-        <div
-          className={cn(
-            "relative flex h-14 w-full max-w-6xl items-center justify-between gap-4 rounded-full px-6 transition-[background-color,border-color,box-shadow] duration-300 ease-editorial",
-            solid
-              ? "border border-white/10 bg-paper/20 shadow-[0_10px_30px_-16px_rgba(0,0,0,0.5)] backdrop-blur-xl"
-              : "border border-white/5 bg-paper/5 backdrop-blur-xl"
-          )}
-        >
+        <div className="relative flex h-16 w-full items-center justify-between gap-4 px-[clamp(1rem,4vw,3.5rem)] md:h-[clamp(4rem,7vh,5rem)]">
           {/* Left nav (desktop) */}
-          <nav aria-label="Primary" className="hidden items-center justify-start gap-6 lg:flex xl:gap-7" onMouseLeave={scheduleCloseMega}>
+          <nav aria-label="Primary" className="hidden items-center justify-start gap-7 lg:flex xl:gap-9" onMouseLeave={scheduleCloseMega}>
             {leftItems.map(renderItem)}
           </nav>
           {/* Mobile spacer to balance the menu button so the logo stays centred */}
           <div className="w-8 lg:hidden" aria-hidden="true" />
 
           {/* Logo - left on mobile, absolutely centred from lg up so side widths never shift it */}
-          <div className="absolute left-6 top-1/2 -translate-y-1/2 lg:left-1/2 lg:-translate-x-1/2">
+          <div className="absolute left-[clamp(1rem,4vw,3.5rem)] top-1/2 -translate-y-1/2 lg:left-1/2 lg:-translate-x-1/2">
             <Logo subdued={!light} />
           </div>
 
           {/* Right nav + enquire / mobile menu */}
           <div className="flex items-center justify-end gap-6">
-            <nav aria-label="More" className="hidden items-center gap-6 lg:flex xl:gap-7" onMouseLeave={scheduleCloseMega}>
+            <nav aria-label="More" className="hidden items-center gap-7 lg:flex xl:gap-9" onMouseLeave={scheduleCloseMega}>
               {rightItems.map(renderItem)}
             </nav>
             <Link
               href="/contact"
-              className={cn(
-                "hidden h-9 items-center rounded-full px-5 font-sans text-xs uppercase tracking-[0.14em] transition-colors duration-300 lg:inline-flex",
-                light ? "border border-ink/40 text-ink hover:bg-ink hover:text-paper" : "bg-ink text-paper hover:bg-ink/90"
-              )}
+              className="hidden items-center px-2 py-1 font-sans text-xs uppercase tracking-[0.14em] opacity-70 transition-opacity duration-300 hover:opacity-100 lg:inline-flex"
             >
-              Enquire
+              Let&apos;s talk
             </Link>
             <button
               type="button"

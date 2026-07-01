@@ -27,7 +27,7 @@ export function ProcessStrip() {
 
         <div ref={ref} className="relative mt-12 md:mt-16">
           {/* Connecting line (desktop), drawn as you scroll */}
-          <div className="absolute left-6 right-6 top-[34px] hidden h-px bg-hairline lg:block" aria-hidden="true">
+          <div className="absolute left-[10px] right-[10px] top-[34px] hidden h-px bg-hairline lg:block" aria-hidden="true">
             <motion.div className="h-full origin-left bg-ink" style={{ scaleX: lineScale }} />
           </div>
 
@@ -37,21 +37,14 @@ export function ProcessStrip() {
                 as="li"
                 key={step.index}
                 delay={i * 0.06}
-                className="group relative flex flex-col overflow-hidden rounded-card border border-hairline bg-mount p-6 transition-shadow duration-500 ease-editorial hover:shadow-[0_28px_56px_-34px_rgba(38,38,38,0.4)]"
+                className="group relative flex flex-col pt-6 lg:pr-6"
               >
-                {/* Ghost numeral */}
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute -right-2 -top-6 font-display text-[6.5rem] leading-none tracking-tighter text-ink/[0.04]"
-                >
-                  {step.index}
-                </span>
                 <span className="relative z-10 flex h-5 w-5 items-center justify-center rounded-full border border-ink bg-paper" aria-hidden="true">
                   <span className="h-2 w-2 rounded-full bg-ink transition-transform duration-500 ease-editorial group-hover:scale-125" />
                 </span>
-                <span className="relative z-10 mt-6 block font-mono text-2xs tracking-label text-ink-muted">{step.index}</span>
-                <h3 className="relative z-10 mt-2 font-display text-2xl tracking-tight">{step.title}</h3>
-                <p className="relative z-10 mt-3 text-sm leading-relaxed text-ink-muted">{step.body}</p>
+                <span className="mt-6 block font-mono text-2xs tracking-label text-ink-muted">{step.index}</span>
+                <h3 className="mt-2 font-display text-2xl tracking-tight">{step.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-ink-muted">{step.body}</p>
               </Reveal>
             ))}
           </ol>

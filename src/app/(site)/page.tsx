@@ -3,7 +3,6 @@ import { ArchitectureSketch } from "@/components/home/ArchitectureSketch";
 import { getProjectsByType } from "@/lib/cms";
 import { EditorialQuote } from "@/components/home/EditorialQuote";
 import { ValuesFlower } from "@/components/home/ValuesFlower";
-import { StudioGrid } from "@/components/home/StudioGrid";
 import { ServicesCards } from "@/components/home/ServicesCards";
 import { GalleryShowcase } from "@/components/home/GalleryShowcase";
 import { Recognition } from "@/components/home/Recognition";
@@ -19,7 +18,6 @@ export default function HomePage() {
       <EditorialQuote />
       <ValuesFlower />
       <GalleryShowcase />
-      <StudioGrid />
       <ServicesCards />
       <Recognition />
       <ProcessStrip />

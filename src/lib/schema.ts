@@ -36,6 +36,7 @@ export const Project = z.object({
   services: z.array(z.string()),
   cover: z.string(),
   coverAlt: z.string().min(1),
+  gridCover: z.string().optional(), // optional B&W thumbnail shown in the archive grid (detail page still uses `cover`)
   screenVideo: z.string().optional(), // optional cinematic loop shown on the device screen
 
   // Narrative ≤150 words: brief / site / response (PRD P2)

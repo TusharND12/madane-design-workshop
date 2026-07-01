@@ -18,24 +18,7 @@ export function EnquiryBand({
   return (
     <section className="relative z-10 bg-paper pb-[clamp(3rem,7vw,6rem)] pt-section">
       <div className="shell-wide">
-        <div className="relative isolate rounded-[clamp(1.5rem,3vw,2.5rem)] border border-white/5 bg-gradient-to-br from-stone to-mount p-8 shadow-[0_44px_100px_-46px_rgba(0,0,0,0.7)] md:p-14">
-          {/* sheen + dotted accents */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 rounded-[inherit]"
-            style={{ background: "radial-gradient(130% 150% at 88% 130%, rgba(96,116,176,0.20), transparent 55%)" }}
-          />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute right-8 top-8 h-24 w-40 opacity-40"
-            style={{
-              backgroundImage: "radial-gradient(rgba(255,255,255,0.35) 1px, transparent 1px)",
-              backgroundSize: "12px 12px",
-              maskImage: "linear-gradient(120deg, #000, transparent)",
-              WebkitMaskImage: "linear-gradient(120deg, #000, transparent)",
-            }}
-          />
-
+        <div className="relative rounded-[clamp(1.5rem,3vw,2.5rem)] border border-white/10 p-8 md:p-14">
           <div className="relative grid gap-10 md:grid-cols-2 md:items-center">
             <h2 className="max-w-[15ch] font-display text-[clamp(1.75rem,3.6vw,2.9rem)] font-light leading-[1.06] tracking-tight text-ink">
               {headline}
@@ -48,7 +31,7 @@ export function EnquiryBand({
               <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
                 <Link
                   href={enquireHref}
-                  className="inline-flex items-center gap-2.5 rounded-full bg-ink px-6 py-3 font-sans text-xs uppercase tracking-[0.14em] text-paper transition-colors duration-300 hover:bg-ink/85"
+                  className="group inline-flex items-center gap-2.5 font-sans text-xs uppercase tracking-[0.14em] text-ink transition-opacity duration-300 hover:opacity-70"
                 >
                   Get started
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

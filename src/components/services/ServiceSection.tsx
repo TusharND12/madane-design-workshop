@@ -58,7 +58,7 @@ export function ServiceSection({ service, flip }: { service: Service; flip: bool
           {/* Copy */}
           <div className="md:col-span-5 md:col-start-8 md:[direction:ltr]">
             <Reveal>
-              <Bracket>{service.title}</Bracket>
+              <Bracket className="text-base text-ink md:text-xl">{service.title}</Bracket>
             </Reveal>
             <Reveal delay={0.05}>
               <h2 className="mt-6 font-display text-3xl leading-tight tracking-tight md:text-4xl">{service.tagline}</h2>
@@ -69,9 +69,9 @@ export function ServiceSection({ service, flip }: { service: Service; flip: bool
 
             <Reveal delay={0.14} className="mt-8">
               <span className="font-mono text-2xs uppercase tracking-label text-ink-muted">Includes</span>
-              <ul className="mt-4 flex flex-wrap gap-2">
+              <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-1.5">
                 {service.includes.map((inc) => (
-                  <li key={inc} className="rounded-none border border-hairline px-3 py-1.5 text-xs text-ink-muted">{inc}</li>
+                  <li key={inc} className="text-xs text-ink-muted">{inc}</li>
                 ))}
               </ul>
             </Reveal>

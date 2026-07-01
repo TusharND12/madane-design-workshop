@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { site } from "@/content/site";
 import { FooterMark } from "@/components/layout/FooterMark";
+import { Logo } from "@/components/layout/Logo";
 
 /** The calm full stop, giant wordmark, link columns, status bar (dark theme). */
 const NAV = [
@@ -23,10 +24,7 @@ export function Footer() {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-8">
           {/* Logo + tagline */}
           <div className="lg:col-span-5">
-            <Link href="/" className="inline-flex flex-col" aria-label="Madane Design Workshop, home">
-              <span className="font-display text-2xl lowercase leading-none tracking-tight text-ink">madane</span>
-              <span className="mt-1 font-mono text-[0.6rem] uppercase tracking-[0.34em] text-ink/45">Design Workshop</span>
-            </Link>
+            <Logo />
             <p className="mt-6 max-w-xs text-sm leading-relaxed text-ink/55">
               We design &amp; build, architecture, interiors and turnkey, since 2008.
             </p>

@@ -92,16 +92,9 @@ export function GalleryShowcase() {
 
   return (
     <section ref={ref} className="overflow-hidden bg-paper pt-section pb-[18vh] text-ink md:pb-[28vh]">
-      <div className="shell-wide">
-        <div className="flex items-baseline gap-4">
-          <span className="section-index">04</span>
-          <span className="font-mono text-2xs uppercase tracking-label text-ink-muted">[ The Workshop ]</span>
-        </div>
-      </div>
-
       {/* Carousel viewport, narrower than the section so neighbours peek */}
       <div
-        className="relative mx-auto mt-10 w-[88%] max-w-[1320px] touch-pan-y md:mt-14"
+        className="relative mx-auto w-[88%] max-w-[1320px] touch-pan-y"
         onPointerDown={onPointerDown}
         onPointerUp={onPointerUp}
       >

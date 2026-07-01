@@ -22,6 +22,7 @@ export const projects: Project[] = [
     services: ["Architecture", "Interior"],
     cover: "/assets/projects/rudra-villa/cover.jpg",
     coverAlt: "Front elevation render of the villa with perforated terracotta jaali facade, flat-roof massing and a car in the porte-cochere.",
+    gridCover: "/assets/projects/rudra-villa/cover.png",
     screenVideo: "/assets/video/homepage-hero.mp4",
     narrative: {
       brief: "An 18,000 sq.ft. weekend villa in Alibag where contemporary architecture meets Indian craft, jaali screens, brass accents and sea views across every room.",
@@ -59,6 +60,7 @@ export const projects: Project[] = [
     services: ["Interior", "Turnkey"],
     cover: "/assets/projects/sun-petrochemicals-pvt-ltd-corporate-office/cover.jpg",
     coverAlt: "Reception with glossy black desk and illuminated 'sun Petrochemicals' logo on a warm tan wall, lounge seating beyond.",
+    gridCover: "/assets/projects/sun-petrochemicals-pvt-ltd-corporate-office/cover.png",
     narrative: {
       brief: "A crisp, light-filled corporate office for Sun Petrochemicals, balancing clean white minimalism with warm wood, terracotta accents and a polished branded reception.",
       site: "Corporate office (petrochemical / industrial) commission in India. completed.",
@@ -94,6 +96,7 @@ export const projects: Project[] = [
     services: ["Interior", "Turnkey"],
     cover: "/assets/projects/akasa-kolkata/cover.jpg",
     coverAlt: "Reception viewed through bronze-fluted glazed doors, with backlit AKASA signage and an inverted black-marble desk.",
+    gridCover: "/assets/projects/akasa-kolkata/cover.png",
     narrative: {
       brief: "A polished Akasa managed-office and coworking floor in Kolkata where a dramatic inverted-marble reception sets the tone for cabins, meeting rooms and a playful cafe.",
       site: "Coworking commission in Kolkata, West Bengal. Completed.",
@@ -128,6 +131,7 @@ export const projects: Project[] = [
     services: ["Interior", "Turnkey"],
     cover: "/assets/projects/semac-consultants-pvt-ltd-office/cover.jpg",
     coverAlt: "Reception viewed through glass doors, with the backlit white sculptural desk and SEMAC logo on a curved timber backwall flanked by green velvet sofas.",
+    gridCover: "/assets/projects/semac-consultants-pvt-ltd-office/cover.png",
     narrative: {
       brief: "A warm, India-themed corporate office for Semac Consultants where arched timber portals, epic murals and curved workstations frame a high-rise city skyline.",
       site: "Engineering consultancy commission in India. Completed.",
@@ -163,6 +167,7 @@ export const projects: Project[] = [
     services: ["Interior", "Turnkey"],
     cover: "/assets/projects/john-cockerill-office-aurum-parc-ghansoli/cover.jpg",
     coverAlt: "Reception with John Cockerill logo wall, rust banquettes and a glass meeting room beyond.",
+    gridCover: "/assets/projects/john-cockerill-office-aurum-parc-ghansoli/cover.png",
     narrative: {
       brief: "A bright, biophilic corporate workplace for engineering group John Cockerill at Aurum Parc, Ghansoli, balancing vast open-plan workstations with green-and-blue collaboration pods.",
       site: "Corporate / engineering (industrial) commission in Aurum Parc, Ghansoli, Navi Mumbai. Design / proposal stage (3D renders).",
@@ -199,6 +204,7 @@ export const projects: Project[] = [
     services: ["Architecture"],
     cover: "/assets/projects/kushal-wallstreet/cover.jpg",
     coverAlt: "Dusk three-quarter street view of the illuminated glass-and-fin office tower with adjacent low-rise context and traffic light trails.",
+    gridCover: "/assets/projects/kushal-wallstreet/cover.png",
     narrative: {
       brief: "A Gr+10 commercial office tower in Pune wrapped in vertical metallic fins, full-height glazing and stacked sky-gardens, branded around a Wall Street bull motif.",
       site: "Commercial office commission in Pune, India. Under construction (2nd floor in progress).",
@@ -229,6 +235,7 @@ export const projects: Project[] = [
     services: ["Interior", "Turnkey"],
     cover: "/assets/projects/lodha-1-office/cover.jpg",
     coverAlt: "Signature wide view: flowing LED light-lines, burgundy chairs, marble desks and arched brass cabin under a wave ceiling.",
+    gridCover: "/assets/projects/lodha-1-office/cover.png",
     narrative: {
       brief: "A sculptural corporate office where flowing LED light-trails, arched brass portals and marble worktops turn an open floorplate into a fluid, premium workspace.",
       site: "Corporate office commission. design / visualization.",
@@ -265,6 +272,7 @@ export const projects: Project[] = [
     services: ["Interior", "Turnkey"],
     cover: "/assets/projects/raymond-office/cover.jpg",
     coverAlt: "Reception with vibrant vertical multi-colour striped feature wall, red neon brand logo, illuminated front desk and concentric linear ceiling profile.",
+    gridCover: "/assets/projects/raymond-office/gridcover.png",
     narrative: {
       brief: "A polished corporate office for Raymond, anchored by a bold multi-colour striped reception and sculptural boardroom ceilings.",
       site: "Corporate office commission. completed.",
@@ -475,6 +483,7 @@ export const projects: Project[] = [
     services: ["Architecture"],
     cover: "/assets/projects/ceat/cover.jpg",
     coverAlt: "Front elevation render of the CEAT facility with the branded white volume meeting a glazed office block, framed by palms.",
+    gridCover: "/assets/projects/ceat/cover.png",
     narrative: {
       brief: "A clean, low-slung industrial facility for CEAT pairing a solid branded volume with a glazed office block.",
       site: "Industrial commission in Ambernath, Mumbai. Under construction.",
@@ -503,6 +512,7 @@ export const projects: Project[] = [
     services: ["Interior", "Turnkey"],
     cover: "/assets/projects/eatigo-office/cover.jpg",
     coverAlt: "Sunlit eye-level view of workstations beside the red eatigo brick wall",
+    gridCover: "/assets/projects/eatigo-office/cover.png",
     narrative: {
       brief: "A bright, open-plan office fit-out for tech brand eatigo, anchored by a red-on-white-brick logo wall and rows of warm-wood workstations.",
       site: "IT commission. Design / Concept (3D renders).",
@@ -539,6 +549,7 @@ export const projects: Project[] = [
     services: ["Interior"],
     cover: "/assets/projects/evos-sales-office/cover.jpg",
     coverAlt: "Curved marble reception desk framed by fluted stone wall panels and the backlit evos logo, with a circular marble floor inlay.",
+    gridCover: "/assets/projects/evos-sales-office/cover.png",
     narrative: {
       brief: "A sculptural, fluted-stone sales office for the Evos brand, organised around a sweeping reception and a central architectural model display.",
       site: "Real estate commission. Design / Visualization (3D renders).",
@@ -568,6 +579,7 @@ export const projects: Project[] = [
     services: ["Interior", "Turnkey"],
     cover: "/assets/projects/fedbank-financial-services-kanakia-wallstreet/cover.jpg",
     coverAlt: "Reception with a lush green living wall and backlit FEDBANK signage above a sculpted white desk.",
+    gridCover: "/assets/projects/fedbank-financial-services-kanakia-wallstreet/cover.png",
     narrative: {
       brief: "A polished corporate banking office for Fedbank at Kanakia Wallstreet, blending a living-wall reception with refined dark-and-timber meeting suites.",
       site: "Banking commission in Kanakia Wallstreet, Andheri, Mumbai. Design / visualization stage.",
@@ -599,6 +611,7 @@ export const projects: Project[] = [
     services: ["Interior", "Turnkey"],
     cover: "/assets/projects/fox-mandal-the-capital/cover.jpg",
     coverAlt: "Reception with grey marble feature wall, Fox Mandal Solicitors & Advocates signage and FM monogram.",
+    gridCover: "/assets/projects/fox-mandal-the-capital/cover.png",
     narrative: {
       brief: "A restrained, marble-and-walnut office fit-out for law firm Fox Mandal Solicitors & Advocates at The Capital.",
       site: "Legal commission in The Capital. Design / visualization (3D renders).",
@@ -631,6 +644,7 @@ export const projects: Project[] = [
     services: ["Interior"],
     cover: "/assets/projects/indiana-business/cover.jpg",
     coverAlt: "Long open-plan workstation bay with rows of iMac desks, mesh task chairs, and suspended green light troughs beneath an exposed services ceiling.",
+    gridCover: "/assets/projects/indiana-business/cover.png",
     narrative: {
       brief: "A bright, green-accented open-plan office where exposed-services ceilings meet rows of long-bench workstations.",
       site: "IT commission. Concept / design visualization.",
@@ -658,6 +672,7 @@ export const projects: Project[] = [
     services: ["Architecture", "Interior"],
     cover: "/assets/projects/jagasara-duplex/cover.jpg",
     coverAlt: "Street-level render of the full row of duplex houses showing the repeating louvered facade, planted balconies and boundary walls with a parked car.",
+    gridCover: "/assets/projects/jagasara-duplex/cover.png",
     narrative: {
       brief: "A row of contemporary duplex houses in Odisha defined by vertical louvered screens, cantilevered volumes and terraced greenery.",
       site: "Residential commission in Odisha, India. Ongoing.",
@@ -688,6 +703,7 @@ export const projects: Project[] = [
     services: ["Interior"],
     cover: "/assets/projects/omkar-techinvention/cover.jpg",
     coverAlt: "Pantry and coffee-bar lounge with green-accented stools, suspended pendant planters and a panoramic night-time city view.",
+    gridCover: "/assets/projects/omkar-techinvention/cover.png",
     narrative: {
       brief: "A high-rise corporate office interior pairing a motivational glass-walled meeting room with a vibrant city-view coffee bar.",
       site: "IT commission. Design / Render.",
@@ -909,6 +925,7 @@ export const projects: Project[] = [
     services: ["Interior", "Turnkey"],
     cover: "/assets/projects/ve-commercial-vehicles-volvo-eicher-office/cover.jpg",
     coverAlt: "Open-plan workfloor with linear pendant lighting, exposed services ceiling, green living wall and panoramic city-view glazing.",
+    gridCover: "/assets/projects/ve-commercial-vehicles-volvo-eicher-office/cover.png",
     narrative: {
       brief: "A crisp, brand-led corporate office for VE Commercial Vehicles, balancing an open high-rise workfloor with a clean white reception.",
       site: "Automotive commission. Design visualization (3D renders).",
@@ -937,6 +954,7 @@ export const projects: Project[] = [
     services: ["Interior"],
     cover: "/assets/projects/vinay-savargi-c-a-office-andheri/cover.jpg",
     coverAlt: "Cutaway render foregrounding the conference cabin and workstation bay, with the wooden circulation corridor sweeping across the upper left.",
+    gridCover: "/assets/projects/vinay-savargi-c-a-office-andheri/cover.png",
     narrative: {
       brief: "A compact chartered accountant's office in Andheri, space-planned into private cabins, open workstations and meeting zones through clean 3D cutaway renders.",
       site: "Professional services (chartered accountant office) commission in Andheri, Mumbai. design / visualization stage.",
@@ -966,6 +984,7 @@ export const projects: Project[] = [
     services: ["Interior", "Turnkey"],
     cover: "/assets/projects/wonese-world-networking-services-office/cover.jpg",
     coverAlt: "Reception with bold red WONESE branding on a dark wood feature wall above a crisp white desk, framed by a glazed meeting cabin.",
+    gridCover: "/assets/projects/wonese-world-networking-services-office/cover.png",
     narrative: {
       brief: "An industrial-modern office fit-out for an IT networking firm, blending exposed red services overhead with warm wood and a bold red-on-black brand identity.",
       site: "IT commission. Design visualisation / render.",
@@ -996,6 +1015,7 @@ export const projects: Project[] = [
     services: ["Interior", "Turnkey"],
     cover: "/assets/projects/icici-bank/cover.jpg",
     coverAlt: "Reception with a backlit ICICI Bank logo on a stone-clad desk under a timber-batten ceiling, beside a perforated screen wall.",
+    gridCover: "/assets/projects/icici-bank/cover.png",
     narrative: {
       brief: "A 1,03,000 sq.ft., four-floor ICICI Bank workplace at Arihant Aura, Navi Mumbai, IGBC Platinum rated, with a warm timber reception and bright, planted open-plan floors.",
       site: "Banking workplace commission at Arihant Aura, Navi Mumbai. IGBC Platinum.",
@@ -1028,6 +1048,7 @@ export const projects: Project[] = [
     services: ["Interior", "Turnkey"],
     cover: "/assets/projects/dcb-bank/cover.jpg",
     coverAlt: "Reception with the blue DCB Bank logo wall, a navy sofa and a marble-topped desk under recessed lighting.",
+    gridCover: "/assets/projects/dcb-bank/cover.png",
     narrative: {
       brief: "A 10,000 sq.ft. DCB Bank office at Hubtown Solaris, Andheri East, completed in 2025, with a crisp blue-and-white identity from reception through to the workstation floors.",
       site: "Banking workplace commission at Hubtown Solaris, Andheri East, Mumbai. Completed 2025.",
@@ -1060,6 +1081,7 @@ export const projects: Project[] = [
     services: ["Interior", "Turnkey"],
     cover: "/assets/projects/shriram-wealth/cover.jpg",
     coverAlt: "Reception with backlit Shriram Wealth signage on a stone-clad desk, warm timber ceiling and potted greenery.",
+    gridCover: "/assets/projects/shriram-wealth/cover.png",
     narrative: {
       brief: "An IGBC Gold rated Shriram Wealth office at The Capital, BKC, with a warm, premium palette of timber, stone and greenery from the branded reception to the boardroom.",
       site: "Wealth-management workplace commission at The Capital, BKC, Mumbai. IGBC Gold.",
@@ -1092,6 +1114,7 @@ export const projects: Project[] = [
     services: ["Interior", "Turnkey"],
     cover: "/assets/projects/moneyboxx/cover.jpg",
     coverAlt: "Breakout lounge with a round sofa, warm timber floor and a bold framed artwork beside the open office.",
+    gridCover: "/assets/projects/moneyboxx/cover.png",
     narrative: {
       brief: "A bright, colourful NBFC head office for Moneyboxx Finance at Kanakia Wall Street, Mumbai, pairing exposed-ceiling open floors with a vivid, art-led breakout lounge.",
       site: "NBFC head-office commission at Kanakia Wall Street, Mumbai.",
@@ -1124,6 +1147,7 @@ export const projects: Project[] = [
     services: ["Interior", "Turnkey"],
     cover: "/assets/projects/policy-bazaar/cover.jpg",
     coverAlt: "Reception lounge with a living green wall, the Policy Bazaar logo and warm leather seating under a slatted ceiling.",
+    gridCover: "/assets/projects/policy-bazaar/gridcover.png",
     narrative: {
       brief: "A 50,000 sq.ft. carpet-area workplace for Policy Bazaar at Infinity Tower, Malad East, with a green-walled reception lounge and bright, art-accented open floors.",
       site: "Insurance and fintech workplace commission at Infinity Tower, Malad East, Mumbai.",
@@ -1390,6 +1414,7 @@ export const projects: Project[] = [
     ],
     "cover": "/assets/projects/juna-deesa-institute/cover.jpg",
     "coverAlt": "Render of the Juna Deesa institute's long, low red-brick academic block fronted by landscaping.",
+    "gridCover": "/assets/projects/juna-deesa-institute/cover.png",
     "narrative": {
       "brief": "A 340,000 sq.ft. Gr+4 institutional campus at Juna Deesa, Gujarat, organised behind a long horizontal red-brick facade.",
       "site": "Juna Deesa, Gujarat, Design and under construction.",
@@ -1428,6 +1453,7 @@ export const projects: Project[] = [
     ],
     "cover": "/assets/projects/ravindra-natya-mandir/cover.jpg",
     "coverAlt": "Render of the Ravindra Natya Mandir's traditional Maharashtrian-style facade and arrival plaza at Prabhadevi.",
+    "gridCover": "/assets/projects/ravindra-natya-mandir/cover.png",
     "narrative": {
       "brief": "External facade and auditorium redesign of the renowned Marathi-theatre venue Ravindra Natya Mandir at Prabhadevi, Mumbai.",
       "site": "Prabhadevi, Mumbai, Concept and schematic.",
@@ -1491,6 +1517,7 @@ export const projects: Project[] = [
     ],
     "cover": "/assets/projects/highmount/cover.jpg",
     "coverAlt": "Dusk render of the slim Highmount residential tower in Mumbai, dramatically illuminated.",
+    "gridCover": "/assets/projects/highmount/cover.png",
     "narrative": {
       "brief": "A residential apartment tower in Mumbai with terraces and balconies, paired with richly classical interior schemes.",
       "site": "Mumbai, Working stage.",
@@ -1548,6 +1575,7 @@ export const projects: Project[] = [
     ],
     "cover": "/assets/projects/c8-villa/cover.jpg",
     "coverAlt": "Warm, timber-clad living room of C8 Villa with a large sectional sofa under a timber ceiling.",
+    "gridCover": "/assets/projects/c8-villa/cover.png",
     "narrative": {
       "brief": "A completed residential villa in Mumbai with warm, timber-clad interiors, sculptural lighting and a modern kitchen.",
       "site": "Mumbai, Maharashtra, Completed.",
@@ -1660,6 +1688,7 @@ export const projects: Project[] = [
     ],
     "cover": "/assets/projects/vithaldeo-library/cover.jpg",
     "coverAlt": "Night view of the white Vithaldeo Library facade punctuated by brightly coloured projecting window boxes.",
+    "gridCover": "/assets/projects/vithaldeo-library/cover.png",
     "narrative": {
       "brief": "A completed ground-plus-one community library at Malkapur, its white facade animated by brightly coloured projecting window boxes.",
       "site": "Malkapur, Maharashtra, Completed.",
@@ -2067,6 +2096,7 @@ export const projects: Project[] = [
     ],
     "cover": "/assets/projects/talegaon-project/cover.jpg",
     "coverAlt": "Render of the Talegaon mixed-use hotel and showroom, a sculptural composition of angular, cantilevered volumes.",
+    "gridCover": "/assets/projects/talegaon-project/cover.png",
     "narrative": {
       "brief": "A monumental mixed-use showcase pairing a hotel with an automobile showroom at Talegaon, Pune, over two basements and four floors.",
       "site": "Talegaon, Pune.",
@@ -2120,6 +2150,7 @@ export const projects: Project[] = [
     ],
     "cover": "/assets/projects/eminent-realtors-excise-bhavan/cover.jpg",
     "coverAlt": "Street-level view of the multi-storey Excise Bhavan government building at Fort, Mumbai.",
+    "gridCover": "/assets/projects/eminent-realtors-excise-bhavan/cover.png",
     "narrative": {
       "brief": "The Excise Bhavan government building at Fort, Mumbai, with refreshed offices and excise-themed staff spaces for Eminent Developers.",
       "site": "Fort, Mumbai.",

@@ -42,13 +42,11 @@ export const site = {
     { label: "Behance", href: "https://behance.net/" },
   ],
   nav: [
-    { label: "Studio", href: "/studio" },
     { label: "Projects", href: "/projects" },
     { label: "Services", href: "/services" },
-    { label: "Process", href: "/process" },
-    { label: "Career", href: "/career" },
-    { label: "News", href: "/news" },
     { label: "Contact", href: "/contact" },
+    { label: "About", href: "/studio" },
+    { label: "Career", href: "/career" },
   ],
   credit: { by: "Athreix Innovations LLP", href: "https://athreix.com" },
 } as const;
