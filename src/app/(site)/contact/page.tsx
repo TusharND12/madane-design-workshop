@@ -28,7 +28,7 @@ export default function ContactPage() {
               Have a space in mind? Tell us about it and we&rsquo;ll shape it with you, architecture, interiors or turnkey.
             </p>
             <div className="mt-8">
-              <Button href="/lets-talk" arrow>
+              <Button href="/lets-talk" variant="tertiary" arrow>
                 Let&rsquo;s talk
               </Button>
             </div>
