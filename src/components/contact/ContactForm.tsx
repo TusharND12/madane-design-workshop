@@ -93,7 +93,7 @@ export function ContactForm() {
       </div>
 
       <div className="flex flex-wrap items-center gap-6 pt-2">
-        <ButtonAction type="submit" disabled={status === "sending"} arrow>
+        <ButtonAction type="submit" variant="tertiary" disabled={status === "sending"} arrow>
           {status === "sending" ? "Sending…" : "Send enquiry"}
         </ButtonAction>
         <AnimatePresence>

@@ -34,6 +34,10 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
     };
   }, [open, onClose]);
 
+  // "Let's talk" is a standalone CTA on desktop; add it here so mobile can reach
+  // the enquiry page from the menu too.
+  const navItems = [...site.nav, { label: "Let's talk", href: "/lets-talk" }];
+
   return (
     <AnimatePresence>
       {open && (
@@ -58,12 +62,14 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
               the right edge: the centre item reaches furthest in and the ends ease
               back. Same labels, same sizes; only a per-row right offset curves it. */}
           <nav aria-label="Primary" className="shell-wide flex flex-1 flex-col items-end justify-center gap-1 py-12 text-right">
-            {site.nav.map((item, i) => {
-              const dmax = (site.nav.length - 1) / 2;
+            {navItems.map((item, i) => {
+              const dmax = (navItems.length - 1) / 2;
               const t = dmax === 0 ? 0 : (i - dmax) / dmax; // -1 (top) … 1 (bottom)
               const bulge = Math.sqrt(Math.max(0, 1 - t * t)); // 1 at centre, 0 at ends
+              // Push each row off the right edge along the semicircle profile so the
+              // rows bow out into an arc - furthest at the centre rows.
               return (
-                <motion.div key={item.href} variants={line} style={{ marginRight: `${(bulge * 9).toFixed(2)}vw` }}>
+                <motion.div key={item.href} variants={line} style={{ marginRight: `${(bulge * 12).toFixed(2)}vw` }}>
                   <Link href={item.href} onClick={onClose} className="group flex flex-row-reverse items-baseline gap-5 py-2">
                     <span className="font-mono text-2xs tracking-label text-ink/40">{String(i + 1).padStart(2, "0")}</span>
                     <span className="font-display text-[15vw] leading-[1.02] tracking-tighter transition-opacity duration-300 group-hover:opacity-60 sm:text-6xl">
