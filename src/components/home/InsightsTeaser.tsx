@@ -11,7 +11,7 @@ export function InsightsTeaser() {
   return (
     <section className="bg-paper">
       <div className="shell-wide py-section">
-        <SectionHeader index="—" label="News & Insights" title="Latest from the studio." />
+        <SectionHeader label="News & Insights" title="Latest from the studio." />
 
         <ul className="mt-12 md:mt-14">
           {latest.map((post, i) => (

@@ -32,7 +32,7 @@ const RUNS: Run[] = [
   { t: "we craft with passion, we think to innovate. ", bold: true },
   { t: "For those who dare to dream, " },
   { t: "who push the norm, who see beyond the common form, ", bold: true },
-  { t: "their legacy we celebrate — " },
+  { t: "their legacy we celebrate, " },
   { t: "together, we rise and we think to innovate.", bold: true },
 ];
 

@@ -79,7 +79,7 @@
     color: var(--paper);
   }
 
-  /* Hide the native scrollbar — Lenis drives the scrolling, the bar is just
+  /* Hide the native scrollbar, Lenis drives the scrolling, the bar is just
      visual noise on this dark, editorial layout. Scrolling stays fully working. */
   html,
   body {
