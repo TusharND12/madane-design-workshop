@@ -78,12 +78,18 @@ function Cinematic() {
 
     // Prime the first frame so it is decoded and painted before the section
     // fades the video in, otherwise it flashes/blinks on the first scroll.
+    // Safari/iOS will NOT paint frames of a <video> that has never played when
+    // it is scrubbed via currentTime (it stays black), so play it muted for a
+    // beat and immediately pause - this unlocks frame painting on seek.
     const primeFirstFrame = () => {
+      video.muted = true; // set the property (React's attribute alone is unreliable in Safari)
       try {
         video.currentTime = 0.0001;
       } catch {
         /* seeking can throw before data is ready; ignore */
       }
+      const p = video.play();
+      if (p && typeof p.then === "function") p.then(() => video.pause()).catch(() => {});
     };
     if (video.readyState >= 2) primeFirstFrame();
     else video.addEventListener("loadeddata", primeFirstFrame, { once: true });

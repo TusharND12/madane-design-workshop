@@ -69,6 +69,17 @@ export function ScrollVideo({
     video.addEventListener("loadedmetadata", onMeta);
     if (video.readyState >= 1) onMeta();
 
+    // Safari/iOS will not paint frames of a <video> that has never played when
+    // it is scrubbed via currentTime (it stays black), so prime the decoder:
+    // play it muted for a beat, then pause.
+    const prime = () => {
+      video.muted = true; // set the property (Safari ignores React's attribute alone)
+      const p = video.play();
+      if (p && typeof p.then === "function") p.then(() => video.pause()).catch(() => {});
+    };
+    if (video.readyState >= 2) prime();
+    else video.addEventListener("loadeddata", prime, { once: true });
+
     // Gate seeks on the seek lifecycle: never issue a new seek while one is
     // still in flight, otherwise requests pile up and the playback stutters.
     let seeking = false;
@@ -106,6 +117,7 @@ export function ScrollVideo({
     window.addEventListener("resize", measure);
     return () => {
       video.removeEventListener("loadedmetadata", onMeta);
+      video.removeEventListener("loadeddata", prime);
       video.removeEventListener("seeking", onSeeking);
       video.removeEventListener("seeked", onSeeked);
       if (rafId.current) cancelAnimationFrame(rafId.current);
