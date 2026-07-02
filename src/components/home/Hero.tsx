@@ -107,7 +107,7 @@ export function Hero() {
               <Bracket className="text-ink/70">Architecture · Interiors · Turnkey</Bracket>
             </motion.div>
 
-            <h1 className="mt-7 w-full whitespace-nowrap font-display text-[2.1vw] font-medium leading-[1.05] tracking-tight">
+            <h1 className="mt-7 w-full whitespace-nowrap font-display text-[length:min(2.1vw,30px)] font-medium leading-[1.05] tracking-tight">
               <motion.span variants={stagger(0.08, 0.1)} initial="hidden" animate="show" className="inline">
                 {HEADLINE.map((w, i) => (
                   <span key={i} className="inline-block overflow-hidden align-bottom">
@@ -119,7 +119,7 @@ export function Hero() {
               </motion.span>
             </h1>
 
-            <motion.p variants={wordReveal} className="mt-2 w-full whitespace-nowrap text-[1.3vw] font-light text-ink/80">
+            <motion.p variants={wordReveal} className="mt-2 w-full whitespace-nowrap text-[length:min(1.3vw,18.5px)] font-light text-ink/80">
               A quiet, precise design workshop, architecture, interiors and turnkey delivery for living and for work.
             </motion.p>
 
