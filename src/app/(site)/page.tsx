@@ -8,6 +8,7 @@ import { ServicesCards } from "@/components/home/ServicesCards";
 import { GalleryShowcase } from "@/components/home/GalleryShowcase";
 import { Recognition } from "@/components/home/Recognition";
 import { ProcessStrip } from "@/components/home/ProcessStrip";
+import { InsightsTeaser } from "@/components/home/InsightsTeaser";
 import { EnquiryBand } from "@/components/common/EnquiryBand";
 
 export default function HomePage() {
@@ -23,6 +24,7 @@ export default function HomePage() {
       <ServicesCards />
       <Recognition />
       <ProcessStrip />
+      <InsightsTeaser />
       <EnquiryBand />
     </>
   );

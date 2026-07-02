@@ -9,10 +9,10 @@ import { TargetsWall } from "@/components/news/TargetsWall";
 import { StandardsMarquee } from "@/components/news/StandardsMarquee";
 
 export const metadata: Metadata = {
-  title: "News",
+  title: "Sustainability",
   description:
     "Madane Design Workshop's environment & sustainability vision 2026-2030, a dharma-driven commitment to bharat's built future: net-zero targets, a five-year roadmap and four strategic pillars.",
-  alternates: { canonical: "/news" },
+  alternates: { canonical: "/sustainability" },
 };
 
 const STATS = [
@@ -61,7 +61,7 @@ const STANDARDS = [
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
-export default function NewsPage() {
+export default function SustainabilityPage() {
   return (
     <>
       <PageIntro

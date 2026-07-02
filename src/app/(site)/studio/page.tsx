@@ -5,6 +5,7 @@ import { ScrollVideo } from "@/components/studio/ScrollVideo";
 import { StatementReveal } from "@/components/studio/StatementReveal";
 import { TeamShowcase } from "@/components/studio/TeamShowcase";
 import { PageZoom } from "@/components/common/PageZoom";
+import { Button } from "@/components/primitives/Button";
 import { EnquiryBand } from "@/components/common/EnquiryBand";
 
 export const metadata: Metadata = {
@@ -62,6 +63,21 @@ export default function StudioPage() {
               ))}
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      {/* Sustainability - the studio ethos, linking to the full vision */}
+      <section className="bg-black">
+        <div className="shell-wide flex flex-col gap-8 border-t border-hairline py-[clamp(4.5rem,13vh,8.5rem)] md:flex-row md:items-end md:justify-between">
+          <div className="max-w-[28ch]">
+            <span className="font-mono text-2xs uppercase tracking-label text-ink-muted">Environment &amp; sustainability</span>
+            <p className="mt-6 font-display text-[clamp(1.9rem,4.5vw,3.25rem)] font-light leading-[1.05] tracking-tight text-ink/80">
+              Design as stewardship, a net-zero path to 2030.
+            </p>
+          </div>
+          <Button href="/sustainability" variant="tertiary" arrow className="text-ink">
+            Our sustainability vision
+          </Button>
         </div>
       </section>
 
