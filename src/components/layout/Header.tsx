@@ -24,7 +24,7 @@ const SUBMENUS: Record<string, SubItem[]> = {
   "/projects": [
     { label: "Architecture", href: "/projects?type=Architecture", img: "/assets/services/architecture.jpg" },
     { label: "Interior", href: "/projects?type=Interior", img: "/assets/services/interior.jpg" },
-    { label: "Commercial", href: "/projects?type=Interior&kind=Commercial", img: "/assets/projects/sun-petrochemicals-pvt-ltd-corporate-office/cover.jpg" },
+    { label: "Commercial", href: "/projects?type=Interior&kind=Commercial", img: "/assets/projects/lodha-1-office/cover.jpg" },
     { label: "Residential", href: "/projects?type=Interior&kind=Residential", img: "/assets/projects/rudra-villa/cover.jpg" },
   ],
 };
