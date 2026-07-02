@@ -142,11 +142,11 @@ export function StatementReveal() {
           <motion.div style={{ rotateY, transformStyle: "preserve-3d" }} className="relative h-full w-full">
             {/* Front face (slight overscan so it always bleeds past the edges) */}
             <div className="absolute inset-0 [backface-visibility:hidden]">
-              <video className="absolute left-[-1%] top-[-1%] h-[102%] w-[102%] object-cover" src={FRONT_SRC} autoPlay muted loop playsInline preload="metadata" aria-hidden="true" />
+              <video className="absolute left-[-1%] top-[-1%] h-[102%] w-[102%] object-cover" style={{ objectPosition: "50% 82%" }} src={FRONT_SRC} autoPlay muted loop playsInline preload="metadata" aria-hidden="true" />
             </div>
             {/* Back face */}
             <motion.div style={{ rotateY: 180 }} className="absolute inset-0 [backface-visibility:hidden]">
-              <video className="absolute left-[-1%] top-[-1%] h-[102%] w-[102%] object-cover" src={BACK_SRC} autoPlay muted loop playsInline preload="metadata" aria-hidden="true" />
+              <video className="absolute left-[-1%] top-[-1%] h-[102%] w-[102%] object-cover" style={{ objectPosition: "50% 82%" }} src={BACK_SRC} autoPlay muted loop playsInline preload="metadata" aria-hidden="true" />
             </motion.div>
           </motion.div>
         </motion.div>
