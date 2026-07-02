@@ -18,6 +18,8 @@ type Slide = {
   video: string;
   poster: string;
   alt: string;
+  // Anchor the cover-crop; use to keep a corner watermark in frame on wide cards.
+  objectPosition?: string;
 };
 
 const SLIDES: Slide[] = [
@@ -27,6 +29,7 @@ const SLIDES: Slide[] = [
     video: "/assets/video/living-daylight.mp4",
     poster: "/assets/video/living-daylight.jpg",
     alt: "A daylit living space, planned around its light edges.",
+    objectPosition: "50% 100%",
   },
   {
     eyebrow: "Detail",
@@ -48,6 +51,7 @@ const SLIDES: Slide[] = [
     video: "/assets/video/architecture-gesture.mp4",
     poster: "/assets/video/architecture-gesture.jpg",
     alt: "Dawn Villa, architecture and interior conceived as one.",
+    objectPosition: "50% 100%",
   },
   {
     eyebrow: "Restraint",
@@ -193,7 +197,7 @@ function Card({
   }, [isActive, playing, reduced]);
 
   return (
-    <div className="relative h-[64vh] min-h-[460px] overflow-hidden rounded-[clamp(1.5rem,3vw,2.25rem)] bg-mount md:h-[72vh]">
+    <div className="relative h-[64vh] min-h-[460px] overflow-hidden bg-mount md:h-[72vh]">
       <video
         ref={videoRef}
         poster={slide.poster}
@@ -202,6 +206,7 @@ function Card({
         playsInline
         preload={priority ? "auto" : "metadata"}
         aria-label={slide.alt}
+        style={{ objectPosition: slide.objectPosition ?? "50% 50%" }}
         className={`absolute inset-0 h-full w-full object-cover transition-all duration-[1200ms] ease-editorial ${
           isActive ? "scale-100 grayscale-0 brightness-[1.04]" : "scale-[1.04] grayscale brightness-[0.35]"
         }`}
