@@ -17,15 +17,15 @@ type SubItem = { label: string; href: string; img: string };
 const SUBMENUS: Record<string, SubItem[]> = {
   "/services": [
     { label: "Architecture", href: "/services#architecture", img: "/assets/services/architecture.jpg" },
-    { label: "Interior", href: "/services#interior", img: "/assets/services/interior.jpg" },
-    { label: "Exterior", href: "/services#exterior", img: "/assets/services/exterior.jpg" },
+    { label: "Commercial", href: "/services#interior", img: "/assets/services/interior.jpg" },
+    { label: "Residential", href: "/services#exterior", img: "/assets/services/residential-interior.png" },
     { label: "Turnkey", href: "/services#turnkey", img: "/assets/services/turnkey.jpg" },
   ],
   "/projects": [
     { label: "Architecture", href: "/projects?type=Architecture", img: "/assets/services/architecture.jpg" },
     { label: "Interior", href: "/projects?type=Interior", img: "/assets/services/interior.jpg" },
-    { label: "Exterior", href: "/projects?type=Exterior", img: "/assets/services/exterior.jpg" },
-    { label: "Turnkey", href: "/projects?type=Turnkey", img: "/assets/services/turnkey.jpg" },
+    { label: "Commercial", href: "/projects?type=Interior&kind=Commercial", img: "/assets/projects/sun-petrochemicals-pvt-ltd-corporate-office/cover.jpg" },
+    { label: "Residential", href: "/projects?type=Interior&kind=Residential", img: "/assets/projects/rudra-villa/cover.jpg" },
   ],
 };
 
