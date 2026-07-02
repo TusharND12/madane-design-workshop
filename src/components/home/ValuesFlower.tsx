@@ -58,7 +58,7 @@ function Scene() {
       <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden pt-[5.5rem] md:pt-0">
         <div className="shell-wide grid w-full items-center gap-6 md:grid-cols-2 md:gap-8">
           {/* Left, the spinning flower */}
-          <div className="relative mx-auto flex aspect-square w-full max-w-[clamp(180px,52vw,500px)] items-center justify-center md:max-w-[clamp(240px,40vw,500px)]">
+          <div className="relative mx-auto flex aspect-square w-full max-w-[clamp(180px,52vw,500px)] items-center justify-center [container-type:inline-size] md:max-w-[clamp(240px,40vw,500px)]">
             <motion.div className="relative h-full w-full" style={{ rotate: rot }}>
               {VALUES.map((val, i) => (
                 <Petal key={val.en} index={i} rot={rot} active={i === active} sa={val.sa} />
@@ -128,7 +128,10 @@ function Petal({ index, rot, active, sa }: { index: number; rot: MotionValue<num
       >
         <motion.span
           style={{ rotate: counter }}
-          className={cn("text-2xl transition-colors duration-500 md:text-3xl", active ? "text-ink" : "text-ink/40")}
+          className={cn(
+            "whitespace-nowrap text-[length:6cqw] leading-none transition-colors duration-500",
+            active ? "text-ink" : "text-ink/40",
+          )}
         >
           {sa}
         </motion.span>
