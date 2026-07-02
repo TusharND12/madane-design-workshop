@@ -74,8 +74,12 @@ export function ScrollVideo({
     // play it muted for a beat, then pause.
     const prime = () => {
       video.muted = true; // set the property (Safari ignores React's attribute alone)
+      // Safari/iOS only paints frames of a PLAYING <video>. Keep it playing but
+      // frozen at playbackRate 0 so it never advances on its own, while our
+      // currentTime scrubbing repaints each frame.
       const p = video.play();
-      if (p && typeof p.then === "function") p.then(() => video.pause()).catch(() => {});
+      if (p && typeof p.then === "function") p.then(() => { video.playbackRate = 0; }).catch(() => {});
+      else video.playbackRate = 0;
     };
     if (video.readyState >= 2) prime();
     else video.addEventListener("loadeddata", prime, { once: true });
