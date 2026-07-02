@@ -182,7 +182,6 @@ function Cinematic() {
         >
           {/* Upper vacant space, above the clasped hands */}
           <motion.div style={{ y: statementY }} className="mx-auto max-w-3xl">
-            <span className="font-mono text-2xs uppercase tracking-[0.5em] text-ink-muted">04, Method</span>
             <h2
               className="mt-5 font-display text-[clamp(1.4rem,3.4vw,2.7rem)] font-light leading-[1.14] tracking-tight text-ink"
               style={{ textShadow: "0 2px 30px rgba(0,0,0,0.85)" }}

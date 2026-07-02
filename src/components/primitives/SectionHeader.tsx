@@ -15,8 +15,8 @@ export function SectionHeader({
   onInk = false,
   className,
 }: {
-  index: string;
-  label: string;
+  index?: string;
+  label?: string;
   title?: React.ReactNode;
   intro?: React.ReactNode;
   align?: "left" | "between";
@@ -25,15 +25,17 @@ export function SectionHeader({
 }) {
   return (
     <header className={cn("w-full", className)}>
-      <Reveal as="div">
-        <div className="flex items-baseline justify-between gap-6">
-          <div className="flex items-baseline gap-4">
-            <span className={cn("section-index", onInk && "text-ink/55")}>{index}</span>
-            <Bracket className={cn(onInk && "text-ink/70")}>{label}</Bracket>
+      {(index || label) && (
+        <Reveal as="div">
+          <div className="flex items-baseline justify-between gap-6">
+            <div className="flex items-baseline gap-4">
+              {index && <span className={cn("section-index", onInk && "text-ink/55")}>{index}</span>}
+              {label && <Bracket className={cn(onInk && "text-ink/70")}>{label}</Bracket>}
+            </div>
           </div>
-        </div>
-        <div className={cn("mt-6 h-px w-full", onInk ? "bg-ink/15" : "bg-hairline")} />
-      </Reveal>
+          <div className={cn("mt-6 h-px w-full", onInk ? "bg-ink/15" : "bg-hairline")} />
+        </Reveal>
+      )}
 
       {(title || intro) && (
         <div className={cn("mt-8 flex flex-col gap-6 md:mt-10", align === "between" && "md:flex-row md:items-end md:justify-between")}>

@@ -70,7 +70,7 @@ function DesktopHover({ services, reduced }: { services: Service[]; reduced: boo
   return (
     <section className="bg-paper">
       <div className="shell-wide py-section">
-        <SectionHeader index="03" label="Services" title="Four ways we work." intro="From a single room to a whole building, designed and, when you want it, delivered." align="between" />
+        <SectionHeader title="Four ways we work." intro="From a single room to a whole building, designed and, when you want it, delivered." align="between" />
         <Hint text="Hover or tap to explore" />
         <Panels
           services={services}
@@ -93,7 +93,7 @@ function MobileScroll({ services }: { services: Service[] }) {
     <section ref={parentRef} className="bg-paper" style={{ height: `${N * 72}vh` }}>
       <div className="sticky top-0 flex h-[100svh] flex-col justify-center overflow-hidden">
         <div className="shell-wide w-full py-6">
-          <SectionHeader index="03" label="Services" title="Four ways we work." intro="From a single room to a whole building, designed and, when you want it, delivered." align="between" />
+          <SectionHeader title="Four ways we work." intro="From a single room to a whole building, designed and, when you want it, delivered." align="between" />
           <Hint text="Scroll to explore" />
           {/* Panels are link-only here (tap = go to the service); scroll drives which one is open */}
           <Panels services={services} active={active} reduced={false} className="mt-5 flex h-[52svh] min-h-[340px] flex-row gap-1.5" />
