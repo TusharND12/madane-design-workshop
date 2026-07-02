@@ -44,7 +44,7 @@ export function StudioLocations() {
           {CITIES.map((c) => (
             <li key={c.name} className="group border-t border-hairline pt-3 first:border-t-0 first:pt-0">
               <div className="flex flex-col md:flex-row md:items-start md:justify-between md:gap-4">
-                <h2 className="order-2 font-display text-[clamp(2.75rem,13vw,10rem)] font-medium uppercase leading-[0.9] tracking-tight text-ink transition-colors duration-500 ease-editorial motion-reduce:transition-none md:order-1 md:text-ink/40 md:group-hover:text-ink">
+                <h2 className="order-2 pb-[0.18em] font-display text-[clamp(2.75rem,13vw,10rem)] font-medium leading-[0.9] tracking-tight text-ink transition-colors duration-500 ease-editorial motion-reduce:transition-none md:order-1 md:text-ink/40 md:group-hover:text-ink">
                   {c.name}
                 </h2>
                 <div className="order-1 mb-2 flex items-center gap-2 md:order-2 md:mb-0 md:mt-5 md:shrink-0 md:flex-col md:items-end md:gap-1 md:text-right">
